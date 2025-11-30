@@ -1,0 +1,72 @@
+{
+  "id": "spotify_engineer_london",
+  "raw_text": "Engineer\nMobile & Beyond - Audiobooks\n\nLondon or Stockholm\nIn the Audiobooks Mission, we're looking for a Software Engineer II to be a founding member of a new full-stack squad. This squad will be a bit unique, as it will span a number of products and areas of expertise – helping us explore opportunities as they come up in the audiobooks space. There will be multiple technologies at play, and an expectation that everyone on the team supercharges their T-shaping (including the EM!).\nThe audiobooks industry is heating up as a result of our entry, and we want to keep up our momentum! Come join us and help do that.\n\nWhat You'll Do\n\nEmbody our engineering philosophy of “anything is possible”\nActively participate in and manage all phases of development from design to post-deployment issue resolution\nWork closely with product, design, and other engineers to rapidly deliver impactful software\nCollaborate regularly with other team members at all stages of product development and launch\nContribute to both mobile and non-mobile initiatives, applying your expertise where it brings the most value\nFocus on high quality, high-velocity feature delivery, maintaining the balance between maximizing business impact and minimizing technical debt\n\nWho You Are\n\nYou thrive working within a fast-paced, high-growth, startup-type environment\nYou have a sense of humor, have fun on the job, and embody Spotify's \"playful\" value\nYou can deliver features on both Android and iOS, and are equally comfortable contributing to non-mobile projects when needed\nYou are able to, willing to, and excited about expanding beyond your core areas of expertise\nYou have 3+ years of software engineering experience\nYou get excited about challenging software design problems, and have a love of clean code\nYou have a strong foundation in software architecture, performance and optimization, data structures, and design patterns\nYou have excellent communication skills, and the ability to collaborate with team members across all functions of the company\nYou have a persistent/determined work ethic and a willingness to try anything and everything\n\nWhere You'll Be\n\nWe offer you the flexibility to work where you work best! For this role, you can be within the GMT or CET time zones as long as we have a work location.\nThis role will ideally be located in the UK, Sweden, or potentially one of our other EMEA locations *excluding France for now due to on-call restrictions.",
+  "title": "Engineer",
+  "company": "Spotify",
+  "location": "London",
+  "country": "UK",
+  "seniority": "Mid-level",
+  "responsibilities": [
+    "Embody the engineering philosophy of “anything is possible”",
+    "Actively participate in and manage all phases of development from design to post-deployment issue resolution",
+    "Work closely with product, design, and other engineers to rapidly deliver impactful software",
+    "Collaborate regularly with other team members at all stages of product development and launch",
+    "Contribute to both mobile and non-mobile initiatives, applying expertise where it brings the most value",
+    "Focus on high quality, high-velocity feature delivery, maintaining the balance between maximizing business impact and minimising technical debt"
+  ],
+  "must_have_requirements": [
+    "3+ years of software engineering experience",
+    "Strong foundation in software architecture, performance and optimization, data structures, and design patterns",
+    "Excellent communication skills, and the ability to collaborate with team members across all functions of the company",
+    "Persistent/determined work ethic and a willingness to try anything and everything"
+  ],
+  "nice_to_have_requirements": [],
+  "skills": [
+    {
+      "name": "Software Engineering",
+      "importance": 10,
+      "years_of_experience": 3
+    },
+    {
+      "name": "Software Architecture",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "name": "Performance Optimization",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "name": "Data Structures",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "name": "Design Patterns",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "name": "Communication Skills",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "name": "Android",
+      "importance": 4,
+      "years_of_experience": 0
+    },
+    {
+      "name": "iOS",
+      "importance": 4,
+      "years_of_experience": 0
+    }
+  ],
+  "tech_stack": [
+    "Android",
+    "iOS"
+  ],
+  "experience_min": 3,
+  "experience_max": 0
+}

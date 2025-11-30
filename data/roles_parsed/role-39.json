@@ -1,0 +1,119 @@
+{
+  "job_id": "apple_senior_software_engineer_london",
+  "company": "Apple",
+  "role": "Senior Software Engineer",
+  "location": "London",
+  "seniority": "Senior",
+  "responsibilities": [
+    "Take ownership of solutions from design to on-call support.",
+    "Design, build, test, deliver, and maintain software.",
+    "Participate in technical discussions and code reviews.",
+    "Explore creative solutions and contribute to AI exploration.",
+    "Develop, deploy, and operate high-availability cloud-based distributed systems."
+  ],
+  "must_have_requirements": [
+    "Expertise in cloud and distributed systems.",
+    "Proficiency in Java and/or Kotlin.",
+    "Hands-on experience with SQL/NoSQL databases.",
+    "Strong communication and collaboration skills.",
+    "Commitment to continuous learning and engineering excellence."
+  ],
+  "nice_to_have_requirements": [
+    "Experience with REST and/or gRPC services.",
+    "Understanding of cryptography and security concerns.",
+    "Familiarity with CI/CD pipelines and infrastructure as code.",
+    "Experience with containerisation and orchestration.",
+    "Experience with observability tools."
+  ],
+  "skills": [
+    {
+      "skill": "Cloud Computing",
+      "importance": 10
+    },
+    {
+      "skill": "Distributed Systems",
+      "importance": 10
+    },
+    {
+      "skill": "Java",
+      "importance": 9
+    },
+    {
+      "skill": "Kotlin",
+      "importance": 9
+    },
+    {
+      "skill": "SQL",
+      "importance": 7
+    },
+    {
+      "skill": "NoSQL",
+      "importance": 7
+    },
+    {
+      "skill": "REST",
+      "importance": 5
+    },
+    {
+      "skill": "gRPC",
+      "importance": 5
+    },
+    {
+      "skill": "Cryptography",
+      "importance": 4
+    },
+    {
+      "skill": "CI/CD",
+      "importance": 4
+    },
+    {
+      "skill": "Docker",
+      "importance": 4
+    },
+    {
+      "skill": "Kubernetes",
+      "importance": 4
+    },
+    {
+      "skill": "Prometheus",
+      "importance": 4
+    },
+    {
+      "skill": "Grafana",
+      "importance": 4
+    },
+    {
+      "skill": "OpenTelemetry",
+      "importance": 4
+    },
+    {
+      "skill": "Datadog",
+      "importance": 4
+    },
+    {
+      "skill": "Communication",
+      "importance": 8
+    },
+    {
+      "skill": "Collaboration",
+      "importance": 8
+    }
+  ],
+  "tech_stack": [
+    "Java",
+    "Kotlin",
+    "SQL",
+    "NoSQL",
+    "REST",
+    "gRPC",
+    "Docker",
+    "Kubernetes",
+    "Prometheus",
+    "Grafana",
+    "OpenTelemetry",
+    "Datadog"
+  ],
+  "years_of_experience_required": 0,
+  "years_of_experience_preferred": 0,
+  "raw_text": "Senior Software Engineer, Apple Wallet Ecosystem, London\nLondon, England, United Kingdom\nSoftware and Services\nSummary\nPosted:\n17 Nov 2025\nWeekly Hours:\n35\nRole Number:\n200631252-2114\nApple Pay, launched over 10 years ago, has evolved into the comprehensive Apple Wallet ecosystem. Serving hundreds of millions of users globally, Wallet securely stores payment cards, transit passes, car keys, corporate IDs, driving licenses, and more across Apple devices.\n\nThis is just the beginning. We are seeking a highly motivated and experienced Software Engineer to help lead the development of a resilient, scalable platform designed for the next decade of innovation in Wallet and Payments.\nDescription\nYou will join a nimble team involved in every stage of the product lifecycle, tackling the complex challenge of building and maintaining resilient, reliable distributed software systems at Apple's scale.\n\nAutonomy & Ownership: Take full ownership of your solutions, from initial design and development to operating, monitoring, and providing on-call support for the services you build. Your lived experience will actively shape our platform architecture.\n\nFull Lifecycle Involvement: Design, build, test, deliver, and maintain exceptional software that directly impacts our users.\n\nCollaboration: Participate actively in technical discussions, write specifications, review code, and produce clear documentation.\n\nInnovation: You will have the flexibility to explore creative solutions, leverage diverse technologies, and contribute to our exploration of how AI can enhance software development.\n\nSuccess in this role requires a high degree of self-motivation, crisp communication, a highly collaborative approach, and the ability to inspire others while working effectively across teams and disciplines.\nMinimum Qualifications\nCloud & Distributed Systems Expertise: Expertise in developing, deploying, and operating high-availability/high-throughput Cloud-based distributed systems proven in a production environment.\nProgramming: Demonstrable expertise in the software development lifecycle, including proficiency in Java and/or Kotlin.\nDatabase Experience: Hands-on experience with SQL/NoSQL databases (e.g., Aurora, DynamoDB, CockroachDB, Oracle).\nCommunication & Collaboration: The ability to communicate thoughtfully and clearly, both verbally and in writing, and a track record of building healthy, long-term relationships within and beyond your immediate team.\nGrowth Mindset: A commitment to continuous learning, curiosity for new technologies, and a relentless pursuit of engineering excellence.\nPreferred Qualifications\nAPI Development: Development and operational experience with REST and/or gRPC services.\nSecurity & Privacy: Understanding of cryptography concepts and general security and privacy concerns in financial/identity platforms.\nDevOps: Familiarity with CI/CD pipelines and infrastructure as code.\nModern Infrastructure: Experience with containerisation and orchestration (e.g., Docker, Kubernetes).\nObservability: Experience with observability tools (e.g., Prometheus, Grafana, OpenTelemetry, Datadog)."
+}

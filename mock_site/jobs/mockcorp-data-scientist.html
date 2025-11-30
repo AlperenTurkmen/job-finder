@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MockCorp · Lead Data Scientist</title>
+    <style>
+      body { font-family: Inter, Arial, sans-serif; line-height: 1.6; padding: 2rem; background: #fafafa; }
+      h1, h2 { color: #182439; }
+      ul { padding-left: 1.2rem; }
+      .meta { font-weight: 600; }
+      .job-section { margin-bottom: 1.5rem; }
+      .pill { display: inline-block; margin-right: 0.5rem; padding: 0.2rem 0.8rem; background: #e5edff; border-radius: 999px; font-size: 0.85rem; }
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org/",
+        "@type": "JobPosting",
+        "title": "Lead Data Scientist",
+        "employmentType": "FULL_TIME",
+        "industry": "Technology",
+        "hiringOrganization": {
+          "@type": "Organization",
+          "name": "MockCorp",
+          "sameAs": "https://mockcorp.example"
+        },
+        "jobLocation": {
+          "@type": "Place",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "London",
+            "addressCountry": "United Kingdom"
+          }
+        },
+        "baseSalary": {
+          "@type": "MonetaryAmount",
+          "currency": "GBP",
+          "value": {
+            "@type": "QuantitativeValue",
+            "minValue": 95000,
+            "maxValue": 120000,
+            "unitText": "YEAR"
+          }
+        },
+        "description": "MockCorp is hiring a Lead Data Scientist to productionise applied AI prototypes and mentor a growing team."
+      }
+    </script>
+  </head>
+  <body>
+    <article>
+      <header>
+        <p class="pill">Artificial Intelligence</p>
+        <p class="pill">Hybrid · London</p>
+        <h1>Lead Data Scientist</h1>
+        <p class="meta">MockCorp · £95k – £120k · Full time</p>
+      </header>
+
+      <section class="job-section">
+        <h2>About the role</h2>
+        <p>
+          MockCorp needs a senior data scientist who can productionise applied AI prototypes, own the feature pipeline,
+          and mentor a small group of scientist/engineers. You will work alongside product and platform teams to ship
+          trustworthy ML services that delight our fictional customers.
+        </p>
+      </section>
+
+      <section class="job-section">
+        <h2>Responsibilities</h2>
+        <ul>
+          <li>Design, train, and evaluate NLP and recommendation models with an experimentation-first mindset.</li>
+          <li>Partner with product, infra, and design to map ambiguous briefs into measurable ML roadmaps.</li>
+          <li>Ship production-grade pipelines in Python using Airflow, BigQuery, and Vertex AI.</li>
+          <li>Coach a team of 3–4 scientists, setting technical direction and reviewing critical launches.</li>
+          <li>Champion MLOps hygiene: automated validation, feature stores, observability, and runbooks.</li>
+        </ul>
+      </section>
+
+      <section class="job-section">
+        <h2>Must-have</h2>
+        <ul>
+          <li>7+ years in applied ML or data science with shipped products.</li>
+          <li>Deep Python expertise plus working knowledge of Spark or Beam.</li>
+          <li>Hands-on experience with GCP (Vertex AI, BigQuery, Cloud Run).</li>
+          <li>Comfort mentoring seniors and presenting roadmaps to exec stakeholders.</li>
+        </ul>
+      </section>
+
+      <section class="job-section">
+        <h2>Nice-to-have</h2>
+        <ul>
+          <li>Familiarity with reinforcement learning from human feedback.</li>
+          <li>Experience building internal platforms or developer tooling.</li>
+          <li>Human-centred design instincts and the ability to write crisp product briefs.</li>
+        </ul>
+      </section>
+
+      <section class="job-section">
+        <h2>How to apply</h2>
+        <p>
+          Email careers@mockcorp.example with your CV and highlight the most impactful system you've shipped. Mention
+          "Mock Data Scientist" in the subject line.
+        </p>
+      </section>
+
+      <section class="job-section" id="apply">
+        <h2>Apply online</h2>
+        <form id="mock-apply-form">
+          <label>
+            Full name
+            <input type="text" name="full_name" data-question="Full name" required />
+          </label>
+          <br /><br />
+          <label>
+            Email
+            <input type="email" name="email" data-question="Email" required />
+          </label>
+          <br /><br />
+          <label>
+            Current city
+            <input type="text" name="city" data-question="City" required />
+          </label>
+          <br /><br />
+          <label>
+            Cover letter
+            <textarea name="cover_letter" rows="5" data-question="Cover letter" required></textarea>
+          </label>
+          <br /><br />
+          <button type="submit">Apply now</button>
+        </form>
+      </section>
+    </article>
+  </body>
+</html>

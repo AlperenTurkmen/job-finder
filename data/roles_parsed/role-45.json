@@ -1,0 +1,100 @@
+{
+  "job_id": "apple_software_engineer_london",
+  "company": "Apple",
+  "location": "London, England, United Kingdom",
+  "title": "Software Engineer, iCloud Platform",
+  "seniority": "Mid-level",
+  "responsibilities": [
+    "Contribute to developing the next generation of iCloud Platform.",
+    "Work on key components of systems that enable new applications and experiences for millions of users.",
+    "Collaborate with world-class teams to deliver features that maintain strong privacy guarantees.",
+    "Design, build, and operate novel functionality in Apple’s media processing and content delivery platform.",
+    "Clarify requirements and take risks where justified by the reward.",
+    "Participate in CI/CD, observability, and SLOs as part of building mature, reliable services.",
+    "Identify and prevent potential production issues proactively.",
+    "Diagnose and resolve issues quickly with teammates.",
+    "Provide second-level support when expertise is required, potentially out of hours."
+  ],
+  "must_have_requirements": [
+    "Swift / Java programming or similar high level language programming experience",
+    "Experience contributing to large-scale services",
+    "Strong problem-solving and debugging skills",
+    "Experience with code review processes, collaborative development and familiarity with version control systems"
+  ],
+  "nice_to_have_requirements": [
+    "Quality focus – Strive to improve quality, ease of operation, and reliability",
+    "Bachelor’s Degree in an engineering-related field, or equivalent related experience with track record of delivering and operating high quality software at scale",
+    "Communication - Skilled in cross-functional communication and collaboration",
+    "Experience contributing to team initiatives",
+    "Knowledge of Kubernetes or other methods of automating and scaling cloud deployments, load balancing and traffic routing.",
+    "Understanding of Linux or Apple OS fundamentals.",
+    "Background understanding of cryptography and security.",
+    "Experience in the Media Streaming domain (Video formats, Codecs, HLS)"
+  ],
+  "skills": [
+    {
+      "skill": "Swift",
+      "importance": 8,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Java",
+      "importance": 8,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Problem-solving",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Debugging",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Code review",
+      "importance": 5,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Version control",
+      "importance": 5,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Kubernetes",
+      "importance": 4,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Linux",
+      "importance": 3,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Cryptography",
+      "importance": 3,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Security",
+      "importance": 3,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Media Streaming",
+      "importance": 3,
+      "years_of_experience": 0
+    }
+  ],
+  "tech_stack": [
+    "Swift",
+    "Java",
+    "Kubernetes",
+    "Linux"
+  ],
+  "years_of_experience_min": 0,
+  "years_of_experience_max": 0,
+  "raw_text": "Software Engineer, iCloud Platform\nLondon, England, United Kingdom\nSoftware and Services\nSummary\nPosted:\n29 Sept 2025\nRole Number:\n200599689-2114\nImagine what we could do together. At Apple, new ideas have a way of becoming phenomenal products, services, and customer experiences very quickly. Bring passion and dedication to your job, and there’s no telling what we could accomplish. Apple is looking for an experienced Software Engineer to contribute to developing the next generation of iCloud Platform. You will work on key components of systems that enable new applications and experiences for millions of users. You will work with world-class teams around the world who have a real passion for engineering and delivering features that maintain strong privacy guarantees to end users.\nDescription\nWe are a high-impact team that designs, builds, and operates novel functionality in Apple’s media processing and content delivery platform. This enables many of Apple’s signature apps and experiences. Our work is crucial to the success of Apple’s growth in services, enabling new features that will change the world.\n\nThis role will take you beyond the systems and services you will find elsewhere. Privacy is paramount at Apple. This role involves close collaboration with the Privacy and Security teams. The ideal candidate will have a strong quality focus and be motivated by helping evolve services into reliable scalable systems. Our systems are distributed in nature, and you will gain experience reasoning about different failure models that may occur. You will be comfortable working with our cross-functional partner teams to deliver the best outcomes.\n\nProduct development can be fast-paced, and requirements can change during the rapid innovation cycles. You will have the opportunity to clarify requirements, taking risks where justified by the reward. You will be exposed to CI/CD, observability, and SLOs as part of building mature, reliable services. Learn to identify and prevent potential production issues proactively. When issues do occur you will work with teammates to diagnose and resolve them quickly. This is not an operations role, but the job will provide second-level support when expertise is required, potentially out of hours.\n\nThis role offers excellent learning opportunities in distributed systems, scalability, and privacy-focused engineering.\nMinimum Qualifications\nSwift / Java programming or similar high level language programming experience\nExperience contributing to large-scale services\nStrong problem-solving and debugging skills\nExperience with code review processes, collaborative development and familiarity with version control systems\nPreferred Qualifications\nQuality focus – Strive to improve quality, ease of operation, and reliability\nBachelor’s Degree in an engineering-related field, or equivalent related experience with track record of delivering and operating high quality software at scale\nCommunication - Skilled in cross-functional communication and collaboration\nExperience contributing to team initiatives\nCloud - Knowledge of Kubernetes or other methods of automating and scaling cloud deployments, load balancing and traffic routing.\nSystems - Understanding of Linux or Apple OS fundamentals.\nSecurity - Background understanding of cryptography and security.\nExperience in the Media Streaming domain (Video formats, Codecs, HLS) is a plus."
+}

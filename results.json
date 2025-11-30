@@ -1,0 +1,50 @@
+{
+  "job_url_extraction": {
+    "companies_processed": 1,
+    "successful_companies": 1,
+    "job_urls_found": 1,
+    "output_csv": "data/job_urls/mock_urls.csv"
+  },
+  "scraping": {
+    "scraped": 1,
+    "failed": 0,
+    "intermediate_csv": "data/job_urls/mock_urls_intermediate.csv",
+    "output_dir": "results/mock_roles"
+  },
+  "scoring": {
+    "roles_scored": 1,
+    "eligible_roles": 1,
+    "threshold": 60.0
+  },
+  "applications": [
+    {
+      "job_id": "mockcorp_lead_data_scientist_london",
+      "company": "MockCorp",
+      "role": "Lead Data Scientist",
+      "job_url": "http://localhost:8000/jobs/mockcorp-data-scientist.html",
+      "scores": {
+        "for_me": 84.0,
+        "for_them": 81.0,
+        "insight": {
+          "insight": "Great alignment on ML leadership with minor location constraints. Strengths: Shipped ML platforms, Mentorship track record. Risks: Hybrid requirement. Recommendation: Apply."
+        }
+      },
+      "applied": true,
+      "auto_apply_result": {
+        "applied": true,
+        "artifact": "/Users/alperenturkmen/ai_agent/answers/applied/a_mockcorp-data-scientist.json",
+        "steps": [
+          "Filled Full name",
+          "Filled Email",
+          "Filled Current city",
+          "Filled Cover letter",
+          "Filled Full name",
+          "Filled Email",
+          "Filled Current city",
+          "Filled Cover letter",
+          "Clicked submit button: Apply now"
+        ]
+      }
+    }
+  ]
+}

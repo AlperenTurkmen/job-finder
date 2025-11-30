@@ -1,0 +1,5 @@
+{
+  "roles": [],
+  "source_fields": [],
+  "notes": "No job posting data could be identified in the provided JSON. All potential arrays were empty or contained no discernible job role information (e.g., titles, IDs)."
+}

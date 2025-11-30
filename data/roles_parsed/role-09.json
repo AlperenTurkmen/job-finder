@@ -1,0 +1,147 @@
+{
+  "job_id": "nike_software_engineer_iii_infra_engineering_itc_karnataka",
+  "company": "Nike",
+  "role": "Software Engineer III (Core Infrastructure Services)",
+  "location": "Karnataka, India",
+  "seniority": "Mid-level",
+  "responsibilities": [
+    "Write APIs to support rapid change.",
+    "Automate repeatable processes to improve reliability and efficiency.",
+    "Develop integrated solutions enabling infrastructure-as-code across a multi-cloud ecosystem.",
+    "Participate in team/product planning sessions.",
+    "Share ideas for products and services and help refine and prioritise the backlog.",
+    "Partner with Core Engineers, Architecture, Product and Program managers to integrate products into the multi-cloud ecosystem.",
+    "Assess risks and navigate governance policy.",
+    "Work with cloud infrastructure engineers and cloud account holders to deploy product features and codified policies.",
+    "Ensure adherence to company’s security policies and procedures."
+  ],
+  "must_have_requirements": [
+    "Bachelor’s degree in Computer Science or IT related discipline or any combination of equivalent relevant education, training and experience",
+    "Highly skilled at scripting (PowerShell and Python) with a mindset for automation.",
+    "Experience working with DNS/DHCP and IPAM in an enterprise environment",
+    "Working knowledge of the Linux OS.",
+    "Experience working in Azure automation.",
+    "Experience in Infrastructure-as-code tools such as Terraform, CloudFormation, Pulumi, etc.",
+    "Experience working with AWS Route 53.",
+    "Ability to interface effectively with peer groups and experts to evolve Nike’s DDI services.",
+    "Ability to interface effectively with internal Security Governance to ensure adherence to company’s security policies and procedures.",
+    "Must be able to work in a team environment with a “can do” attitude capable of overcoming difficult challenges.",
+    "Excellent communications skills including proven experience effectively communicating technical challenges and solutions to peers, customers and clients.",
+    "Strong working knowledge of networking technologies.",
+    "Knowledge of Agile principles and Sprint Planning, including planning/backlog tools (e.g. JIRA)",
+    "Innovative problem-solving skills, with a track record of developing creative solutions to technical challenges."
+  ],
+  "nice_to_have_requirements": [
+    "Specific BlueCat skills"
+  ],
+  "skills": [
+    {
+      "skill": "PowerShell",
+      "importance": 9,
+      "years_of_experience": 3
+    },
+    {
+      "skill": "Python",
+      "importance": 9,
+      "years_of_experience": 3
+    },
+    {
+      "skill": "DNS",
+      "importance": 7,
+      "years_of_experience": 3
+    },
+    {
+      "skill": "DHCP",
+      "importance": 7,
+      "years_of_experience": 3
+    },
+    {
+      "skill": "IPAM",
+      "importance": 7,
+      "years_of_experience": 3
+    },
+    {
+      "skill": "Linux",
+      "importance": 7,
+      "years_of_experience": 1
+    },
+    {
+      "skill": "Azure",
+      "importance": 7,
+      "years_of_experience": 3
+    },
+    {
+      "skill": "Terraform",
+      "importance": 7,
+      "years_of_experience": 3
+    },
+    {
+      "skill": "CloudFormation",
+      "importance": 7,
+      "years_of_experience": 3
+    },
+    {
+      "skill": "Pulumi",
+      "importance": 7,
+      "years_of_experience": 3
+    },
+    {
+      "skill": "AWS Route 53",
+      "importance": 7,
+      "years_of_experience": 3
+    },
+    {
+      "skill": "Agile",
+      "importance": 4,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "JIRA",
+      "importance": 4,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Networking",
+      "importance": 7,
+      "years_of_experience": 3
+    },
+    {
+      "skill": "CI/CD",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "GitHub",
+      "importance": 4,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Azure DevOps",
+      "importance": 4,
+      "years_of_experience": 0
+    }
+  ],
+  "tech_stack": [
+    "PowerShell",
+    "Python",
+    "DNS",
+    "DHCP",
+    "IPAM",
+    "Linux",
+    "Azure",
+    "Terraform",
+    "CloudFormation",
+    "Pulumi",
+    "AWS Route 53",
+    "JIRA",
+    "Networking",
+    "CI/CD",
+    "GitHub",
+    "Azure DevOps"
+  ],
+  "summary_of_experience": {
+    "years_of_experience_min": 3,
+    "years_of_experience_max": 5
+  },
+  "raw_text": "Software Engineer III - Infra Engineering , ITC\nLocation\n4/F, WeWork, Embassy GolfLinks, Karnataka, Karnataka 560093, India\n\nBecome a Part of the NIKE, Inc. Team\n\nNIKE, Inc. does more than outfit the world’s best athletes. It is a place to explore potential, obliterate boundaries and push out the edges of what can be. The company looks for people who can grow, think, dream and create. Its culture thrives by embracing diversity and rewarding imagination. The brand seeks achievers, leaders and visionaries. At NIKE, Inc. it’s about each person bringing skills and passion to a challenging and constantly evolving game.\n\nSOFTWARE ENGINEER III (Core Infrastructure Services)\nCore Infrastructure Services, Infrastructure Engineering, Global Technology\nWHO WE ARE LOOKING FOR\n\nWe are looking for a Software Engineer with the skills to write API’s, automate repeatable processes, and improve the reliability and efficiency of our critical infrastructure.  This will require the development of integrated solutions that enable infrastructure-as-code across a multi-cloud ecosystem.\n\nThe candidate will have demonstrable experience coding using languages like PowerShell and Python, an understanding DNS, DHCP, and IP Address Management (DDI) architectures and continuous integration & continuous deployment (CI/CD). Candidate should be familiar with cloud technologies.  Understanding and experience with infrastructure-as-code technologies (e.g. Terraform, CloudFormation, CircleCI), version control (e.g. GitHub), and build automation (e.g. Azure DevOps) are desired qualities.\n\nOur preferred candidate is a team-player with a passion for learning and taking on challenges. Attention to detail is a must, as is the ability to collaborate with fellow engineers. You will own pieces of the architecture from design to development to deployment and production.\n\nIn addition to the requirements described above, successful candidates will exhibit the following:\n \n\nBachelor’s degree in Computer Science or IT related discipline or any combination of equivalent relevant education, training and experience\nHighly skilled at scripting (PowerShell and Python) with a mindset for automation.\nExperience working with DNS/DHCP and IPAM in an enterprise environment; specific BlueCat skills a plus.\nWorking knowledge of the Linux OS.\nExperience working in Azure automation.\nExperience in Infrastructure-as-code tools such as Terraform, CloudFormation, Pulumi, etc.\nExperience working with AWS Route 53.\nHighly motivated to learn, grow and collaborate with others on the global team.\nAbility to interface effectively with peer groups and experts to evolve Nike’s DDI services.\nAbility to interface effectively with internal Security Governance to ensure adherence to company’s security policies and procedures.\nMust be able to work in a team environment with a “can do” attitude capable of overcoming difficult challenges.\nExcellent communications skills including proven experience effectively communicating technical challenges and solutions to peers, customers and clients.\nStrong working knowledge of networking technologies.\nKnowledge of Agile principles and Sprint Planning, including planning/backlog tools (e.g. JIRA)\nInnovative problem-solving skills, with a track record of developing creative solutions to technical challenges.\nWHAT YOU WILL WORK ON\n\nYou will join a squad making a difference at Nike through the development of core enterprise infrastructure.  You will create APIs and automation that support rapid change while insuring the correctness and stability of foundational services. \n\nYou will participate in team/product planning sessions, share your ideas for our products and services, and help refine and prioritize our backlog. You will partner with other Core Engineers, Architecture, Product and Program mangers to seamlessly integrate our products and capabilities into our multi-cloud ecosystem, while helping to assess risks and navigate governance policy. You will work closely with cloud infrastructure engineers and cloud account holders to iteratively deploy product features and codified policies that will improve the operating posture of Nike in the cloud.\n\nWHO YOU WILL WORK WITH\n \n\nYou will report to the Director of Core Services and join a global team that supports critical core infrastructure.  Flexibility is key to these partnerships.  You will partner with architects, security experts and interact with engineers in peer squads, but this role will allow you to focus on what you truly enjoy – delivering quality code and software features that make a difference.\n\nAs part of the Nike Engineering Community, you will have the opportunity to participate in community sessions, engineering forums, governance activities, and networks within Nike.\n\nDO NOT EDIT\n \n\nNIKE, Inc. is a growth company that looks for team members to grow with it. Nike offers a generous total rewards package, casual work environment, a diverse and inclusive culture, and an electric atmosphere for professional development. No matter the location, or the role, every Nike employee shares one galvanizing mission: To bring inspiration and innovation to every athlete* in the world.\n\nNIKE, Inc. is an equal opportunity employer. Qualified applicants will receive consideration without regard to race, color, religion, sex, national origin, age, sexual orientation, gender identity, gender expression, veteran status, or disability."
+}

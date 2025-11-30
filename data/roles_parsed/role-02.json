@@ -1,0 +1,208 @@
+{
+  "job_id": "nike_director_software_engineering_karnataka",
+  "company": "Nike",
+  "location": "Karnataka, India",
+  "title": "Director, Software Engineering",
+  "seniority": "Senior",
+  "responsibilities": [
+    "Lead, mentor, and manage multiple engineering squads to deliver software in alignment with roadmaps and industry trends.",
+    "Build a culture of trust and innovation, encouraging teams to explore new technologies.",
+    "Enable continuous transformational changes to accelerate technical maturity and developer productivity.",
+    "Partner with leadership, product managers, architects, and peers to manage priorities and drive alignment on technical decisions.",
+    "Empower the engineering team, remove barriers, and maintain a strong team culture."
+  ],
+  "must_have_requirements": [
+    "15+ years’ experience leading high performing software engineering teams.",
+    "5+ years in a leadership role, providing strategic leadership and direction to multiple engineering squads.",
+    "5+ years’ experience with cloud native technologies or platforms like AWS, Azure or other major cloud providers",
+    "Excellent verbal and written communication skills, both technical and business-facing",
+    "Strength in strategic thinking and translating strategy to measurable objectives",
+    "Track record of inspiring others & positive change in solution design, technical delivery, and process improvement",
+    "Passion for learning new technologies, patterns, and practices",
+    "Experience with Agile software development methodology and DevOps (CICD)",
+    "Experience with deploying, monitoring and tracing solutions using tools like Splunk, SignalFx and New Relic",
+    "Fluent in modern software architectural principles and patterns (e.g. REST, domain-driven design, microservices, etc.)",
+    "Experience with current front-end web application tech (e.g. javascript, CSS, html5, Vue, React/redux)",
+    "Experience with distributed cloud systems tech (e.g. node.js, EC2, Kubernetes, Lambda, Bedrock, DynamoDB, Elasticsearch)",
+    "Experience developing, monitoring and supporting highly available microservices and applications",
+    "Experience working within large organization or scaled Agile methodologies",
+    "Bachelor's degree in Computer Science or Engineering, or equivalent experience"
+  ],
+  "nice_to_have_requirements": [
+    "Experience with implementing or integrating AI, Machine Learning and related data solutions"
+  ],
+  "skills": [
+    {
+      "skill": "Leadership",
+      "importance": 9,
+      "years_of_experience": 5
+    },
+    {
+      "skill": "Software Engineering",
+      "importance": 10,
+      "years_of_experience": 15
+    },
+    {
+      "skill": "Cloud Native Technologies",
+      "importance": 9,
+      "years_of_experience": 5
+    },
+    {
+      "skill": "AWS",
+      "importance": 8,
+      "years_of_experience": 5
+    },
+    {
+      "skill": "Azure",
+      "importance": 8,
+      "years_of_experience": 5
+    },
+    {
+      "skill": "Communication Skills",
+      "importance": 9,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Strategic Thinking",
+      "importance": 8,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Agile",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "DevOps",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "CI/CD",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Splunk",
+      "importance": 6,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "SignalFx",
+      "importance": 6,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "New Relic",
+      "importance": 6,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "REST",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Domain-Driven Design",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Microservices",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "JavaScript",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "CSS",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "HTML5",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Vue",
+      "importance": 6,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "React",
+      "importance": 6,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Redux",
+      "importance": 6,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Node.js",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "EC2",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Kubernetes",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Lambda",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "DynamoDB",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Elasticsearch",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "AI",
+      "importance": 5,
+      "years_of_experience": 0
+    },
+    {
+      "skill": "Machine Learning",
+      "importance": 5,
+      "years_of_experience": 0
+    }
+  ],
+  "tech_stack": [
+    "AWS",
+    "Azure",
+    "JavaScript",
+    "CSS",
+    "HTML5",
+    "Vue",
+    "React",
+    "Redux",
+    "Node.js",
+    "Kubernetes",
+    "DynamoDB",
+    "Elasticsearch",
+    "Splunk",
+    "SignalFx",
+    "New Relic",
+    "AI",
+    "Machine Learning"
+  ],
+  "years_of_experience_min": 15,
+  "years_of_experience_max": 0,
+  "raw_text": "Director, Software Engineering, ITC\n4/F, WeWork, Embassy GolfLinks, Karnataka, Karnataka 560093, India\n\nBecome a Part of the NIKE, Inc. Team\n\nNIKE, Inc. does more than outfit the world’s best athletes. It is a place to explore potential, obliterate boundaries and push out the edges of what can be. The company looks for people who can grow, think, dream and create. Its culture thrives by embracing diversity and rewarding imagination. The brand seeks achievers, leaders and visionaries. At NIKE, Inc. it’s about each person bringing skills and passion to a challenging and constantly evolving game.\n\nThe Consumer Product and Innovation team provides the foundation for how we make Nike product; from innovation, to design, development, line planning, and merchandising. We build the tools and enable Nike to keep pace with consumers and stay ahead of what they want.\n\nWho are we looking for:\n\nWe are looking for a Director of Software Engineering to lead teams that build and develop web experiences, core platform APIs leveraging AI/ML for Nike’s Product Creation function. This role will need to seamlessly partner and collaborate with business teams, other technology leaders, engineers, architects, and product managers to drive rapid value delivery of reusable, well-architected and highly scalable solutions to modernize Nike’s technology landscape. This role will lead, support and develop engineering team members, manage priorities and deliver results across boundaries. The successful candidate is an inclusive and empowering\n\ntechnology leader with a history of building trust, tight partnerships and enabling agile teams to solve technical problems in a product model.\n\nWhat will you do:\n\nThis role will lead, mentor, and manage multiple engineering squads to deliver software in alignment to cross-functional and multi-year roadmaps and modern industry trends. You will build a culture of trust and innovation, pushing our teams to explore new and emerging technologies and how those can help us deliver business value at scale. Enable continuous transformational changes to accelerate Nike’s technical maturity, experimentation, standards, best practices, and developer productivity, while inspiring a rich global engineering culture.\n\nWho will you work with:\n\nAs a leader in this organization, you will also partner closely with leadership, product managers, architects, principal engineers, and peers across Merchandising and Product Creation and Innovation team to manage priorities and drive alignment on technical decisions. Your team will be a high-performing group of software engineers that will be looking to you to empower them, remove barriers, and maintain a strong team culture.\n\nWhat you bring\n\n• 15+ years’ experience leading high performing software engineering teams.\n\n• 5+ years in a leadership role, providing strategic leadership and direction to multiple engineering squads.\n\n• 5+ years’ experience with cloud native technologies or platforms like AWS, Azure or other major cloud providers\n\n• Excellent verbal and written communication skills, both technical and business-facing\n\n• Strength in strategic thinking and translating strategy to measurable objectives\n\n• Track record of inspiring others & positive change in solution design, technical delivery, and process improvement\n\n• Passion for learning new technologies, patterns, and practices\n\n• Experience with Agile software development methodology and DevOps (CICD)\n\n• Experience with deploying, monitoring and tracing solutions using tools like Splunk, SignalFx and New Relic\n\n• Fluent in modern software architectural principles and patterns (e.g. REST, domain-driven design, microservices, etc.)\n\n• Experience with current front-end web application tech (e.g. javascript, CSS, html5, Vue, React/redux)\n\n• Experience with distributed cloud systems tech (e.g. node.js, EC2, Kubernetes, Lambda, Bedrock, DynamoDB, Elasticsearch)\n\n• Experience with implementing or integrating AI, Machine Learning and related data solutions preferred.\n\n• Experience developing, monitoring and supporting highly available microservices and applications\n\n• Experience working within large organization or scaled Agile methodologies\n\n• Bachelor's degree in Computer Science or Engineering, or equivalent experience\n\nNIKE, Inc. is a growth company that looks for team members to grow with it. Nike offers a generous total rewards package, casual work environment, a diverse and inclusive culture, and an electric atmosphere for professional development. No matter the location, or the role, every Nike employee shares one galvanizing mission: To bring inspiration and innovation to every athlete* in the world.\n\nNIKE, Inc. is an equal opportunity employer. Qualified applicants will receive consideration without regard to race, color, religion, sex, national origin, age, sexual orientation, gender identity, gender expression, veteran status, or disability."
+}

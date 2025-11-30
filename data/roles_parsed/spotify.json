@@ -1,0 +1,185 @@
+{
+  "roles": [
+    {
+      "title": "Business Development Representative, Backstage",
+      "department": "Sales",
+      "location": "New York",
+      "id": "business-development-representative-backstage",
+      "url": null,
+      "raw": {
+        "id": "business-development-representative-backstage",
+        "text": "Business Development Representative, Backstage",
+        "category": {
+          "name": "Sales",
+          "slug": "sales"
+        },
+        "locations": [
+          {
+            "location": "New York",
+            "slug": "new-york",
+            "num_jobs": 33
+          }
+        ]
+      }
+    },
+    {
+      "title": "Senior Visual Designer, Design Systems",
+      "department": "Design",
+      "location": "London",
+      "id": "senior-visual-designer-design-systems",
+      "url": null,
+      "raw": {
+        "id": "senior-visual-designer-design-systems",
+        "text": "Senior Visual Designer, Design Systems",
+        "category": {
+          "name": "Design",
+          "slug": "design"
+        },
+        "locations": [
+          {
+            "location": "London",
+            "slug": "london",
+            "num_jobs": 34
+          }
+        ]
+      }
+    },
+    {
+      "title": "Sales Trainer, EMEA, London",
+      "department": "Sales",
+      "location": "London",
+      "id": "sales-trainer-emea-london",
+      "url": null,
+      "raw": {
+        "id": "sales-trainer-emea-london",
+        "text": "Sales Trainer, EMEA, London",
+        "category": {
+          "name": "Sales",
+          "slug": "sales"
+        },
+        "locations": [
+          {
+            "location": "London",
+            "slug": "london",
+            "num_jobs": 34
+          }
+        ]
+      }
+    },
+    {
+      "title": "Fullstack Engineer, User Platform",
+      "department": "Engineering",
+      "location": "London",
+      "id": "fullstack-engineer-user-platform",
+      "url": null,
+      "raw": {
+        "id": "fullstack-engineer-user-platform",
+        "text": "Fullstack Engineer, User Platform",
+        "category": {
+          "name": "Engineering",
+          "slug": "engineering"
+        },
+        "locations": [
+          {
+            "location": "London",
+            "slug": "london",
+            "num_jobs": 34
+          }
+        ]
+      }
+    },
+    {
+      "title": "Data Engineer, Platform Central Data",
+      "department": "Engineering",
+      "location": "Toronto",
+      "id": "data-engineer-platform-central-data",
+      "url": null,
+      "raw": {
+        "id": "data-engineer-platform-central-data",
+        "text": "Data Engineer, Platform Central Data",
+        "category": {
+          "name": "Engineering",
+          "slug": "engineering"
+        },
+        "locations": [
+          {
+            "location": "Toronto",
+            "slug": "toronto",
+            "num_jobs": 5
+          }
+        ]
+      }
+    },
+    {
+      "title": "Associate Manager, Music Publishing Operations US",
+      "department": "Support & Operations",
+      "location": "New York",
+      "id": "associate-manager-music-publishing-operations",
+      "url": null,
+      "raw": {
+        "id": "associate-manager-music-publishing-operations",
+        "category": {
+          "name": "Support & Operations",
+          "slug": "support-operations"
+        },
+        "text": "Associate Manager, Music Publishing Operations US",
+        "locations": [
+          {
+            "location": "New York",
+            "slug": "new-york",
+            "num_jobs": 33
+          }
+        ]
+      }
+    },
+    {
+      "title": "Senior Machine Learning Engineer, Podcast",
+      "department": "Engineering",
+      "location": "New York",
+      "id": "senior-machine-learning-engineer-podcast",
+      "url": null,
+      "raw": {
+        "id": "senior-machine-learning-engineer-podcast",
+        "category": {
+          "name": "Engineering",
+          "slug": "engineering"
+        },
+        "text": "Senior Machine Learning Engineer, Podcast",
+        "locations": [
+          {
+            "location": "New York",
+            "slug": "new-york",
+            "num_jobs": 33
+          }
+        ]
+      }
+    },
+    {
+      "title": "Data Engineer, Data Infrastructure",
+      "department": "Engineering",
+      "location": "Toronto",
+      "id": "data-engineer-data-infrastructure",
+      "url": null,
+      "raw": {
+        "id": "data-engineer-data-infrastructure",
+        "category": {
+          "name": "Engineering",
+          "slug": "engineering"
+        },
+        "text": "Data Engineer, Data Infrastructure",
+        "locations": [
+          {
+            "location": "Toronto",
+            "slug": "toronto",
+            "num_jobs": 5
+          }
+        ]
+      }
+    }
+  ],
+  "source_fields": [
+    "/pageProps/frontpageData/latest_jobs",
+    "/pageProps/frontpageData/featured_jobs"
+  ],
+  "notes": "Combined and deduplicated job postings from 'latest_jobs' and 'featured_jobs'. URL, description, and compensation fields were not explicitly present in the source data for individual job postings."
+}

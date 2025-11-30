@@ -1,0 +1,73 @@
+{
+  "job_id": "health_incubation_machine_learning_data_scientist_cambridge",
+  "company": "Health Incubation",
+  "role": "Machine Learning Data Scientist",
+  "location": "Cambridge, England, United Kingdom",
+  "seniority": "Mid-level",
+  "responsibilities": [
+    "Apply knowledge of AI/ML, algorithms, data science, statistical analysis, and human physiology to explore novel feature concepts.",
+    "Build algorithms and ML models to support feature concepts.",
+    "Collaborate with ML Scientists, Data/Integrity Engineers, Health Studies, Hardware, Clinical, and Regulatory teams.",
+    "Define specifications for new features.",
+    "Develop instrumentation and experiments to analyse large datasets.",
+    "Assist with ML development.",
+    "Perform failure analysis."
+  ],
+  "must_have_requirements": [
+    "Masters in BME/CS/CE/EECS/Math/Physics or equivalent experience",
+    "Experience with algorithms, statistical analysis, signal processing, and scientific reasoning",
+    "Experience creating algorithms pipelines and analysing human signals data",
+    "Experiences designing and analysing human research studies"
+  ],
+  "nice_to_have_requirements": [
+    "Ph.D in BME/CS/CE/EECS/Math/Physics or equivalent experience",
+    "Experience with machine learning techniques and tools",
+    "Experience with large-scale data solutions with distributed data processing frameworks (e.g. MapReduce, Spark)",
+    "Experience with failure analysis and root cause analysis techniques such as hypothesis testing and experiment design",
+    "Experience in designing specifications, requirements and evaluation",
+    "Excellent communication skills, comfortable in a collaborative and innovative development environment"
+  ],
+  "skills": [
+    {
+      "skill": "AI/ML",
+      "importance": 10
+    },
+    {
+      "skill": "Algorithms",
+      "importance": 9
+    },
+    {
+      "skill": "Data Science",
+      "importance": 9
+    },
+    {
+      "skill": "Statistical Analysis",
+      "importance": 9
+    },
+    {
+      "skill": "Signal Processing",
+      "importance": 7
+    },
+    {
+      "skill": "MapReduce",
+      "importance": 5
+    },
+    {
+      "skill": "Spark",
+      "importance": 5
+    },
+    {
+      "skill": "Communication Skills",
+      "importance": 6
+    }
+  ],
+  "tech_stack": [
+    "AI/ML",
+    "MapReduce",
+    "Spark"
+  ],
+  "years_of_experience_min": 0,
+  "years_of_experience_max": 0,
+  "years_of_experience_avg": 0,
+  "raw_text": "Machine Learning Data Scientist – Health Incubation\nCambridge, England, United Kingdom\nHardware\n\nSummary\nPosted:\n18 Nov 2025\nRole Number:\n200632808-1251\n\"I believe, if you zoom out into the future, and you look back, and you ask the question, 'What\nwas Appleʼs greatest contribution to mankind?' It will be about health.” – Tim Cook, 2019\n\nWould you like to be a critical part of an engineering team building next-generation features to\nimprove health using sensing technologies?\n\nThe Health Incubation team builds outstanding technologies to support our users in living their\nhealthiest, happiest lives by providing them with objective, accurate, and timely information\nabout their health and well-being! As part of the larger Sensor SW & Prototyping team, we take\na multimodal approach to health sensing, using a variety of sensors across HW platforms, such\nas camera, PPG, inertial motion, temperature.\nDescription\nIn this role, you will be applying your in-depth knowledge of AI/ML, algorithms, data science,\nstatistical analysis, and human physiology to explore novel feature concepts and build\nalgorithms and ML models to support them. You will be working with other ML Scientists,\nData/Integrity Engineers, Health Studies, Hardware, Clinical, and Regulatory teams to define\nspecifications, develop instrumentation and experiments to analyze large datasets and assist\nwith ML development, and perform failure analysis.\nMinimum Qualifications\nMasters in BME/CS/CE/EECS/Math/Physics or equivalent experience\nExperience with algorithms, statistical analysis, signal processing, and scientific reasoning\nExperience creating algorithms pipelines and analyzing human signals data\nExperiences designing and analyzing human research studies\nPreferred Qualifications\nPh.D in BME/CS/CE/EECS/Math/Physics or equivalent experience\nExperience with machine learning techniques and tools\nExperience with large-scale data solutions with distributed data processing frameworks (e.g.\nMapReduce, Spark)\nExperience with failure analysis and root cause analysis techniques such as hypothesis\ntesting and experiment design\nExperience in designing specifications, requirements and evaluation\nExcellent communication skills, comfortable in a collaborative and innovative development\nenvironment"
+}

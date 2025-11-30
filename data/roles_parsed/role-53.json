@@ -1,0 +1,124 @@
+{
+  "job_id": "spotify_data_engineer_toronto",
+  "company": "Spotify",
+  "role": "Data Engineer",
+  "location": "Toronto",
+  "seniority": "Mid-level",
+  "responsibilities": [
+    "Build and operate reliable data pipelines and products using SQL and Python or Scala.",
+    "Translate complex platform and developer experience use cases into trustworthy datasets, metrics, and ML and AI insights workflows.",
+    "Improve data quality, performance, and cost efficiency across existing pipelines.",
+    "Collaborate with Product, Engineering, and Data Science partners to deliver end to end outcomes.",
+    "Contribute to agile rituals and take part in a fair support rotation for key pipelines and datasets."
+  ],
+  "must_have_requirements": [
+    "3+ years building production quality data solutions with complex domain logic.",
+    "Strong SQL skills.",
+    "Experience with a cloud data warehouse (e.g., BigQuery, Snowflake, Redshift, or Databricks SQL).",
+    "Experience with distributed processing frameworks (e.g., Apache Spark or Scio).",
+    "Comfortable with Python or Scala and transformation frameworks (e.g., dbt).",
+    "Experience with a workflow orchestrator (e.g., Airflow, Dagster, Prefect, or Flyte).",
+    "Clear communication skills with technical and non-technical partners."
+  ],
+  "nice_to_have_requirements": [
+    "Experience in platform and developer productivity, experimentation, or ML and AI platform metrics."
+  ],
+  "skills": [
+    {
+      "name": "SQL",
+      "importance": 9,
+      "years_of_experience": 3
+    },
+    {
+      "name": "Python",
+      "importance": 8,
+      "years_of_experience": 3
+    },
+    {
+      "name": "Scala",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "name": "Apache Spark",
+      "importance": 8,
+      "years_of_experience": 0
+    },
+    {
+      "name": "Scio",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "name": "BigQuery",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "name": "Snowflake",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "name": "Redshift",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "name": "Databricks SQL",
+      "importance": 7,
+      "years_of_experience": 0
+    },
+    {
+      "name": "dbt",
+      "importance": 6,
+      "years_of_experience": 0
+    },
+    {
+      "name": "Airflow",
+      "importance": 6,
+      "years_of_experience": 0
+    },
+    {
+      "name": "Dagster",
+      "importance": 6,
+      "years_of_experience": 0
+    },
+    {
+      "name": "Prefect",
+      "importance": 6,
+      "years_of_experience": 0
+    },
+    {
+      "name": "Flyte",
+      "importance": 6,
+      "years_of_experience": 0
+    },
+    {
+      "name": "Communication",
+      "importance": 7,
+      "years_of_experience": 0
+    }
+  ],
+  "tech_stack": [
+    "SQL",
+    "Python",
+    "Scala",
+    "Apache Spark",
+    "Scio",
+    "BigQuery",
+    "Snowflake",
+    "Redshift",
+    "Databricks SQL",
+    "dbt",
+    "Airflow",
+    "Dagster",
+    "Prefect",
+    "Flyte"
+  ],
+  "experience_summary": {
+    "years_of_experience_min": 3,
+    "years_of_experience_max": 0
+  },
+  "raw_text": "Data Engineer\nPlatform Central Data\n\nToronto\nWe’re looking for a mid-level Data Engineer to build data-driven engineering initiatives within Spotify’s Platform Mission on the Platform Central Data (PCD) squad, a mixed Data Engineering/Analytics Engineering team. You’ll design and operate reliable datasets and workflow automations that power developer productivity, platform health, leadership decision-making, and ML and AI Platform Metrics. Working shoulder to shoulder with our AE teammates, plus Product and Platform partners, you’ll turn complex platform signals into trusted, actionable data that helps Spotify ship faster and safer.\n\nWhat You'll Do\n\nBuild and operate reliable, well-modeled data pipelines and products using SQL and Python or Scala, with strong testing, observability, and CI/CD. For distributed processing you will use Apache Spark or Scio, or equivalent technologies like Apache Beam or Flink.\nPartner in a mixed DE and AE squad to translate complex platform and developer experience use cases into trustworthy datasets, metrics, and ML and AI insights workflows.\nImprove data quality, performance, and cost efficiency across existing pipelines, including troubleshooting, backfills, and iterative hardening.\nCollaborate with Product, Engineering, and Data Science partners to deliver end to end outcomes, from scoping and modeling to rollout and documentation.\nContribute to agile rituals and take part in a fair support rotation for key pipelines and datasets.\n\nWho You Are\n\nYou have 3+ years building production quality data solutions with complex domain logic, and you use strong SQL to answer questions and debug problems.\nYou have experience with a cloud data warehouse, for example BigQuery, Snowflake, Redshift, or Databricks SQL, and with distributed processing frameworks such as Apache Spark or Scio (Scala for Apache Beam), or equivalents like Apache Beam or Flink.\nYou are comfortable with Python or Scala and with one or more transformation frameworks, for example dbt or equivalent SQL based transformations.\nYou have used a workflow orchestrator such as Airflow, Dagster, Prefect, or Flyte, and you care about reliability, monitoring, and testability.\nYou communicate clearly with both technical and non technical partners, and you can prioritize and deliver in a changing environment.\nExperience in platform and developer productivity, experimentation, or ML and AI platform metrics is a plus.\n\nWhere You'll Be\n\nThis role is based in Toronto.\nWe offer you the flexibility to work where you work best! There will be some in person meetings, but still allows for flexibility to work from home."
+}

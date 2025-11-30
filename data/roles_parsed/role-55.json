@@ -1,0 +1,110 @@
+{
+  "job_id": "podcast_senior_machine_learning_engineer_new_york",
+  "company": "Podcast",
+  "role": "Senior Machine Learning Engineer",
+  "location": "New York",
+  "seniority": "Senior",
+  "responsibilities": [
+    "Tech lead ML initiatives for podcast and video features, defining and maintaining a clear roadmap.",
+    "Advise leadership on ML initiatives, guiding prioritisation and shaping decisions on ML feature development and rollout.",
+    "Serve as the liaison for ML efforts within the Podcast mission, ensuring understanding of existing systems and facilitating seamless integration.",
+    "Mentor engineers in ML practices to level up Podcast Mission’s capabilities.",
+    "Collaborate with backend, data, and client engineers, PMs, and designers to ship features impacting podcast engagement metrics.",
+    "Prototype novel agentic workflows and contribute to experimentation around Creator-Consumer interactivity.",
+    "Own and evolve ML model lifecycle: data annotation, data pipeline construction, feature engineering, model training, deployment, and monitoring.",
+    "Design, develop, fine-tune, and deploy machine learning systems that power podcast growth.",
+    "Optimise models for scale and reliability using modern ML infra tools.",
+    "Implement A/B tests and contribute to continuous model evaluation and improvement loops.",
+    "Participate in Spotify’s ML community: share findings, explore new tools and paradigms, and contribute to scaling ML standards."
+  ],
+  "must_have_requirements": [
+    "5+ years of professional experience in machine learning, with expertise in building and productionize ML systems at scale.",
+    "Fluent in Python.",
+    "Experience with large-scale data systems and owning end-to-end ML workflows (data ingestion to serving).",
+    "Hands-on experience with cloud platforms like GCP or AWS, and with ML infra tools such as Ray, Apache Beam, or Airflow.",
+    "Experience, or strong interest, in agent-based systems and LLM integrations.",
+    "Thrive in agile environments, care deeply about product impact, and bring a user-centered outlook to ML development."
+  ],
+  "nice_to_have_requirements": [
+    "Experience with content recommendation, interactive media formats, or real-time systems.",
+    "Experience leading initiatives within an organisation, expertly balancing trade-offs in large-scale systems, engaging with collaborators, and crafting clear, actionable roadmaps.",
+    "Experience with PyTorch or TensorFlow."
+  ],
+  "skills": [
+    {
+      "skill": "Machine Learning",
+      "importance": 10
+    },
+    {
+      "skill": "Python",
+      "importance": 10
+    },
+    {
+      "skill": "PyTorch",
+      "importance": 7
+    },
+    {
+      "skill": "TensorFlow",
+      "importance": 7
+    },
+    {
+      "skill": "GCP",
+      "importance": 7
+    },
+    {
+      "skill": "AWS",
+      "importance": 7
+    },
+    {
+      "skill": "Ray",
+      "importance": 7
+    },
+    {
+      "skill": "Apache Beam",
+      "importance": 7
+    },
+    {
+      "skill": "Airflow",
+      "importance": 7
+    },
+    {
+      "skill": "A/B Testing",
+      "importance": 7
+    },
+    {
+      "skill": "Data Annotation",
+      "importance": 7
+    },
+    {
+      "skill": "Data Pipeline",
+      "importance": 7
+    },
+    {
+      "skill": "Feature Engineering",
+      "importance": 7
+    },
+    {
+      "skill": "LLM",
+      "importance": 7
+    },
+    {
+      "skill": "Agile",
+      "importance": 7
+    }
+  ],
+  "years_of_experience": {
+    "minimum": 5,
+    "maximum": 0
+  },
+  "tech_stack": [
+    "Python",
+    "PyTorch",
+    "TensorFlow",
+    "GCP",
+    "AWS",
+    "Ray",
+    "Apache Beam",
+    "Airflow"
+  ],
+  "raw_text": "Senior Machine Learning Engineer\nPodcast\n\nNew York\nWe’re part of Spotify’s Podcast Mission, focused on giving podcast creators tools to grow their audiences and connect more deeply with listeners. The team is building the systems that power interactive podcast experiences, enabling everything from polls, comments, and Q&A to emerging agent-driven features.\nAs a Senior Machine Learning Engineer, from integrating foundational models to crafting feedback loops for real-time interactivity, you'll shape how creators and consumers connect in more dynamic and intelligent ways. This is a product-oriented role where you’ll spend time understanding roadmaps and advising leadership on the trade-offs of implementing ML solutions. You’ll also play a key role in build-vs-buy decisions, assessing the engineering effort required, and connecting with ML teams across Spotify to find opportunities for collaboration with the Podcast mission.\n\nWhat You'll Do\n\nTech lead ML initiatives for podcast and video features while helping define and maintain a clear roadmap for the Spotify for Creators and Megaphone apps.\nAdvise leadership on ML initiatives, guiding prioritization and shaping decisions on the development and rollout of ML features.\nServe as the liaison ML efforts within the Podcast mission and ML engineers/PMs across Spotify, ensuring deep understanding of existing systems and facilitating their seamless integration into the Spotify for Creators product.\nMentor engineers in ML practices to level up Podcast Mission’s capabilities in the space.\nWork closely with backend, data, and client engineers as well as PMs and designers to ship features that directly impact podcast engagement metrics.\nPrototype novel agentic workflows (e.g., multi-component pipelines or tool-using agents) and contribute to experimentation around Creator-Consumer interactivity.\nOwn and evolve ML model lifecycle: data annotation, data pipeline construction, feature engineering, model training, deployment, and monitoring.\nDesign, develop, fine-tune, and deploy machine learning systems that power podcast growth.\nOptimize models for scale and reliability using modern ML infra tools like Ray, Apache Beam, and Google Cloud Platform (GCP).\nLead with an experimentation attitude. Implement A/B tests and contribute to continuous model evaluation and improvement loops to productionize solutions at scale for our millions of active podcast users.\nParticipate in Spotify’s ML community: share findings, explore new tools and paradigms, and contribute to scaling ML standards across the company.\n\nWho You Are\n\nYou have 5+ years of professional experience in machine learning, with expertise in building and productionize ML systems at scale.\nYou’re fluent in Python; experience with PyTorch or TensorFlow is a strong plus.\nYou’ve worked with large-scale data systems and owning end-to-end ML workflows (data ingestion to serving).\nYou have hands-on experience with cloud platforms like GCP or AWS, and with ML infra tools such as Ray, Apache Beam, or Airflow.\nYou have experience, or strong interest, in agent-based systems and LLM integrations.\nYou thrive in agile environments, care deeply about product impact, and bring a user-centered outlook to ML development.\nBonus: Experience with content recommendation, interactive media formats, or real-time systems.\nBonus: You’ve led initiatives within an organization, expertly balancing trade-offs in large-scale systems, engaging with collaborators, and crafting clear, actionable roadmaps.\n\nWhere You'll Be\n\nWe offer you the flexibility to work where you work best! For this role, you can be within the North Americas region as long as we have a work location.\nThis team operates within the Eastern Standard time zone for collaboration.\n\nThe United States base range for this position is $ 176,166 - $ 251,666, plus equity. The benefits available for this position include health insurance, six month paid parental leave, 401(k) retirement plan, a monthly meal allowance, 23 paid days off, 13 paid flexible holidays. These ranges may be modified in the future."
+}
