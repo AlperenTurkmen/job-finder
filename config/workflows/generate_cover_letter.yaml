@@ -1,0 +1,43 @@
+version: "1.0"
+name: generate_cover_letter
+model: gemini-2.5-pro
+inputs:
+  role_file: data/role.json
+  uploaded_cv: data/user_uploaded_cv.pdf
+  writing_samples: data/writing_samples/*.md
+steps:
+  - id: load_profile
+    description: Aggregate qualifications, skills, experience, projects, and CV variants.
+    agent: agents.common.profile_agent.ProfileAgent
+    output: profile_package
+  - id: analyze_role
+    description: Convert role.json into clustered role summary and role vector.
+    agent: agents.common.role_analysis_agent.RoleAnalysisAgent
+    requires: [role_file, load_profile]
+    output: role_summary
+  - id: extract_style
+    description: Build user style fingerprint for tone-aware drafting.
+    agent: agents.cover_letter.style_extractor_agent.StyleExtractorAgent
+    requires: [writing_samples]
+    output: style_profile
+  - id: select_cv
+    description: Choose highest scoring CV version based on role vector similarity.
+    agent: agents.common.orchestrator_agent.OrchestratorAgent
+    action: select_cv_only
+    requires: [profile_package, role_summary]
+    output: selected_cv
+  - id: initial_cover_letter
+    description: Generate initial cover letter draft combining all context.
+    agent: agents.cover_letter.cover_letter_generator_agent.CoverLetterGeneratorAgent
+    requires: [role_summary, profile_package, style_profile, selected_cv]
+    output: cover_letter
+  - id: iterative_loop
+    description: Kick off HR feedback loop until score target reached.
+    workflow: iterative_review_loop.yaml
+    requires: [cover_letter, selected_cv]
+outputs:
+  - data/output/final_cover_letter.md
+  - data/output/hr_report.json
+  - data/output/revision_history.md
+  - data/output/selected_cv.json
+  - data/output/role_fit_score.json

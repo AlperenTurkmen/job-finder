@@ -14,20 +14,15 @@ from pathlib import Path
 from typing import Any, Dict, List, Sequence, Tuple
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-JOB_ENGINE_ROOT = PROJECT_ROOT / "job-application-engine"
-JOB_ENGINE_AGENTS = JOB_ENGINE_ROOT / "agents"
 
-# Ensure both the workspace root (for scraping agents) and the job-application-engine
-# (for cover letter + auto-apply agents) are importable.
+# Ensure project root is in path for imports
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
-if str(JOB_ENGINE_AGENTS) not in sys.path:
-    sys.path.insert(0, str(JOB_ENGINE_AGENTS))
 
 from typing import Tuple
 
-from logging_utils import configure_logging, get_logger  # noqa: E402
-from agents.job_url_extractor_agent import extract_all_job_urls  # noqa: E402
+from utils.logging import configure_logging, get_logger  # noqa: E402
+from agents.discovery.job_url_extractor_agent import extract_all_job_urls  # noqa: E402
 from pipeline.scrape_and_normalize import run_full_pipeline  # noqa: E402
 
 logger = get_logger(__name__)
@@ -36,29 +31,27 @@ DEFAULT_COMPANIES_CSV = PROJECT_ROOT / "data" / "companies" / "example_companies
 DEFAULT_JOB_URLS_CSV = PROJECT_ROOT / "data" / "job_urls" / "sample_urls.csv"
 DEFAULT_INTERMEDIATE_CSV = PROJECT_ROOT / "data" / "roles_for_llm" / "sample_urls_scraped.csv"
 DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "data" / "roles"
-JOB_ENGINE_INPUT_DIR = JOB_ENGINE_ROOT / "input"
-JOB_ENGINE_OUTPUT_DIR = JOB_ENGINE_ROOT / "output"
-DEFAULT_PROFILE_JSON = JOB_ENGINE_INPUT_DIR / "profile.json"
-DEFAULT_CV_PDF = JOB_ENGINE_INPUT_DIR / "user_uploaded_cv.pdf"
-ROLE_JSON_PATH = JOB_ENGINE_INPUT_DIR / "role.json"
-ALL_JOBS_PATH = JOB_ENGINE_INPUT_DIR / "all_jobs.json"
-COVER_LETTER_PATH = JOB_ENGINE_OUTPUT_DIR / "final_cover_letter.md"
-SUMMARY_PATH = PROJECT_ROOT / "results.json"
+DEFAULT_PROFILE_JSON = PROJECT_ROOT / "data" / "profile.json"
+DEFAULT_CV_PDF = PROJECT_ROOT / "data" / "user_uploaded_cv.pdf"
+ROLE_JSON_PATH = PROJECT_ROOT / "data" / "role.json"
+ALL_JOBS_PATH = PROJECT_ROOT / "data" / "output" / "all_jobs.json"
+COVER_LETTER_PATH = PROJECT_ROOT / "data" / "output" / "final_cover_letter.md"
+SUMMARY_PATH = PROJECT_ROOT / "data" / "output" / "results.json"
 
 RoleEvaluationEngineCls = None
 OrchestratorAgentCls = None
 AutoApplyOrchestratorCls = None
 
 
-def load_job_engine_components() -> Tuple[Any, Any, Any]:
-    """Import job-application-engine components lazily to avoid path issues."""
+def load_pipeline_components() -> Tuple[Any, Any, Any]:
+    """Import agent components lazily to avoid circular imports."""
     global RoleEvaluationEngineCls, OrchestratorAgentCls, AutoApplyOrchestratorCls
     if RoleEvaluationEngineCls is None:
-        RoleEvaluationEngineCls = importlib.import_module("role_evaluation_engine").RoleEvaluationEngine
+        RoleEvaluationEngineCls = importlib.import_module("agents.scoring.role_evaluation_engine").RoleEvaluationEngine
     if OrchestratorAgentCls is None:
-        OrchestratorAgentCls = importlib.import_module("orchestrator_agent").OrchestratorAgent
+        OrchestratorAgentCls = importlib.import_module("agents.common.orchestrator_agent").OrchestratorAgent
     if AutoApplyOrchestratorCls is None:
-        AutoApplyOrchestratorCls = importlib.import_module("auto_apply.orchestrator").AutoApplyOrchestrator
+        AutoApplyOrchestratorCls = importlib.import_module("agents.auto_apply.orchestrator").AutoApplyOrchestrator
     return RoleEvaluationEngineCls, OrchestratorAgentCls, AutoApplyOrchestratorCls
 
 
@@ -96,7 +89,7 @@ def collect_success_urls(intermediate_csv: Path) -> List[str]:
 
 def normalize_payload(payload: Dict[str, Any], job_url: str | None) -> tuple[Dict[str, Any], Dict[str, Any], str]:
     company = str(payload.get("company_name") or payload.get("company") or payload.get("employer") or "Unknown Company").strip()
-    title = str(payload.get("job_title") or payload.get("role_name") or payload.get("title") or "Unknown Role").strip()
+    title = str(payload.get("role") or payload.get("job_title") or payload.get("role_name") or payload.get("title") or "Unknown Role").strip()
     location = str(
         payload.get("location")
         or ", ".join([loc for loc in payload.get("location_names", []) if isinstance(loc, str) and loc.strip()])
@@ -274,7 +267,7 @@ async def run_pipeline(args: argparse.Namespace) -> Dict[str, Any]:
     logger.info("Starting full apply pipeline")
     logger.info("=" * 80)
 
-    # Step 1: Extract job URLs
+    # Step 1: Extract job URLs (if companies CSV provided)
     extraction_results = await extract_all_job_urls(
         args.companies_csv,
         args.job_urls_csv,
@@ -284,7 +277,16 @@ async def run_pipeline(args: argparse.Namespace) -> Dict[str, Any]:
     )
     success_companies = sum(1 for result in extraction_results if result.status == "success" and result.job_urls)
     total_urls = sum(len(result.job_urls) for result in extraction_results)
-    if success_companies == 0 or total_urls == 0:
+    
+    # Check if we have existing URLs in the CSV even if no new extraction
+    existing_urls_count = 0
+    if args.job_urls_csv.exists():
+        with args.job_urls_csv.open(newline="", encoding="utf-8") as f:
+            import csv as csv_module
+            reader = csv_module.DictReader(f)
+            existing_urls_count = sum(1 for row in reader if row.get("url", "").strip().startswith("http"))
+    
+    if (success_companies == 0 or total_urls == 0) and existing_urls_count == 0:
         raise RuntimeError("Job URL extraction produced no usable URLs")
 
     # Step 2: Scrape + normalize
@@ -312,8 +314,8 @@ async def run_pipeline(args: argparse.Namespace) -> Dict[str, Any]:
     write_all_jobs(records, ALL_JOBS_PATH)
 
     # Step 3: Score roles
-    RoleEvaluationEngineCls, OrchestratorAgentCls, AutoApplyOrchestratorCls = load_job_engine_components()
-    evaluation_engine = RoleEvaluationEngineCls(JOB_ENGINE_ROOT)
+    RoleEvaluationEngineCls, OrchestratorAgentCls, AutoApplyOrchestratorCls = load_pipeline_components()
+    evaluation_engine = RoleEvaluationEngineCls(PROJECT_ROOT)
     evaluation_results = evaluation_engine.run()
     if not evaluation_results:
         raise RuntimeError("Role evaluation returned no results")
@@ -325,8 +327,8 @@ async def run_pipeline(args: argparse.Namespace) -> Dict[str, Any]:
         logger.info("%d roles met the threshold", len(eligible_jobs))
 
     # Step 4: Cover letter + auto apply
-    orchestrator = OrchestratorAgentCls(JOB_ENGINE_ROOT)
-    auto_apply = AutoApplyOrchestratorCls(JOB_ENGINE_ROOT)
+    orchestrator = OrchestratorAgentCls(PROJECT_ROOT)
+    auto_apply = AutoApplyOrchestratorCls(PROJECT_ROOT)
     applications: List[Dict[str, Any]] = []
     limit = args.max_applications or len(eligible_jobs)
     for record, score_info in eligible_jobs[:limit]:

@@ -2,7 +2,7 @@
 
 This script:
 1. Reads a CSV file containing job URLs (with a 'url' column)
-2. Scrapes each URL using the job scraper agent to extract raw text
+2. Scrapes each URL using Playwright to extract raw text
 3. Creates an intermediate CSV with 'raw_text' column
 4. Passes that to the role_normaliser_agent to convert to structured JSON
 """
@@ -21,14 +21,82 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from agents.role_normaliser_agent import run_agent as run_normaliser, ConversionResult
-from job_scraper_agent import JobScraperAgent, BrowserMCPError, BrowserMCPTimeoutError, URLValidationError
-from browser_client import _fetch_with_retry, BrowserMCPConfig
-from content_cleaner import clean_job_content
-from logging_utils import configure_logging, get_logger
+from agents.discovery.role_normaliser_agent import run_agent as run_normaliser, ConversionResult
+from utils.content_cleaner import clean_job_content
+from utils.logging import configure_logging, get_logger
 
 configure_logging()
 logger = get_logger(__name__)
+
+
+class ScraperError(Exception):
+    """Base error for scraping failures."""
+
+
+class ScraperTimeoutError(ScraperError):
+    """Raised when page load times out."""
+
+
+async def scrape_with_playwright(url: str, timeout: float = 30.0) -> str:
+    """Scrape a URL using Playwright and return the text content.
+    
+    Args:
+        url: The URL to scrape
+        timeout: Timeout in seconds for page load
+        
+    Returns:
+        The text content of the page
+    """
+    from playwright.async_api import async_playwright
+    
+    logger.info("Playwright navigate -> %s", url)
+    
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True)
+        try:
+            page = await browser.new_page()
+            
+            await page.goto(url, wait_until="networkidle", timeout=int(timeout * 1000))
+            
+            # Try to find job-specific content sections first
+            job_content = None
+            job_selectors = [
+                "main",
+                "article",
+                "[role='main']",
+                ".job-description",
+                ".job-details",
+                ".job-content",
+                "#job-description",
+                "#job-details",
+                ".posting-description",
+                ".job-posting",
+            ]
+            
+            for selector in job_selectors:
+                try:
+                    element = await page.query_selector(selector)
+                    if element:
+                        job_content = await element.inner_text()
+                        if job_content and len(job_content.strip()) > 100:
+                            logger.debug("Found job content using selector: %s", selector)
+                            break
+                except Exception:
+                    continue
+            
+            # Fallback to body if no specific content found
+            if not job_content:
+                logger.debug("No specific job content selector found, using body")
+                job_content = await page.inner_text("body")
+            
+            logger.info("Successfully retrieved %d characters", len(job_content))
+            return job_content
+            
+        except Exception as exc:
+            logger.error("Playwright navigation error: %s", exc)
+            raise ScraperTimeoutError(f"Failed to load {url}: {exc}") from exc
+        finally:
+            await browser.close()
 
 
 DEFAULT_INPUT_DIR = PROJECT_ROOT / "data" / "job_urls"
@@ -90,15 +158,8 @@ async def scrape_urls_to_csv(
     successful = 0
     failed = 0
     
-    # Configure browser
-    config = BrowserMCPConfig.from_env()
-    if timeout is not None:
-        config = BrowserMCPConfig(
-            endpoint=config.endpoint,
-            api_key=config.api_key,
-            project=config.project,
-            timeout=timeout,
-        )
+    # Use provided timeout or default
+    scrape_timeout = timeout if timeout is not None else 30.0
     
     with output_csv.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=["url", "raw_text", "status"])
@@ -108,8 +169,8 @@ async def scrape_urls_to_csv(
             logger.info(f"[{idx}/{len(urls)}] Scraping {url}")
             
             try:
-                # Scrape the URL using async browser client
-                raw_content = await _fetch_with_retry(url, config)
+                # Scrape the URL using Playwright
+                raw_content = await scrape_with_playwright(url, timeout=scrape_timeout)
                 
                 # Optionally clean with LLM
                 if clean_with_llm:
@@ -126,7 +187,7 @@ async def scrape_urls_to_csv(
                 successful += 1
                 logger.info(f"[{idx}/{len(urls)}] Successfully scraped {len(raw_text)} characters")
                 
-            except (BrowserMCPTimeoutError, BrowserMCPError) as exc:
+            except ScraperError as exc:
                 logger.error(f"[{idx}/{len(urls)}] Failed to scrape {url}: {exc}")
                 writer.writerow({
                     "url": url,

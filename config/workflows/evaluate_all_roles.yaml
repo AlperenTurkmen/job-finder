@@ -1,0 +1,40 @@
+version: "1.0"
+name: evaluate_all_roles
+model: gemini-2.5-flash
+inputs:
+  all_jobs: data/output/all_jobs.json
+  profile: data/profile.json
+  preferences: data/preferences.json
+steps:
+  - id: validate_roles
+    description: Ensure every role object includes the required metadata and canonical types.
+    agent: agents.scoring.role_validation_agent.RoleValidationAgent
+    foreach: ${inputs.all_jobs}
+    output: validation_results
+  - id: compute_for_me
+    description: Calculate preference alignment scores using profile.json + preferences.json.
+    agent: agents.scoring.for_me_score_agent.ForMeScoreAgent
+    requires: [profile, preferences, validate_roles]
+    foreach: ${inputs.all_jobs}
+    output: for_me_scores
+  - id: compute_for_them
+    description: Score employer fit using experience, skills, and domain alignment.
+    agent: agents.scoring.for_them_score_agent.ForThemScoreAgent
+    requires: [profile, validate_roles]
+    foreach: ${inputs.all_jobs}
+    output: for_them_scores
+  - id: synthesize_insights
+    description: Generate actionable insights and recommendations per role.
+    agent: agents.common.insight_generator_agent.InsightGeneratorAgent
+    requires: [compute_for_me, compute_for_them]
+    foreach: ${inputs.all_jobs}
+    output: insights
+  - id: persist_results
+    description: Append each evaluation row to job_scores.csv and emit JSON summary.
+    agent: agents.scoring.role_evaluation_engine.RoleEvaluationEngine
+    action: run
+    requires: [synthesize_insights]
+    output: evaluation_payload
+outputs:
+  - data/output/evaluation_results.json
+  - data/output/job_scores.csv

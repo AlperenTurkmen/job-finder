@@ -22,25 +22,23 @@ data/roles_for_llm/
 data/roles_raw/
 mock_data/*.json
 
-# Job application engine sensitive data
-job-application-engine/input/profile.json
-job-application-engine/input/role.json
-job-application-engine/input/all_jobs.json
-job-application-engine/input/*.pdf
-job-application-engine/input/*.docx
-job-application-engine/output/
+# Sensitive user data
+data/profile.json
+data/role.json
+data/user_answers.json
+data/*.pdf
+data/*.docx
+data/output/
 answers/
-memory/
 
 # Pending-question scratch files
-job-application-engine/output/pending_questions.*
+data/output/pending_questions.*
 
 # Generated CSV summaries
-job-application-engine/output/*.csv
+data/output/*.csv
 
 # DOM snapshots and browser captures
-output/dom_snapshots/
-job-application-engine/output/dom_snapshots/
+data/output/dom_snapshots/
 
 # Misc scratch artifacts
 *.sqlite

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from agents.careers_page_finder_agent import choose_careers_page, choose_from_file, format_prompt
+from agents.discovery.careers_page_finder_agent import choose_careers_page, choose_from_file, format_prompt
 
 
 class FakeLLM:

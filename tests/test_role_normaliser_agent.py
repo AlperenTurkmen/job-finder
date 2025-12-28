@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from agents.role_normaliser_agent import (
+from agents.discovery.role_normaliser_agent import (
     DEFAULT_PROMPT,
     ConversionResult,
     convert_raw_text,

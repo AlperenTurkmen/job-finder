@@ -1,0 +1,23 @@
+version: "1.0"
+name: auto_apply_to_job
+model: gemini-2.5-pro
+inputs:
+  job_url: ""
+  cover_letter_file: data/cover_letter.md
+  profile_json: data/profile.json
+  cv_pdf: data/user_uploaded_cv.pdf
+steps:
+  - id: auto_apply_run
+    description: Run the complete Playwright MCP auto-apply workflow.
+    agent: agents.auto_apply.orchestrator.AutoApplyOrchestrator
+    action: run
+    args:
+      job_url: ${inputs.job_url}
+      cover_letter: ${inputs.cover_letter_file}
+      profile_path: ${inputs.profile_json}
+      cv_path: ${inputs.cv_pdf}
+outputs:
+  - answers/applied/
+  - answers/not_applied/
+  - data/output/pending_questions.json
+  - data/output/dom_snapshots/

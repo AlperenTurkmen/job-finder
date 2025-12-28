@@ -1,0 +1,69 @@
+{
+      "location_preferences": {
+            "preferred_locations": [
+                  "London",
+                  "Milton Keynes",
+                  "Remote",
+                  "UK"
+            ],
+            "willing_to_relocate": true,
+            "remote_preference": "hybrid_or_remote"
+      },
+      "role_preferences": {
+            "preferred_titles": [
+                  "Software Engineer",
+                  "Backend Engineer",
+                  "Data Engineer",
+                  "ML Engineer",
+                  "AI Engineer",
+                  "Full Stack Developer",
+                  "Platform Engineer"
+            ],
+            "preferred_domains": [
+                  "AI/ML",
+                  "Data Engineering",
+                  "Backend Systems",
+                  "Distributed Systems",
+                  "Automation"
+            ],
+            "avoid_domains": []
+      },
+      "company_preferences": {
+            "preferred_sizes": [
+                  "startup",
+                  "scaleup",
+                  "mid-size",
+                  "enterprise"
+            ],
+            "preferred_industries": [
+                  "Technology",
+                  "AI/ML",
+                  "FinTech",
+                  "HealthTech",
+                  "Gaming",
+                  "SaaS"
+            ],
+            "avoid_industries": []
+      },
+      "compensation_preferences": {
+            "minimum_salary_gbp": 50000,
+            "target_salary_gbp": 70000,
+            "equity_interest": true
+      },
+      "work_style_preferences": {
+            "team_size": "flexible",
+            "autonomy_level": "high",
+            "learning_opportunities": "important",
+            "work_life_balance": "important"
+      },
+      "deal_breakers": [
+            "No remote/hybrid options",
+            "Requires security clearance I don't have"
+      ],
+      "nice_to_haves": [
+            "Modern tech stack",
+            "Strong engineering culture",
+            "Growth opportunities",
+            "International exposure"
+      ]
+}
