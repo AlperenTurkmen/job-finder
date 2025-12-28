@@ -56,10 +56,34 @@ Notes:
 
 import asyncio
 from dataclasses import dataclass
+import sys
+from pathlib import Path
+
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from playwright.async_api import async_playwright, Page
 
-from .base import BaseScraper, ScrapedJob
+try:
+    from tools.scrapers.base import BaseScraper, ScrapedJob
+except ImportError:
+    # Fallback if base.py doesn't exist or for standalone execution
+    from typing import Protocol
+    
+    class BaseScraper:
+        """Minimal base scraper class."""
+        async def extract_text(self, page, selector):
+            try:
+                el = await page.query_selector(selector)
+                return (await el.inner_text()).strip() if el else ""
+            except:
+                return ""
+    
+    class ScrapedJob:
+        """Minimal scraped job class."""
+        def __init__(self, **kwargs):
+            for k, v in kwargs.items():
+                setattr(self, k, v)
 
 
 @dataclass
@@ -234,6 +258,8 @@ async def scrape_netflix_jobs(
     location: str | None = "United Kingdom",
     query: str = "*",
     headless: bool = True,
+    save_to_db: bool = False,
+    db_connection_string: str | None = None,
 ) -> list[NetflixJobListing]:
     """Scrape job listings from Netflix careers website.
     
@@ -252,6 +278,9 @@ async def scrape_netflix_jobs(
             - "product manager" - jobs containing "product manager"
         headless: If True (default), runs browser without visible window.
             Set to False for debugging to see the browser.
+        save_to_db: If True, saves jobs to database automatically
+        db_connection_string: Database URL (required if save_to_db=True)
+            Get from os.getenv("DATABASE_URL")
     
     Returns:
         List of NetflixJobListing objects, each containing:
@@ -267,6 +296,13 @@ async def scrape_netflix_jobs(
         >>> jobs = await scrape_netflix_jobs(location=None)  # worldwide
         >>> jobs = await scrape_netflix_jobs(query="engineer")
         
+        >>> # Save to database automatically
+        >>> jobs = await scrape_netflix_jobs(
+        ...     location="United Kingdom",
+        ...     save_to_db=True,
+        ...     db_connection_string=os.getenv("DATABASE_URL")
+        ... )
+        
         >>> for job in jobs:
         ...     print(job.title)
     
@@ -277,6 +313,11 @@ async def scrape_netflix_jobs(
     """
     url = build_search_url(query=query, location=location)
     
+    from utils.logging import get_logger
+    logger = get_logger(__name__)
+    
+    logger.info(f"🌐 Navigating to: {url}")
+    
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=headless)
         context = await browser.new_context(
@@ -286,46 +327,100 @@ async def scrape_netflix_jobs(
         page = await context.new_page()
         
         try:
-            await page.goto(url, wait_until="networkidle", timeout=30000)
+            logger.info("📡 Loading page...")
+            # Use domcontentloaded instead of networkidle (much faster)
+            await page.goto(url, wait_until="domcontentloaded", timeout=15000)
             
-            # Wait for initial content
-            await asyncio.sleep(2)
+            logger.info("⏳ Waiting for job cards...")
+            # Wait for job cards to appear
+            try:
+                await page.wait_for_selector(".position-card", timeout=10000)
+                logger.info("✓ Job cards found")
+            except:
+                logger.warning("⚠️  No job cards found, proceeding anyway...")
             
             # Scroll to load all jobs (handles lazy loading/pagination)
+            logger.info("📜 Scrolling to load all jobs...")
             await _scroll_to_load_all(page)
             
             # Create scraper and extract jobs
+            logger.info("🔍 Extracting job data...")
             scraper = NetflixScraper()
             jobs = await scraper.scrape_job_search(url, page)
+            logger.info(f"✅ Extracted {len(jobs)} jobs")
+            
+            # Save to database if requested
+            if save_to_db:
+                if not db_connection_string:
+                    raise ValueError("db_connection_string required when save_to_db=True")
+                
+                logger.info("💾 Saving to database...")
+                # Import here to avoid circular dependency
+                import sys
+                from pathlib import Path
+                sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+                from utils.db_client import save_jobs_to_db
+                
+                # Convert NetflixJobListing objects to dicts
+                job_dicts = [
+                    {
+                        "title": job.title,
+                        "job_url": job.job_url,
+                        "location": job.location,
+                        "department": job.department,
+                        "business_unit": job.business_unit,
+                        "work_type": job.work_location_option,
+                        "job_id": job.job_id,
+                    }
+                    for job in jobs
+                ]
+                
+                result = await save_jobs_to_db(
+                    company_name="Netflix",
+                    company_domain="netflix.com",
+                    careers_url=BASE_URL,
+                    jobs=job_dicts,
+                    db_connection_string=db_connection_string
+                )
+                
+                logger.info(f"✅ Database: {result['inserted']} inserted, {result['updated']} updated")
+            
             return jobs
             
         finally:
             await browser.close()
 
 
-async def _scroll_to_load_all(page: Page, max_scrolls: int = 50) -> None:
+async def _scroll_to_load_all(page: Page, max_scrolls: int = 10) -> None:
     """Scroll down the page to trigger lazy loading of all jobs.
     
     Netflix/Eightfold loads more jobs as you scroll, so we need to
     keep scrolling until no more jobs are loaded.
     """
+    from utils.logging import get_logger
+    logger = get_logger(__name__)
+    
     previous_count = 0
     
-    for _ in range(max_scrolls):
+    for i in range(max_scrolls):
         # Count current cards
         cards = await page.query_selector_all(".position-card")
         current_count = len(cards)
         
+        if current_count > 0:
+            logger.info(f"Loaded {current_count} jobs (scroll {i+1}/{max_scrolls})")
+        
         # Scroll to bottom
         await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-        await asyncio.sleep(1)
+        await asyncio.sleep(0.5)  # Reduced from 1 second
         
         # Check if we've loaded more cards
         cards = await page.query_selector_all(".position-card")
         new_count = len(cards)
         
-        if new_count == previous_count:
+        if new_count == previous_count and new_count > 0:
             # No new cards loaded, we're done
+            logger.info(f"✓ All jobs loaded ({new_count} total)")
             break
         previous_count = new_count
     
@@ -334,21 +429,38 @@ async def _scroll_to_load_all(page: Page, max_scrolls: int = 50) -> None:
 
 
 async def main():
-    """Example usage of the Netflix scraper."""
+    """Example usage of the Netflix scraper with database integration."""
+    import os
+    from dotenv import load_dotenv
+    
+    load_dotenv()
+    
+    # Example 1: Just scrape jobs (no database)
+    print("=== Scraping Netflix jobs (no database) ===")
     jobs = await scrape_netflix_jobs(location="United Kingdom")
     
     if jobs:
-        print(f"Found {len(jobs)} Netflix job(s):\n")
-        for i, job in enumerate(jobs, 1):
+        print(f"\nFound {len(jobs)} Netflix job(s):\n")
+        for i, job in enumerate(jobs[:5], 1):  # Show first 5
             print(f"{i}. {job.title}")
             print(f"   Department: {job.department}")
-            print(f"   Business Unit: {job.business_unit}")
             print(f"   Location: {job.location}")
-            print(f"   Work Type: {job.work_location_option}")
-            print(f"   Job ID: {job.job_id}")
             print(f"   URL: {job.job_url}\n")
     else:
         print("No jobs found.")
+    
+    # Example 2: Scrape and save to database
+    db_url = os.getenv("DATABASE_URL")
+    if db_url:
+        print("\n=== Scraping and saving to database ===")
+        jobs = await scrape_netflix_jobs(
+            location="United Kingdom",
+            save_to_db=True,
+            db_connection_string=db_url
+        )
+        print(f"✅ Saved {len(jobs)} jobs to database")
+    else:
+        print("\n⚠️  DATABASE_URL not set - skipping database save")
     
     return jobs
 
