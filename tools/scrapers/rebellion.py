@@ -143,6 +143,30 @@ class RebellionJobListing:
     application_url: str = ""
 
 
+@dataclass
+class RebellionJobDetails:
+    """Full details of a Rebellion job posting.
+    
+    Attributes:
+        title: Job title
+        location: Job location (city, country)
+        department: Department name
+        workplace_type: Work arrangement (hybrid, on_site, remote)
+        job_id: Rebellion job ID
+        job_description: Full job description blob
+        job_url: URL of the job detail page
+        apply_url: URL to the application form
+    """
+    title: str
+    location: str
+    department: str
+    workplace_type: str
+    job_id: str
+    job_description: str
+    job_url: str
+    apply_url: str
+
+
 class RebellionScraper(BaseScraper):
     """Scraper for Rebellion careers pages."""
     
@@ -368,6 +392,111 @@ async def _save_to_database(jobs: list[RebellionJobListing], connection_string: 
         logger.error("asyncpg not installed. Run: pip install asyncpg")
     except Exception as e:
         logger.error(f"Failed to save to database: {e}")
+
+
+async def scrape_rebellion_job_details(job_url: str, headless: bool = True) -> RebellionJobDetails:
+    """Scrape full details from a Rebellion job detail page.
+    
+    Args:
+        job_url: URL to the Rebellion job detail page (e.g., https://rebellion.workable.com/jobs/4648107)
+        headless: Run browser in headless mode
+    
+    Returns:
+        RebellionJobDetails with all job information
+    """
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=headless)
+        page = await browser.new_page()
+        
+        logger.info(f"Fetching job details from: {job_url}")
+        await page.goto(job_url, wait_until="load", timeout=60000)
+        await page.wait_for_timeout(3000)
+        
+        result = {}
+        
+        # Get body text
+        body_text = await page.inner_text("body")
+        lines = [l.strip() for l in body_text.split("\n") if l.strip()]
+        
+        # Title - first line is usually the job title
+        result["title"] = lines[0] if lines else ""
+        
+        # Location - look for city, country format (usually line 3-4)
+        result["location"] = ""
+        for line in lines[1:10]:
+            if "Oxford" in line or "Warwick" in line:
+                if "United Kingdom" in line or "England" in line:
+                    result["location"] = line.strip()
+                    break
+                else:
+                    result["location"] = line.strip()
+        
+        # Department - extract from second line (e.g., "HybridVideo Games, CodeFull timeCOD54")
+        result["department"] = ""
+        if len(lines) > 1:
+            line2 = lines[1]
+            if "Code" in line2:
+                result["department"] = "Code"
+            elif "Art" in line2:
+                result["department"] = "Art"
+            elif "Design" in line2:
+                result["department"] = "Design"
+            elif "QA" in line2:
+                result["department"] = "QA"
+            elif "Audio" in line2:
+                result["department"] = "Audio"
+            elif "VFX" in line2:
+                result["department"] = "VFX"
+        
+        # Workplace type - extract from second line
+        result["workplace_type"] = ""
+        if len(lines) > 1:
+            line2_lower = lines[1].lower()
+            if "hybrid" in line2_lower:
+                result["workplace_type"] = "hybrid"
+            elif "on-site" in line2_lower or "onsite" in line2_lower:
+                result["workplace_type"] = "on_site"
+            elif "remote" in line2_lower:
+                result["workplace_type"] = "remote"
+        
+        # Extract job_id from URL
+        import re
+        job_id_match = re.search(r'/jobs/(\d+)', job_url)
+        result["job_id"] = job_id_match.group(1) if job_id_match else ""
+        
+        # Build job_description from body text (Workable format)
+        full_text = "\n".join(lines)
+        
+        # Find sections: Description, Requirements, Benefits
+        desc_idx = full_text.find("Description")
+        req_idx = full_text.find("Requirements")
+        benefits_idx = full_text.find("Benefits")
+        
+        parts = []
+        
+        # Description section
+        if desc_idx >= 0:
+            end_idx = req_idx if req_idx > desc_idx else (benefits_idx if benefits_idx > desc_idx else len(full_text))
+            parts.append(full_text[desc_idx:end_idx].strip())
+        
+        # Requirements section
+        if req_idx >= 0:
+            end_idx = benefits_idx if benefits_idx > req_idx else len(full_text)
+            parts.append(f"\n\n{full_text[req_idx:end_idx].strip()}")
+        
+        # Benefits section
+        if benefits_idx >= 0:
+            parts.append(f"\n\n{full_text[benefits_idx:len(full_text)].strip()}")
+        
+        result["job_description"] = "".join(parts) if parts else full_text[:3000]
+        
+        result["job_url"] = job_url
+        result["apply_url"] = f"{job_url}/apply" if not job_url.endswith("/apply") else job_url
+        
+        await browser.close()
+        
+        logger.info(f"Extracted details for: {result['title']}")
+        return RebellionJobDetails(**result)
 
 
 async def main():

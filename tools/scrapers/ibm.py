@@ -34,6 +34,28 @@ class IBMJobListing:
     company: str = "IBM"
 
 
+@dataclass(slots=True)
+class IBMJobDetails:
+    """Full details of an IBM job posting.
+    
+    Attributes:
+        title: Job title
+        location: Job location
+        team: Team/department name
+        job_id: IBM job ID
+        job_description: Full job description blob
+        job_url: URL of the job detail page
+        apply_url: URL to the application form
+    """
+    title: str
+    location: str
+    team: str
+    job_id: str
+    job_description: str
+    job_url: str
+    apply_url: str
+
+
 async def scrape_ibm_jobs(
     location: str | None = "United Kingdom",
     query: str | None = None,
@@ -155,6 +177,124 @@ async def scrape_ibm_jobs(
         logger.info("Database saving not yet implemented")
     
     return jobs
+
+
+async def scrape_ibm_job_details(
+    job_url: str, 
+    headless: bool = True,
+    max_retries: int = 3,
+    retry_delay: float = 2.0,
+) -> IBMJobDetails:
+    """Scrape full details from an IBM job detail page.
+    
+    Args:
+        job_url: URL to the IBM job detail page (e.g., https://ibmglobal.avature.net/en_UK/careers/JobDetail?jobId=81102)
+        headless: Run browser in headless mode
+        max_retries: Maximum number of retry attempts for rate-limited requests
+        retry_delay: Base delay between retries (increases exponentially)
+    
+    Returns:
+        IBMJobDetails with all job information
+    """
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=headless)
+        page = await browser.new_page()
+        
+        logger.info(f"Fetching job details from: {job_url}")
+        
+        # Retry logic for rate limiting (406 errors)
+        body_text = ""
+        for attempt in range(max_retries):
+            await page.goto(job_url, wait_until="load", timeout=60000)
+            await page.wait_for_timeout(3000)
+            
+            body_text = await page.inner_text("body")
+            
+            # Check for rate limiting (406 Not Acceptable)
+            if "406 Not Acceptable" in body_text or "not acceptable" in body_text.lower():
+                if attempt < max_retries - 1:
+                    delay = retry_delay * (2 ** attempt)  # Exponential backoff
+                    logger.warning(f"Rate limited (406), retrying in {delay}s... (attempt {attempt + 1}/{max_retries})")
+                    await page.wait_for_timeout(delay * 1000)
+                    continue
+                else:
+                    logger.error(f"Rate limited after {max_retries} attempts: {job_url}")
+                    break
+            else:
+                # Success - break out of retry loop
+                break
+        
+        result = {}
+        lines = [l.strip() for l in body_text.split("\n") if l.strip()]
+        
+        # Title - find after "< Back to search results" marker, usually line 6
+        result["title"] = ""
+        for i, line in enumerate(lines):
+            if line == "< Back to search results" and i + 1 < len(lines):
+                result["title"] = lines[i + 1]
+                break
+        if not result["title"]:
+            # Fallback: try h1
+            title_el = await page.query_selector("h1")
+            result["title"] = (await title_el.inner_text()).strip() if title_el else lines[5] if len(lines) > 5 else ""
+        
+        # Location - usually right after title
+        result["location"] = ""
+        for i, line in enumerate(lines):
+            if line == result["title"] and i + 1 < len(lines):
+                result["location"] = lines[i + 1]
+                break
+        
+        # Team - usually after location (e.g., "Consulting")
+        result["team"] = ""
+        for i, line in enumerate(lines):
+            if line == result["location"] and i + 1 < len(lines):
+                result["team"] = lines[i + 1]
+                break
+        
+        # Extract job_id from URL
+        job_id_match = re.search(r'jobId=(\d+)', job_url)
+        result["job_id"] = job_id_match.group(1) if job_id_match else ""
+        
+        # Build job_description from body text
+        full_text = "\n".join(lines)
+        
+        # IBM Avature uses sections: Introduction, Your role and responsibilities, Required technical and professional expertise
+        intro_idx = full_text.find("Introduction")
+        role_idx = full_text.find("Your role and responsibilities")
+        req_idx = full_text.find("Required technical and professional expertise")
+        pref_idx = full_text.find("Preferred technical and professional expertise")
+        
+        parts = []
+        
+        # Introduction section
+        if intro_idx >= 0:
+            end_idx = role_idx if role_idx > intro_idx else (req_idx if req_idx > intro_idx else len(full_text))
+            parts.append(full_text[intro_idx:end_idx].strip())
+        
+        # Role and responsibilities section
+        if role_idx >= 0:
+            end_idx = req_idx if req_idx > role_idx else (pref_idx if pref_idx > role_idx else len(full_text))
+            parts.append(f"\n\n{full_text[role_idx:end_idx].strip()}")
+        
+        # Required expertise section
+        if req_idx >= 0:
+            end_idx = pref_idx if pref_idx > req_idx else len(full_text)
+            parts.append(f"\n\n{full_text[req_idx:end_idx].strip()}")
+        
+        # Preferred expertise section
+        if pref_idx >= 0:
+            parts.append(f"\n\n{full_text[pref_idx:len(full_text)].strip()}")
+        
+        result["job_description"] = "".join(parts) if parts else full_text[:3000]
+        
+        result["job_url"] = job_url
+        result["apply_url"] = job_url  # IBM Avature uses same page
+        
+        await browser.close()
+        
+        logger.info(f"Extracted details for: {result['title']}")
+        return IBMJobDetails(**result)
 
 
 def main():

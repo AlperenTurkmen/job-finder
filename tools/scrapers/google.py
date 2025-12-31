@@ -128,6 +128,28 @@ class GoogleJobListing:
     job_url: str
 
 
+@dataclass
+class GoogleJobDetails:
+    """Full details of a Google job posting.
+    
+    Attributes:
+        title: Job title
+        location: Job location
+        level: Experience level
+        job_id: Google job ID
+        job_description: Full job description blob
+        job_url: URL of the job detail page
+        apply_url: URL to the application form
+    """
+    title: str
+    location: str
+    level: str
+    job_id: str
+    job_description: str
+    job_url: str
+    apply_url: str
+
+
 class GoogleScraper(BaseScraper):
     """Scraper for Google careers pages."""
     
@@ -379,6 +401,126 @@ async def _save_to_database(jobs: list[GoogleJobListing], connection_string: str
         logger.error("asyncpg not installed. Run: pip install asyncpg")
     except Exception as e:
         logger.error(f"Failed to save to database: {e}")
+
+
+async def scrape_google_job_details(job_url: str, headless: bool = True) -> GoogleJobDetails:
+    """Scrape full details from a Google job detail page.
+    
+    Note: Google careers shows job details in a side panel. The function 
+    extracts job details by finding the job in the list and parsing the 
+    inline details shown.
+    
+    Args:
+        job_url: URL to the Google job detail page (can include job ID in URL)
+        headless: Run browser in headless mode
+    
+    Returns:
+        GoogleJobDetails with all job information
+    """
+    import re
+    
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=headless)
+        page = await browser.new_page()
+        
+        logger.info(f"Fetching job details from: {job_url}")
+        await page.goto(job_url, wait_until="load", timeout=60000)
+        await page.wait_for_timeout(4000)  # Google pages are JavaScript heavy
+        
+        # Accept cookies if present
+        try:
+            agree_btn = await page.query_selector('button:has-text("Agree")')
+            if agree_btn:
+                await agree_btn.click()
+                await page.wait_for_timeout(2000)
+        except:
+            pass
+        
+        result = {}
+        
+        # Get body text
+        body_text = await page.inner_text("body")
+        lines = [l.strip() for l in body_text.split("\n") if l.strip()]
+        
+        # Extract job_id from URL
+        job_id_match = re.search(r'/results/(\d+)', job_url)
+        result["job_id"] = job_id_match.group(1) if job_id_match else ""
+        
+        # Find the job details section - look for "Jobs search results" marker
+        # then find job info after that
+        full_text = "\n".join(lines)
+        
+        # Title - look for title in the content (after "Jobs search results")
+        result["title"] = ""
+        search_results_idx = None
+        for i, line in enumerate(lines):
+            if line == "Jobs search results":
+                search_results_idx = i
+                break
+        
+        if search_results_idx and search_results_idx + 1 < len(lines):
+            # First job title is usually right after
+            for line in lines[search_results_idx + 1:search_results_idx + 5]:
+                if line and line not in ["corporate_fare", "Google", "place"] and len(line) > 10:
+                    result["title"] = line
+                    break
+        
+        # Location - find after "place" marker
+        result["location"] = ""
+        for i, line in enumerate(lines):
+            if line == "place" and i + 1 < len(lines):
+                result["location"] = lines[i + 1]
+                break
+        
+        # Level - find after "bar_chart" marker
+        result["level"] = ""
+        for i, line in enumerate(lines):
+            if line == "bar_chart" and i + 1 < len(lines):
+                result["level"] = lines[i + 1]
+                break
+        
+        # Build job_description from body text
+        # Google shows "Minimum qualifications" inline after the job info
+        min_qual_idx = full_text.find("Minimum qualifications")
+        pref_qual_idx = full_text.find("Preferred qualifications")
+        about_idx = full_text.find("About the job")
+        resp_idx = full_text.find("Responsibilities")
+        
+        parts = []
+        
+        # About the job section
+        if about_idx >= 0:
+            end_idx = resp_idx if resp_idx > about_idx else (min_qual_idx if min_qual_idx > about_idx else len(full_text))
+            parts.append(full_text[about_idx:end_idx].strip())
+        
+        # Responsibilities section
+        if resp_idx >= 0:
+            end_idx = min_qual_idx if min_qual_idx > resp_idx else len(full_text)
+            parts.append(f"\n\n{full_text[resp_idx:end_idx].strip()}")
+        
+        # Minimum qualifications section
+        if min_qual_idx >= 0:
+            end_idx = pref_qual_idx if pref_qual_idx > min_qual_idx else len(full_text)
+            parts.append(f"\n\n{full_text[min_qual_idx:end_idx].strip()}")
+        
+        # Preferred qualifications section
+        if pref_qual_idx >= 0:
+            # Find end - usually "Learn more" or another job listing
+            learn_more_idx = full_text.find("Learn more", pref_qual_idx)
+            end_idx = learn_more_idx if learn_more_idx > pref_qual_idx else len(full_text)
+            parts.append(f"\n\n{full_text[pref_qual_idx:end_idx].strip()}")
+        
+        result["job_description"] = "".join(parts) if parts else full_text[:3000]
+        
+        result["job_url"] = job_url
+        result["apply_url"] = job_url  # Google uses same page for apply
+        
+        await browser.close()
+        
+        logger.info(f"Extracted details for: {result['title']}")
+        return GoogleJobDetails(**result)
+        logger.info(f"Extracted details for: {result['title']}")
+        return GoogleJobDetails(**result)
 
 
 async def main():

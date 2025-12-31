@@ -113,6 +113,28 @@ class MetaJobListing:
     job_url: str
 
 
+@dataclass
+class MetaJobDetails:
+    """Full details of a Meta job posting from the job detail page.
+    
+    Attributes:
+        title: Job title
+        location: Primary job location
+        teams: Team/department name
+        job_id: Meta job reference number
+        job_description: Full job description blob (description + responsibilities + qualifications)
+        job_url: URL of the job detail page
+        apply_url: URL to the application form
+    """
+    title: str
+    location: str
+    teams: str
+    job_id: str
+    job_description: str
+    job_url: str
+    apply_url: str
+
+
 class MetaScraper(BaseScraper):
     """Scraper for Meta careers pages (GraphQL-based)."""
     
@@ -473,6 +495,139 @@ async def _scroll_to_load_all(page: Page, logger=None, max_scrolls: int = 10) ->
     
     # Scroll back to top
     await page.evaluate("window.scrollTo(0, 0)")
+
+
+async def scrape_meta_job_details(job_url: str, headless: bool = True) -> MetaJobDetails:
+    """Scrape full details from a Meta job detail page.
+    
+    Args:
+        job_url: URL to the Meta job detail page
+        headless: Run browser in headless mode
+    
+    Returns:
+        MetaJobDetails with all job information
+    """
+    from utils.logging import get_logger
+    logger = get_logger(__name__)
+    
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=headless)
+        page = await browser.new_page()
+        
+        logger.info(f"Fetching job details from: {job_url}")
+        await page.goto(job_url, wait_until="networkidle", timeout=60000)
+        await page.wait_for_timeout(2000)
+        
+        # Accept cookies if present
+        try:
+            cookie_btn = await page.query_selector('button[data-cookiebanner="accept_button"]')
+            if cookie_btn:
+                await cookie_btn.click()
+                await page.wait_for_timeout(1000)
+        except:
+            pass
+        
+        result = {}
+        
+        # Get body text
+        body_text = await page.inner_text("body")
+        lines = [l.strip() for l in body_text.split("\n") if l.strip()]
+        
+        # Title - first occurrence that's not a nav item
+        for line in lines:
+            if line not in ["Jobs", "Teams", "Career Programs", "Working at Meta", "Blog", "Skip to main content"]:
+                result["title"] = line
+                break
+        
+        # Location - look for location pattern after title
+        result["location"] = ""
+        for i, line in enumerate(lines):
+            if line == result.get("title", "") and i + 1 < len(lines):
+                # Next non-title line should be location
+                for j in range(i + 1, min(i + 5, len(lines))):
+                    if lines[j] != result["title"] and not lines[j].startswith("+"):
+                        result["location"] = lines[j]
+                        break
+                break
+        
+        # Teams - look for team name after location
+        result["teams"] = ""
+        for i, line in enumerate(lines):
+            if line == result.get("location", "") and i + 1 < len(lines):
+                result["teams"] = lines[i + 1]
+                break
+        
+        # Job ID from URL
+        result["job_id"] = job_url.split("/")[-1] if "/" in job_url else ""
+        
+        # Build job_description from body text
+        # Find sections: responsibilities, qualifications
+        full_text = "\n".join(lines)
+        
+        resp_markers = ["Responsibilities", "What you'll do", "Your role"]
+        qual_markers = ["Minimum Qualifications", "Qualifications", "Requirements", "What we're looking for"]
+        about_markers = ["About Meta", "Equal Employment"]
+        
+        resp_idx = -1
+        for marker in resp_markers:
+            idx = full_text.find(marker)
+            if idx > 0:
+                resp_idx = idx
+                break
+        
+        qual_idx = -1
+        for marker in qual_markers:
+            idx = full_text.find(marker)
+            if idx > 0:
+                qual_idx = idx
+                break
+        
+        about_idx = -1
+        for marker in about_markers:
+            idx = full_text.find(marker)
+            if idx > 0:
+                about_idx = idx
+                break
+        
+        # Description - from Apply button text to responsibilities
+        apply_idx = full_text.find("Apply now")
+        if apply_idx > 0 and resp_idx > apply_idx:
+            desc_start = apply_idx + len("Apply now")
+            description = full_text[desc_start:resp_idx].strip()
+        else:
+            description = ""
+        
+        # Responsibilities - from resp_idx to qual_idx
+        responsibilities = ""
+        if resp_idx > 0 and qual_idx > resp_idx:
+            responsibilities = full_text[resp_idx:qual_idx].strip()
+        elif resp_idx > 0 and about_idx > resp_idx:
+            responsibilities = full_text[resp_idx:about_idx].strip()
+        
+        # Qualifications - from qual_idx to about_idx
+        qualifications = ""
+        if qual_idx > 0 and about_idx > qual_idx:
+            qualifications = full_text[qual_idx:about_idx].strip()
+        elif qual_idx > 0:
+            qualifications = full_text[qual_idx:qual_idx+2000].strip()
+        
+        # Combine into job_description blob
+        parts = []
+        if description:
+            parts.append(description)
+        if responsibilities:
+            parts.append(f"\n\n{responsibilities}")
+        if qualifications:
+            parts.append(f"\n\n{qualifications}")
+        result["job_description"] = "".join(parts)
+        
+        result["job_url"] = job_url
+        result["apply_url"] = job_url  # Meta uses same page for viewing and applying
+        
+        await browser.close()
+        
+        logger.info(f"Extracted details for: {result.get('title', 'Unknown')}")
+        return MetaJobDetails(**result)
 
 
 async def main():

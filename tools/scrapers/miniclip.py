@@ -127,6 +127,28 @@ class MiniclipJobListing:
     job_url: str
 
 
+@dataclass
+class MiniclipJobDetails:
+    """Full details of a Miniclip job posting.
+    
+    Attributes:
+        title: Job title
+        location: Job location
+        department: Department name
+        job_id: Miniclip job ID
+        job_description: Full job description blob
+        job_url: URL of the job detail page
+        apply_url: URL to the application form
+    """
+    title: str
+    location: str
+    department: str
+    job_id: str
+    job_description: str
+    job_url: str
+    apply_url: str
+
+
 class MiniclipScraper(BaseScraper):
     """Scraper for Miniclip careers pages."""
     
@@ -389,6 +411,85 @@ async def _save_to_database(jobs: list[MiniclipJobListing], connection_string: s
         logger.error("asyncpg not installed. Run: pip install asyncpg")
     except Exception as e:
         logger.error(f"Failed to save to database: {e}")
+
+
+async def scrape_miniclip_job_details(job_url: str, headless: bool = True) -> MiniclipJobDetails:
+    """Scrape full details from a Miniclip job detail page.
+    
+    Args:
+        job_url: URL to the Miniclip job detail page (e.g., https://careers.miniclip.com/job/Derby-Office-Assistant/1332014555/)
+        headless: Run browser in headless mode
+    
+    Returns:
+        MiniclipJobDetails with all job information
+    """
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=headless)
+        page = await browser.new_page()
+        
+        logger.info(f"Fetching job details from: {job_url}")
+        await page.goto(job_url, wait_until="networkidle", timeout=60000)
+        await page.wait_for_timeout(2000)
+        
+        result = {}
+        
+        # Get body text
+        body_text = await page.inner_text("body")
+        lines = [l.strip() for l in body_text.split("\n") if l.strip()]
+        
+        # Title - usually in h1 or early in the page
+        title_el = await page.query_selector("h1")
+        result["title"] = (await title_el.inner_text()).strip() if title_el else ""
+        
+        # Location - look for location info
+        result["location"] = ""
+        for i, line in enumerate(lines):
+            if any(x in line for x in ["London", "Derby", "Zoetermeer", "Lisbon", "Nottingham", "Izmir"]):
+                if len(line) < 100:  # Avoid picking up text blocks
+                    result["location"] = line.strip()
+                    break
+        
+        # Department
+        result["department"] = ""
+        
+        # Extract job_id from URL
+        import re
+        job_id_match = re.search(r'/(\d+)/?$', job_url)
+        result["job_id"] = job_id_match.group(1) if job_id_match else ""
+        
+        # Build job_description from body text
+        full_text = "\n".join(lines)
+        
+        # Find sections: Job Description, What will you be doing, What are we looking for
+        desc_idx = full_text.find("Job Description")
+        doing_idx = full_text.find("What will you be doing")
+        looking_idx = full_text.find("What are we looking for")
+        
+        parts = []
+        
+        # Job Description section
+        if desc_idx >= 0:
+            end_idx = doing_idx if doing_idx > desc_idx else (looking_idx if looking_idx > desc_idx else len(full_text))
+            parts.append(full_text[desc_idx:end_idx].strip())
+        
+        # What will you be doing section
+        if doing_idx >= 0:
+            end_idx = looking_idx if looking_idx > doing_idx else len(full_text)
+            parts.append(f"\n\n{full_text[doing_idx:end_idx].strip()}")
+        
+        # What are we looking for section
+        if looking_idx >= 0:
+            parts.append(f"\n\n{full_text[looking_idx:len(full_text)].strip()}")
+        
+        result["job_description"] = "".join(parts) if parts else full_text[:3000]
+        
+        result["job_url"] = job_url
+        result["apply_url"] = job_url  # Miniclip uses same page
+        
+        await browser.close()
+        
+        logger.info(f"Extracted details for: {result['title']}")
+        return MiniclipJobDetails(**result)
 
 
 async def main():

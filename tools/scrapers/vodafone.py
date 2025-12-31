@@ -133,6 +133,30 @@ class VodafoneJobListing:
     job_url: str = ""
 
 
+@dataclass
+class VodafoneJobDetails:
+    """Full details of a Vodafone job posting.
+    
+    Attributes:
+        title: Job title
+        location: Job location
+        department: Department name
+        work_type: Work arrangement (onsite, remote, hybrid)
+        job_id: Vodafone job ID
+        job_description: Full job description blob
+        job_url: URL of the job detail page
+        apply_url: URL to the application form
+    """
+    title: str
+    location: str
+    department: str
+    work_type: str
+    job_id: str
+    job_description: str
+    job_url: str
+    apply_url: str
+
+
 class VodafoneScraper(BaseScraper):
     """Scraper for Vodafone careers pages."""
     
@@ -350,6 +374,117 @@ async def _save_to_database(jobs: list[VodafoneJobListing], connection_string: s
         logger.error("asyncpg not installed. Run: pip install asyncpg")
     except Exception as e:
         logger.error(f"Failed to save to database: {e}")
+
+
+async def scrape_vodafone_job_details(job_url: str, headless: bool = True) -> VodafoneJobDetails:
+    """Scrape full details from a Vodafone job detail page.
+    
+    Args:
+        job_url: URL to the Vodafone job detail page
+        headless: Run browser in headless mode
+    
+    Returns:
+        VodafoneJobDetails with all job information
+    """
+    from utils.logging import get_logger
+    logger = get_logger(__name__)
+    
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=headless)
+        page = await browser.new_page()
+        
+        logger.info(f"Fetching job details from: {job_url}")
+        await page.goto(job_url, wait_until="networkidle", timeout=60000)
+        await page.wait_for_timeout(2000)
+        
+        result = {}
+        
+        # Get body text
+        body_text = await page.inner_text("body")
+        lines = [l.strip() for l in body_text.split("\n") if l.strip()]
+        
+        # Title - find the job title (usually after "View All Jobs")
+        result["title"] = ""
+        for i, line in enumerate(lines):
+            if line == "View All Jobs" and i + 1 < len(lines):
+                result["title"] = lines[i + 1]
+                break
+        if not result["title"]:
+            # Fallback: look for title after line 10 (past navigation)
+            for i, line in enumerate(lines[10:22], start=10):
+                if line and len(line) > 5 and len(line) < 100 and line not in ["Apply Now", "View All Jobs"]:
+                    result["title"] = line
+                    break
+        
+        # Location - usually right after title or line 12
+        result["location"] = ""
+        for i, line in enumerate(lines):
+            if line == result["title"] and i + 1 < len(lines):
+                result["location"] = lines[i + 1]
+                break
+        if not result["location"] and len(lines) > 12:
+            result["location"] = lines[12] if "United Kingdom" in lines[12] or "Germany" in lines[12] else ""
+        
+        # Department and work_type from page
+        result["department"] = ""
+        result["work_type"] = ""
+        
+        # Job ID from Requisition ID
+        result["job_id"] = ""
+        for i, line in enumerate(lines):
+            if line == "Requisition ID" and i + 1 < len(lines):
+                result["job_id"] = lines[i + 1]
+                break
+        
+        # Build job_description from body text
+        full_text = "\n".join(lines)
+        
+        # Find key sections
+        role_idx = full_text.find("Role Purpose:")
+        if role_idx < 0:
+            role_idx = full_text.find(result["title"])
+        
+        with_us_idx = full_text.find("With us you will:")
+        apply_idx = full_text.find("Apply if you have:")
+        skills_idx = full_text.find("Technical / professional skills")
+        insights_idx = full_text.find("Insights from previous")
+        
+        # Combine sections into description
+        parts = []
+        
+        if role_idx >= 0:
+            end_idx = with_us_idx if with_us_idx > role_idx else (apply_idx if apply_idx > role_idx else len(full_text))
+            role_text = full_text[role_idx:end_idx].strip()
+            if role_text:
+                parts.append(role_text)
+        
+        if with_us_idx >= 0:
+            end_idx = apply_idx if apply_idx > with_us_idx else (insights_idx if insights_idx > with_us_idx else len(full_text))
+            with_us_text = full_text[with_us_idx:end_idx].strip()
+            if with_us_text:
+                parts.append(f"\n\n{with_us_text}")
+        
+        if apply_idx >= 0:
+            end_idx = skills_idx if skills_idx > apply_idx else (insights_idx if insights_idx > apply_idx else len(full_text))
+            apply_text = full_text[apply_idx:end_idx].strip()
+            if apply_text:
+                parts.append(f"\n\n{apply_text}")
+        
+        if skills_idx >= 0:
+            end_idx = insights_idx if insights_idx > skills_idx else len(full_text)
+            skills_text = full_text[skills_idx:end_idx].strip()
+            if skills_text:
+                parts.append(f"\n\n{skills_text}")
+        
+        result["job_description"] = "".join(parts) if parts else full_text[:3000]
+        
+        result["job_url"] = job_url
+        result["apply_url"] = job_url  # Vodafone uses same page
+        
+        await browser.close()
+        
+        logger.info(f"Extracted details for: {result['title']}")
+        return VodafoneJobDetails(**result)
 
 
 async def main():

@@ -110,6 +110,30 @@ class NetflixJobListing:
     job_url: str
 
 
+@dataclass
+class NetflixJobDetails:
+    """Full details of a Netflix job posting from the job detail page.
+    
+    Attributes:
+        title: Job title
+        location: Job location
+        job_id: Netflix job reference number
+        teams: Team/department name
+        work_type: Work arrangement (Onsite, Remote, Hybrid)
+        job_description: Full job description blob (description + responsibilities + qualifications)
+        job_url: URL of the job detail page
+        apply_url: URL to the application form
+    """
+    title: str
+    location: str
+    job_id: str
+    teams: str
+    work_type: str
+    job_description: str
+    job_url: str
+    apply_url: str
+
+
 class NetflixScraper(BaseScraper):
     """Scraper for Netflix careers pages (Eightfold ATS)."""
     
@@ -426,6 +450,145 @@ async def _scroll_to_load_all(page: Page, max_scrolls: int = 10) -> None:
     
     # Scroll back to top
     await page.evaluate("window.scrollTo(0, 0)")
+
+
+async def scrape_netflix_job_details(job_url: str, headless: bool = True) -> NetflixJobDetails:
+    """Scrape full details from a Netflix job detail page.
+    
+    Args:
+        job_url: URL to the Netflix job detail page
+        headless: Run browser in headless mode
+    
+    Returns:
+        NetflixJobDetails with all job information
+    """
+    from utils.logging import get_logger
+    logger = get_logger(__name__)
+    
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=headless)
+        page = await browser.new_page()
+        
+        logger.info(f"Fetching job details from: {job_url}")
+        await page.goto(job_url, wait_until="networkidle", timeout=60000)
+        await page.wait_for_timeout(2000)
+        
+        result = {}
+        
+        # Title - h1 with class position-title
+        title_el = await page.query_selector("h1.position-title, h1")
+        result["title"] = (await title_el.inner_text()).strip() if title_el else ""
+        
+        # Location - p with class position-location
+        location_el = await page.query_selector("p.position-location, .position-location")
+        result["location"] = (await location_el.inner_text()).strip() if location_el else ""
+        
+        # Job ID
+        job_id_el = await page.query_selector("text=Job Requisition ID")
+        if job_id_el:
+            parent_text = await job_id_el.evaluate("el => el.parentElement.innerText")
+            result["job_id"] = parent_text.replace("Job Requisition ID", "").strip()
+        else:
+            result["job_id"] = ""
+        
+        # Teams
+        teams_el = await page.query_selector("text=Teams")
+        if teams_el:
+            parent_text = await teams_el.evaluate("el => el.parentElement.innerText")
+            result["teams"] = parent_text.replace("Teams", "").strip()
+        else:
+            result["teams"] = ""
+        
+        # Work Type
+        work_type_el = await page.query_selector("text=Work Type")
+        if work_type_el:
+            parent_text = await work_type_el.evaluate("el => el.parentElement.innerText")
+            result["work_type"] = parent_text.replace("Work Type", "").strip()
+        else:
+            result["work_type"] = ""
+        
+        # Get full text for description parsing
+        body_text = await page.inner_text("body")
+        
+        # Netflix uses various section headers - try multiple patterns
+        resp_markers = ["Responsibilities will include:", "Responsibilities:", "Key Responsibilities:"]
+        qual_markers = ["What we're looking for:", "Qualifications:", "Requirements:", "What You'll Need:"]
+        
+        resp_idx = -1
+        resp_marker_len = 0
+        for marker in resp_markers:
+            idx = body_text.find(marker)
+            if idx > 0:
+                resp_idx = idx
+                resp_marker_len = len(marker)
+                break
+        
+        qual_idx = -1
+        qual_marker_len = 0
+        for marker in qual_markers:
+            idx = body_text.find(marker)
+            if idx > 0:
+                qual_idx = idx
+                qual_marker_len = len(marker)
+                break
+        
+        # Description - between Work Type section and Responsibilities
+        work_type_idx = body_text.find(result.get("work_type", "Onsite"))
+        if work_type_idx > 0 and resp_idx > 0:
+            desc_start = work_type_idx + len(result.get("work_type", "")) + 1
+            description = body_text[desc_start:resp_idx].strip()
+        elif work_type_idx > 0:
+            # No responsibilities section, take everything after work type
+            desc_start = work_type_idx + len(result.get("work_type", "")) + 1
+            inclusion_idx = body_text.find("Inclusion is a Netflix value", desc_start)
+            end_idx = inclusion_idx if inclusion_idx > desc_start else len(body_text)
+            description = body_text[desc_start:end_idx].strip()
+        else:
+            description = ""
+        
+        # Responsibilities
+        responsibilities = []
+        if resp_idx > 0:
+            end_idx = qual_idx if qual_idx > resp_idx else body_text.find("Inclusion is a Netflix value", resp_idx)
+            if end_idx < 0:
+                end_idx = len(body_text)
+            resp_text = body_text[resp_idx + resp_marker_len:end_idx].strip()
+            responsibilities = [r.strip() for r in resp_text.split("\n") if r.strip()]
+        
+        # Qualifications
+        qualifications = []
+        if qual_idx > 0:
+            qual_text = body_text[qual_idx + qual_marker_len:]
+            inclusion_idx = qual_text.find("Inclusion is a Netflix value")
+            if inclusion_idx > 0:
+                qual_text = qual_text[:inclusion_idx]
+            qualifications = [q.strip() for q in qual_text.split("\n") if q.strip()]
+        
+        # Combine into single job_description blob
+        parts = []
+        if description:
+            parts.append(description)
+        if responsibilities:
+            parts.append("\n\nResponsibilities:\n" + "\n".join(f"• {r}" for r in responsibilities))
+        if qualifications:
+            parts.append("\n\nQualifications:\n" + "\n".join(f"• {q}" for q in qualifications))
+        result["job_description"] = "".join(parts)
+        
+        result["job_url"] = job_url
+        
+        # Get apply URL by clicking button
+        apply_btn = await page.query_selector("button:has-text(\"APPLY NOW\")")
+        if apply_btn:
+            await apply_btn.click()
+            await page.wait_for_timeout(2000)
+            result["apply_url"] = page.url
+        else:
+            result["apply_url"] = ""
+        
+        await browser.close()
+        
+        logger.info(f"Extracted details for: {result['title']}")
+        return NetflixJobDetails(**result)
 
 
 async def main():

@@ -157,15 +157,12 @@ class JobFinderDB:
         title: str,
         job_url: str,
         location: Optional[str] = None,
+        other_locations: Optional[List[str]] = None,
         department: Optional[str] = None,
         business_unit: Optional[str] = None,
         work_type: Optional[str] = None,
         job_id: Optional[str] = None,
         description: Optional[str] = None,
-        responsibilities: Optional[List[str]] = None,
-        qualifications: Optional[List[str]] = None,
-        tech_stack: Optional[List[str]] = None,
-        job_type: Optional[str] = None,
         salary_range: Optional[str] = None,
         status: str = "new"
     ) -> int:
@@ -178,16 +175,13 @@ class JobFinderDB:
             company_id: Foreign key to companies table
             title: Job title
             job_url: Unique URL to job posting (used for deduplication)
-            location: Job location
+            location: Primary job location
+            other_locations: List of additional locations for multi-location jobs
             department: Department name
             business_unit: Business unit
             work_type: "onsite", "remote", or "hybrid"
             job_id: External ATS job ID
-            description: Full job description
-            responsibilities: List of responsibilities
-            qualifications: List of qualifications
-            tech_stack: List of technologies
-            job_type: "full-time", "contract", etc.
+            description: Full job description blob
             salary_range: Salary range string
             status: "new", "applied", "rejected", "interview"
             
@@ -199,32 +193,27 @@ class JobFinderDB:
                 result = await conn.fetchrow(
                     """
                     INSERT INTO jobs (
-                        company_id, title, job_url, location, department,
-                        business_unit, work_type, job_id, description,
-                        responsibilities, qualifications, tech_stack,
-                        job_type, salary_range, status
+                        company_id, title, job_url, location, other_locations,
+                        department, business_unit, work_type, job_id, 
+                        description, salary_range, status
                     )
-                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
                     ON CONFLICT (job_url) DO UPDATE SET
                         title = EXCLUDED.title,
                         location = EXCLUDED.location,
+                        other_locations = EXCLUDED.other_locations,
                         department = EXCLUDED.department,
                         business_unit = EXCLUDED.business_unit,
                         work_type = EXCLUDED.work_type,
                         job_id = EXCLUDED.job_id,
                         description = EXCLUDED.description,
-                        responsibilities = EXCLUDED.responsibilities,
-                        qualifications = EXCLUDED.qualifications,
-                        tech_stack = EXCLUDED.tech_stack,
-                        job_type = EXCLUDED.job_type,
                         salary_range = EXCLUDED.salary_range,
                         updated_at = CURRENT_TIMESTAMP
                     RETURNING id
                     """,
-                    company_id, title, job_url, location, department,
-                    business_unit, work_type, job_id, description,
-                    responsibilities or [], qualifications or [], tech_stack or [],
-                    job_type, salary_range, status
+                    company_id, title, job_url, location, other_locations or [],
+                    department, business_unit, work_type, job_id,
+                    description, salary_range, status
                 )
                 logger.debug(f"Upserted job: {title} → ID {result['id']}")
                 return result['id']

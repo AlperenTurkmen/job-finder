@@ -139,6 +139,28 @@ class RockstarJobListing:
     job_url: str
 
 
+@dataclass
+class RockstarJobDetails:
+    """Full details of a Rockstar Games job posting.
+    
+    Attributes:
+        title: Job title
+        company: Rockstar studio name
+        department: Department name
+        job_id: Rockstar job ID
+        job_description: Full job description blob
+        job_url: URL of the job detail page
+        apply_url: URL to the application form
+    """
+    title: str
+    company: str
+    department: str
+    job_id: str
+    job_description: str
+    job_url: str
+    apply_url: str
+
+
 class RockstarScraper(BaseScraper):
     """Scraper for Rockstar Games careers pages."""
     
@@ -381,6 +403,96 @@ async def _save_to_database(jobs: list[RockstarJobListing], connection_string: s
         logger.error("asyncpg not installed. Run: pip install asyncpg")
     except Exception as e:
         logger.error(f"Failed to save to database: {e}")
+
+
+async def scrape_rockstar_job_details(job_url: str, headless: bool = True) -> RockstarJobDetails:
+    """Scrape full details from a Rockstar Games job detail page.
+    
+    Args:
+        job_url: URL to the Rockstar job detail page (e.g., https://www.rockstargames.com/careers/openings/position/6673341003)
+        headless: Run browser in headless mode
+    
+    Returns:
+        RockstarJobDetails with all job information
+    """
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=headless)
+        page = await browser.new_page()
+        
+        logger.info(f"Fetching job details from: {job_url}")
+        await page.goto(job_url, wait_until="networkidle", timeout=60000)
+        await page.wait_for_timeout(2000)
+        
+        result = {}
+        
+        # Get body text
+        body_text = await page.inner_text("body")
+        lines = [l.strip() for l in body_text.split("\n") if l.strip()]
+        
+        # Title is usually in h1
+        title_el = await page.query_selector("h1")
+        result["title"] = (await title_el.inner_text()).strip() if title_el else ""
+        
+        # Company/studio - extract from page or URL
+        result["company"] = ""
+        for line in lines:
+            if "Rockstar" in line and any(x in line for x in ["North", "New York", "San Diego", "Leeds", "Lincoln", "London", "Dundee", "Toronto", "India"]):
+                result["company"] = line.strip()
+                break
+        
+        # Department - look for department marker
+        result["department"] = ""
+        for i, line in enumerate(lines):
+            if "Department" in line or line in ["Code", "Art", "Animation", "Design", "Audio", "QA", "Production", "Marketing"]:
+                result["department"] = line
+                break
+        
+        # Extract job_id from URL
+        import re
+        job_id_match = re.search(r'/position/(\d+)', job_url)
+        result["job_id"] = job_id_match.group(1) if job_id_match else ""
+        
+        # Build job_description from body text
+        full_text = "\n".join(lines)
+        
+        # Find sections: WHAT WE DO, RESPONSIBILITIES, REQUIREMENTS, PLUSES, HOW TO APPLY
+        what_we_do_idx = full_text.upper().find("WHAT WE DO")
+        resp_idx = full_text.upper().find("RESPONSIBILITIES")
+        req_idx = full_text.upper().find("REQUIREMENTS")
+        pluses_idx = full_text.upper().find("PLUSES")
+        how_idx = full_text.upper().find("HOW TO APPLY")
+        
+        parts = []
+        
+        # What We Do section
+        if what_we_do_idx >= 0:
+            end_idx = resp_idx if resp_idx > what_we_do_idx else (req_idx if req_idx > what_we_do_idx else len(full_text))
+            parts.append(full_text[what_we_do_idx:end_idx].strip())
+        
+        # Responsibilities section
+        if resp_idx >= 0:
+            end_idx = req_idx if req_idx > resp_idx else (pluses_idx if pluses_idx > resp_idx else len(full_text))
+            parts.append(f"\n\n{full_text[resp_idx:end_idx].strip()}")
+        
+        # Requirements section
+        if req_idx >= 0:
+            end_idx = pluses_idx if pluses_idx > req_idx else (how_idx if how_idx > req_idx else len(full_text))
+            parts.append(f"\n\n{full_text[req_idx:end_idx].strip()}")
+        
+        # Pluses section
+        if pluses_idx >= 0:
+            end_idx = how_idx if how_idx > pluses_idx else len(full_text)
+            parts.append(f"\n\n{full_text[pluses_idx:end_idx].strip()}")
+        
+        result["job_description"] = "".join(parts) if parts else full_text[:3000]
+        
+        result["job_url"] = job_url
+        result["apply_url"] = job_url  # Rockstar uses same page
+        
+        await browser.close()
+        
+        logger.info(f"Extracted details for: {result['title']}")
+        return RockstarJobDetails(**result)
 
 
 async def main():

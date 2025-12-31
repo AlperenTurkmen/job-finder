@@ -107,6 +107,32 @@ class SamsungJobListing:
     job_url: str
 
 
+@dataclass
+class SamsungJobDetails:
+    """Full details of a Samsung job posting from the job detail page.
+    
+    Attributes:
+        title: Job title
+        location: Job location
+        remote_type: Work arrangement (Hybrid, On-site, Remote)
+        time_type: Employment type (Full time, Part time)
+        posted_on: When the job was posted
+        job_id: Samsung job reference number
+        job_description: Full job description blob (description + responsibilities + qualifications + benefits)
+        job_url: URL of the job detail page
+        apply_url: URL to the application form
+    """
+    title: str
+    location: str
+    remote_type: str
+    time_type: str
+    posted_on: str
+    job_id: str
+    job_description: str
+    job_url: str
+    apply_url: str
+
+
 class SamsungScraper(BaseScraper):
     """Scraper for Samsung careers pages (Workday ATS)."""
     
@@ -464,6 +490,114 @@ async def get_samsung_remote_types(headless: bool = True) -> list[dict]:
             
         finally:
             await browser.close()
+
+
+async def scrape_samsung_job_details(job_url: str, headless: bool = True) -> SamsungJobDetails:
+    """Scrape full details from a Samsung job detail page.
+    
+    Args:
+        job_url: URL to the Samsung job detail page
+        headless: Run browser in headless mode
+    
+    Returns:
+        SamsungJobDetails with all job information
+    """
+    from utils.logging import get_logger
+    logger = get_logger(__name__)
+    
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=headless)
+        page = await browser.new_page()
+        
+        logger.info(f"Fetching job details from: {job_url}")
+        await page.goto(job_url, wait_until="networkidle", timeout=60000)
+        await page.wait_for_timeout(3000)
+        
+        result = {}
+        
+        # Title (h2)
+        title_el = await page.query_selector("h2")
+        result["title"] = (await title_el.inner_text()).strip() if title_el else ""
+        
+        # Get body text for parsing
+        body_text = await page.inner_text("body")
+        lines = [l.strip() for l in body_text.split("\n") if l.strip()]
+        
+        # Parse metadata by finding labels
+        result["remote_type"] = ""
+        result["location"] = ""
+        result["time_type"] = ""
+        result["posted_on"] = ""
+        result["job_id"] = ""
+        
+        for i, line in enumerate(lines):
+            if line == "remote type" and i + 1 < len(lines):
+                result["remote_type"] = lines[i + 1]
+            elif line == "locations" and i + 1 < len(lines):
+                result["location"] = lines[i + 1]
+            elif line == "time type" and i + 1 < len(lines):
+                result["time_type"] = lines[i + 1]
+            elif line == "posted on" and i + 1 < len(lines):
+                result["posted_on"] = lines[i + 1]
+            elif line == "job requisition id" and i + 1 < len(lines):
+                result["job_id"] = lines[i + 1]
+        
+        # Find Position Summary, Role and Responsibilities, Skills sections
+        full_text = "\n".join(lines)
+        
+        pos_idx = full_text.find("Position Summary")
+        role_idx = full_text.find("Role and Responsibilities")
+        skills_idx = full_text.find("Skills and Qualifications")
+        benefits_idx = full_text.find("Employee Benefits")
+        
+        # Extract individual sections
+        description = ""
+        if pos_idx >= 0 and role_idx > pos_idx:
+            description = full_text[pos_idx + len("Position Summary"):role_idx].strip()
+        
+        responsibilities = []
+        if role_idx >= 0 and skills_idx > role_idx:
+            resp_text = full_text[role_idx + len("Role and Responsibilities"):skills_idx].strip()
+            responsibilities = [r.strip() for r in resp_text.split("\n") if r.strip()]
+        
+        qualifications = []
+        if skills_idx >= 0:
+            end_idx = benefits_idx if benefits_idx > skills_idx else len(full_text)
+            skills_text = full_text[skills_idx + len("Skills and Qualifications"):end_idx].strip()
+            qualifications = [q.strip() for q in skills_text.split("\n") if q.strip()]
+        
+        benefits = []
+        if benefits_idx >= 0:
+            loc_idx = full_text.find("Location and Hybrid Working")
+            end_idx = loc_idx if loc_idx > benefits_idx else len(full_text) - 500
+            benefits_text = full_text[benefits_idx + len("Employee Benefits"):end_idx].strip()
+            benefits = [b.strip() for b in benefits_text.split("\n") if b.strip()]
+        
+        # Combine into single job_description blob
+        parts = []
+        if description:
+            parts.append(f"Position Summary:\n{description}")
+        if responsibilities:
+            parts.append("\n\nRole and Responsibilities:\n" + "\n".join(f"• {r}" for r in responsibilities))
+        if qualifications:
+            parts.append("\n\nSkills and Qualifications:\n" + "\n".join(f"• {q}" for q in qualifications))
+        if benefits:
+            parts.append("\n\nEmployee Benefits:\n" + "\n".join(f"• {b}" for b in benefits))
+        result["job_description"] = "".join(parts)
+        
+        result["job_url"] = job_url
+        
+        # Get apply URL
+        apply_btn = await page.query_selector("a:has-text(\"Apply\")")
+        if apply_btn:
+            result["apply_url"] = await apply_btn.get_attribute("href") or ""
+        else:
+            result["apply_url"] = ""
+        
+        await browser.close()
+        
+        logger.info(f"Extracted details for: {result['title']}")
+        return SamsungJobDetails(**result)
 
 
 async def main():
