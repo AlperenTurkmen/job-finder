@@ -1,26 +1,48 @@
 # job-finder
 
-A **multi-agent job application automation system** built on Gemini LLMs and Playwright.
+A **multi-agent job application automation system** with a web interface for finding and applying to relevant jobs.
 
-## What it does
+## Features
 
-```
-Companies CSV → Job URL Extraction → Scrape & Normalize → Role Scoring → Cover Letter → Auto-Apply
-```
+### 🌐 Web Interface (NEW!)
+- **User-friendly web app** for finding jobs matched to your profile
+- Select companies, enter skills and preferences
+- Real-time scraping and intelligent job matching
+- See why each job matches your profile
 
-1. **Extracts job URLs** from company careers pages using Playwright + LLM filtering
-2. **Scrapes & normalizes** job postings into structured JSON
-3. **Scores roles** against your profile (For-Me / For-Them scores)
-4. **Generates cover letters** tailored to each role
-5. **Auto-applies** via Playwright browser automation
+### 🤖 Automation Pipeline
+- **Multi-agent system** for automated job applications
+- LLM-powered scraping, scoring, and cover letter generation
+- Playwright-based form filling
 
 ## Quick Start
+
+### Web Interface (Recommended)
 
 ```bash
 # Install dependencies
 pip install -r requirements.txt
 playwright install chromium
 
+# Set up environment (see .env.example)
+cp .env.example .env
+# Edit .env with your DATABASE_URL, GEMINI_API_KEY, etc.
+
+# Set up database (see DATABASE_SETUP.md)
+psql -d jobfinder -f database/schema.sql
+
+# Start the web application
+./start_web.sh
+# Or: python web/app.py
+```
+
+Visit http://localhost:5000 to use the web interface.
+
+See [web/README.md](web/README.md) for detailed documentation.
+
+### Command-Line Pipeline
+
+```bash
 # Set API key
 echo "GEMINI_API_KEY=your_key_here" > .env
 
@@ -36,24 +58,26 @@ python pipeline/run_apply_pipeline.py \
 
 ```
 job-finder/
+├── web/                       # Web application (NEW!)
+│   ├── app.py                 # Flask web server
+│   ├── scraper_orchestrator.py
+│   ├── job_matcher.py         # Job matching logic
+│   └── templates/             # HTML templates
 ├── agents/                    # All agents in unified structure
 │   ├── discovery/             # Find careers pages and extract jobs
 │   ├── scoring/               # Evaluate roles for fit
 │   ├── cover_letter/          # Generate and refine cover letters
 │   ├── common/                # Shared utilities (Gemini client, profile)
 │   └── auto_apply/            # Playwright-based form filling
-├── pipeline/                  # Main entry points
+├── pipeline/                  # Command-line entry points
 │   ├── run_apply_pipeline.py  # Full pipeline orchestrator
 │   └── scrape_and_normalize.py
-├── utils/                     # Shared utilities (logging, mock_llm)
-├── tools/                     # Search utilities (Google, DuckDuckGo)
-├── config/
-│   ├── prompts/               # LLM prompt templates
-│   └── workflows/             # ADK workflow YAML files
+├── utils/                     # Shared utilities (logging, db_client)
+├── tools/                     # Search utilities and scrapers
+│   └── scrapers/              # Company-specific scrapers
+├── database/                  # Database schema
+├── config/                    # Prompts and workflows
 ├── data/                      # Input/output data
-│   ├── companies/             # Input company CSVs
-│   ├── roles/                 # Normalized role JSONs
-│   └── output/                # Pipeline results
 └── tests/                     # Pytest tests
 ```
 

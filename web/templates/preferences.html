@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Your Preferences - Job Finder{% endblock %}
+
+{% block content %}
+<div class="card">
+      <h2>Tell us what you're looking for</h2>
+      <p style="margin-bottom: 30px; color: #666;">
+            Help us find the perfect jobs for you by sharing your preferences.
+      </p>
+
+      <form method="POST" action="{{ url_for('preferences') }}">
+            <div class="form-group">
+                  <label>Companies you're interested in *</label>
+                  <div class="help-text">Select at least one company to scrape jobs from</div>
+                  <div class="checkbox-grid">
+                        {% for company in companies %}
+                        <div class="checkbox-item">
+                              <input type="checkbox" id="company_{{ company.id }}" name="companies"
+                                    value="{{ company.id }}" required>
+                              <label for="company_{{ company.id }}">{{ company.name }}</label>
+                        </div>
+                        {% endfor %}
+                  </div>
+            </div>
+
+            <div class="form-group">
+                  <label for="job_titles">Job Titles *</label>
+                  <input type="text" id="job_titles" name="job_titles" required
+                        placeholder="e.g., Software Engineer, Data Scientist, Product Manager">
+                  <div class="help-text">Comma-separated list of job titles you're interested in</div>
+            </div>
+
+            <div class="form-group">
+                  <label for="skills">Your Skills *</label>
+                  <textarea id="skills" name="skills" required
+                        placeholder="e.g., Python, JavaScript, React, AWS, Machine Learning, SQL"></textarea>
+                  <div class="help-text">Comma-separated list of your technical skills</div>
+            </div>
+
+            <div class="form-group">
+                  <label for="location">Preferred Location</label>
+                  <input type="text" id="location" name="location" placeholder="e.g., London, Amsterdam, Remote">
+                  <div class="help-text">Leave empty if location doesn't matter</div>
+            </div>
+
+            <div class="form-group">
+                  <label for="remote_preference">Work Location Preference</label>
+                  <select id="remote_preference" name="remote_preference">
+                        <option value="">No preference</option>
+                        <option value="remote">Remote only</option>
+                        <option value="hybrid">Hybrid</option>
+                        <option value="onsite">On-site</option>
+                  </select>
+            </div>
+
+            <div class="form-group">
+                  <label for="experience_level">Experience Level</label>
+                  <select id="experience_level" name="experience_level">
+                        <option value="">No preference</option>
+                        <option value="entry">Entry Level (0-2 years)</option>
+                        <option value="mid">Mid Level (3-5 years)</option>
+                        <option value="senior">Senior (6-10 years)</option>
+                        <option value="lead">Lead/Principal (10+ years)</option>
+                  </select>
+            </div>
+
+            <div class="form-group">
+                  <label for="min_salary">Minimum Salary (optional)</label>
+                  <input type="number" id="min_salary" name="min_salary" placeholder="e.g., 50000">
+                  <div class="help-text">Leave empty if not important</div>
+            </div>
+
+            <div style="margin-top: 30px; display: flex; gap: 15px;">
+                  <button type="submit" class="btn">Find Jobs →</button>
+                  <a href="{{ url_for('index') }}" class="btn btn-secondary">Back</a>
+            </div>
+      </form>
+</div>
+
+<script>
+      // Validate at least one company is selected
+      document.querySelector('form').addEventListener('submit', function (e) {
+            const companies = document.querySelectorAll('input[name="companies"]:checked');
+            if (companies.length === 0) {
+                  e.preventDefault();
+                  alert('Please select at least one company');
+            }
+      });
+</script>
+{% endblock %}

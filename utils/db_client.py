@@ -5,6 +5,7 @@ All scrapers and agents should use this client for all database operations.
 """
 
 from typing import Optional, List, Dict, Any
+import os
 
 import asyncpg
 
@@ -365,6 +366,56 @@ class JobFinderDB:
                 logger.info(f"Deleted job: {job_url}")
             return deleted
     
+    async def get_jobs_by_companies(
+        self,
+        company_names: List[str]
+    ) -> List[Dict[str, Any]]:
+        """Get all jobs for multiple companies.
+        
+        Args:
+            company_names: List of company names
+            
+        Returns:
+            List of job dicts with company info
+        """
+        async with self.pool.acquire() as conn:
+            rows = await conn.fetch(
+                """
+                SELECT 
+                    j.*,
+                    c.name as company
+                FROM jobs j
+                JOIN companies c ON j.company_id = c.id
+                WHERE c.name = ANY($1::text[])
+                ORDER BY j.created_at DESC
+                """,
+                company_names
+            )
+            return [dict(row) for row in rows]
+    
+    async def get_job_by_id(self, job_db_id: int) -> Optional[Dict[str, Any]]:
+        """Get job by database ID.
+        
+        Args:
+            job_db_id: Database ID (primary key)
+            
+        Returns:
+            Dict with job data or None if not found
+        """
+        async with self.pool.acquire() as conn:
+            row = await conn.fetchrow(
+                """
+                SELECT 
+                    j.*,
+                    c.name as company
+                FROM jobs j
+                JOIN companies c ON j.company_id = c.id
+                WHERE j.id = $1
+                """,
+                job_db_id
+            )
+            return dict(row) if row else None
+    
     # ==================== BULK OPERATIONS ====================
     
     async def bulk_upsert_jobs(
@@ -489,3 +540,57 @@ async def save_jobs_to_db(
         
     finally:
         await db.close()
+
+
+# Simple alias for web app convenience
+class DatabaseClient:
+    """Convenience wrapper for JobFinderDB using environment variables."""
+    
+    def __init__(self):
+        """Initialize with DATABASE_URL from environment."""
+        self.connection_string = os.getenv("DATABASE_URL")
+        if not self.connection_string:
+            raise ValueError("DATABASE_URL environment variable not set")
+        self._db = JobFinderDB(self.connection_string)
+    
+    async def initialize(self):
+        """Connect to database."""
+        await self._db.connect()
+    
+    async def close(self):
+        """Close database connection."""
+        await self._db.close()
+    
+    async def insert_job(self, job: Dict[str, Any]) -> int:
+        """Insert a normalized job dict into database.
+        
+        Args:
+            job: Normalized job dict with fields like:
+                - company, title, job_url, location, etc.
+        
+        Returns:
+            Job database ID
+        """
+        # Get or create company
+        company_name = job.get("company", "Unknown")
+        company_id = await self._db.upsert_company(name=company_name)
+        
+        # Insert job
+        return await self._db.upsert_job(
+            company_id=company_id,
+            title=job.get("title", ""),
+            job_url=job.get("job_url", ""),
+            location=job.get("location"),
+            other_locations=job.get("other_locations", []),
+            department=job.get("department"),
+            work_type=job.get("work_location_option"),
+            job_id=job.get("job_id"),
+        )
+    
+    async def get_jobs_by_companies(self, company_names: List[str]) -> List[Dict[str, Any]]:
+        """Get jobs for multiple companies."""
+        return await self._db.get_jobs_by_companies(company_names)
+    
+    async def get_job_by_id(self, job_id: int) -> Optional[Dict[str, Any]]:
+        """Get job by ID."""
+        return await self._db.get_job_by_id(job_id)

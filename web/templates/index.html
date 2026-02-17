@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+      <h2>Welcome to Job Finder</h2>
+      <p style="margin: 20px 0;">
+            Discover job opportunities from top tech companies matched to your profile.
+            We scrape jobs in real-time and use AI to find the best matches for you.
+      </p>
+
+      <h3 style="margin-top: 30px;">How it works:</h3>
+      <ol style="margin: 20px 0 30px 20px; line-height: 2;">
+            <li>Select companies you're interested in</li>
+            <li>Tell us about your skills and preferences</li>
+            <li>We scrape the latest jobs and match them to your profile</li>
+            <li>View personalized job recommendations</li>
+      </ol>
+
+      <a href="{{ url_for('preferences') }}" class="btn">Get Started →</a>
+</div>
+
+<div class="card">
+      <h3>Available Companies</h3>
+      <p style="margin-bottom: 20px; color: #666;">
+            We currently scrape jobs from {{ companies|length }} leading tech companies:
+      </p>
+      <div class="checkbox-grid">
+            {% for company in companies %}
+            <div style="padding: 10px; background: #f8f9fa; border-radius: 5px;">
+                  <strong>{{ company.name }}</strong>
+            </div>
+            {% endfor %}
+      </div>
+</div>
+{% endblock %}

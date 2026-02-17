@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}{{ job.title }} - Job Finder{% endblock %}
+
+{% block content %}
+<div class="card">
+      <a href="{{ url_for('results') }}" class="btn btn-secondary" style="margin-bottom: 20px;">← Back to Results</a>
+
+      {% if match_score %}
+      <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+            <div class="match-score" style="font-size: 1.2rem;">{{ match_score }}% Overall Match</div>
+            {% if for_me_score %}
+            <div class="match-score" style="font-size: 1.1rem; background: linear-gradient(135deg, #667eea 0%, #43a047 100%);">
+                  🎯 For You: {{ for_me_score }}%
+            </div>
+            {% endif %}
+            {% if for_them_score %}
+            <div class="match-score" style="font-size: 1.1rem; background: linear-gradient(135deg, #764ba2 0%, #f06292 100%);">
+                  💼 For Them: {{ for_them_score }}%
+            </div>
+            {% endif %}
+      </div>
+      {% endif %}
+
+      <h2 class="job-title">{{ job.title }}</h2>
+
+      <div class="job-meta" style="font-size: 16px; margin-bottom: 30px;">
+            <span>🏢 {{ job.company }}</span>
+            <span>📍 {{ job.location }}</span>
+            {% if job.work_location_option %}
+            <span>💼 {{ job.work_location_option|title }}</span>
+            {% endif %}
+            {% if job.department %}
+            <span>🏷️ {{ job.department }}</span>
+            {% endif %}
+            {% if job.posted_date %}
+            <span>📅 {{ job.posted_date }}</span>
+            {% endif %}
+            {% if job.job_id %}
+            <span>🔖 {{ job.job_id }}</span>
+            {% endif %}
+      </div>
+
+      {% if job.other_locations %}
+      <div style="margin-bottom: 20px;">
+            <strong>Other locations:</strong>
+            {{ job.other_locations|join(', ') }}
+      </div>
+      {% endif %}
+
+      {% if job.for_me_reasoning %}
+      <div style="background: #f0f7ff; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+            <h3 style="color: #667eea; margin-bottom: 10px;">🎯 Why This Job is Good For You</h3>
+            <p style="line-height: 1.8; color: #333;">{{ job.for_me_reasoning }}</p>
+            
+            {% if job.for_me_dimensions %}
+            <div style="margin-top: 15px;">
+                  <strong>Detailed Breakdown:</strong>
+                  <ul style="margin: 10px 0 0 20px;">
+                        {% for dimension, score in job.for_me_dimensions.items() %}
+                        <li>{{ dimension|replace('_', ' ')|title }}: {{ score }}%</li>
+                        {% endfor %}
+                  </ul>
+            </div>
+            {% endif %}
+      </div>
+      {% endif %}
+
+      {% if job.for_them_reasoning %}
+      <div style="background: #fff0f7; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+            <h3 style="color: #764ba2; margin-bottom: 10px;">💼 Why You're a Good Fit For Them</h3>
+            <p style="line-height: 1.8; color: #333;">{{ job.for_them_reasoning }}</p>
+            
+            {% if job.for_them_dimensions %}
+            <div style="margin-top: 15px;">
+                  <strong>Detailed Breakdown:</strong>
+                  <ul style="margin: 10px 0 0 20px;">
+                        {% for dimension, score in job.for_them_dimensions.items() %}
+                        <li>{{ dimension|replace('_', ' ')|title }}: {{ score }}%</li>
+                        {% endfor %}
+                  </ul>
+            </div>
+            {% endif %}
+      </div>
+      {% endif %}
+
+      <div style="margin-top: 30px;">
+            <a href="{{ job.job_url }}" target="_blank" class="btn">Apply on Company Website →</a>
+      </div>
+</div>
+{% endblock %}

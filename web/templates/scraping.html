@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Scraping Jobs - Job Finder{% endblock %}
+
+{% block content %}
+<div class="card">
+      <div class="loading">
+            <div class="spinner"></div>
+            <h2>Scraping Jobs...</h2>
+            <p id="status">Initializing scrapers for {{ companies|length }} companies...</p>
+            <div id="progress" style="margin-top: 20px;"></div>
+      </div>
+</div>
+
+<script>
+      // Trigger scraping via API
+      async function startScraping() {
+            const statusEl = document.getElementById('status');
+            const progressEl = document.getElementById('progress');
+
+            try {
+                  statusEl.textContent = 'Scraping job listings...';
+
+                  const response = await fetch('/api/scrape', {
+                        method: 'POST',
+                        headers: {
+                              'Content-Type': 'application/json'
+                        }
+                  });
+
+                  const data = await response.json();
+
+                  if (data.success) {
+                        statusEl.textContent = `Successfully scraped ${data.job_count} jobs!`;
+                        progressEl.innerHTML = '<div class="alert alert-success">Redirecting to results...</div>';
+
+                        setTimeout(() => {
+                              window.location.href = '/results';
+                        }, 2000);
+                  } else {
+                        throw new Error(data.error || 'Scraping failed');
+                  }
+            } catch (error) {
+                  statusEl.textContent = 'Error occurred';
+                  progressEl.innerHTML = `<div class="alert alert-error">
+                <strong>Error:</strong> ${error.message}
+                <br><br>
+                <a href="/preferences" class="btn">Try Again</a>
+            </div>`;
+            }
+      }
+
+      // Start scraping when page loads
+      window.addEventListener('load', startScraping);
+</script>
+{% endblock %}

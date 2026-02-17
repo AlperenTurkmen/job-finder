@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Job Results - Job Finder{% endblock %}
+
+{% block content %}
+<div class="card">
+      <h2>Your Job Matches</h2>
+      <p style="margin-bottom: 20px; color: #666;">
+            Found {{ jobs|length }} jobs matching your preferences (from {{ total_jobs }} total)
+      </p>
+
+      <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+            <a href="{{ url_for('preferences') }}" class="btn btn-secondary">Update Preferences</a>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Start Over</a>
+      </div>
+</div>
+
+{% if jobs %}
+{% for job in jobs %}
+<div class="job-card">
+      <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+            <div class="match-score">{{ job.match_score }}% Overall</div>
+            <div class="match-score" style="background: linear-gradient(135deg, #667eea 0%, #43a047 100%);">
+                  🎯 For You: {{ job.for_me_score }}%
+            </div>
+            <div class="match-score" style="background: linear-gradient(135deg, #764ba2 0%, #f06292 100%);">
+                  💼 For Them: {{ job.for_them_score }}%
+            </div>
+      </div>
+      
+      <h3 class="job-title">{{ job.title }}</h3>
+
+      <div class="job-meta">
+            <span>🏢 {{ job.company }}</span>
+            <span>📍 {{ job.location }}</span>
+            {% if job.work_location_option %}
+            <span>💼 {{ job.work_location_option|title }}</span>
+            {% endif %}
+            {% if job.department %}
+            <span>🏷️ {{ job.department }}</span>
+            {% endif %}
+      </div>
+
+      {% if job.match_reasons %}
+      <div style="margin-top: 15px;">
+            <strong>LLM Analysis:</strong>
+            <ul style="margin: 10px 0 0 20px; color: #555; line-height: 1.8;">
+                  {% for reason in job.match_reasons %}
+                  <li>{{ reason }}</li>
+                  {% endfor %}
+            </ul>
+      </div>
+      {% endif %}
+
+      <div style="margin-top: 15px; display: flex; gap: 10px;">
+            <a href="{{ job.job_url }}" target="_blank" class="btn">View Job →</a>
+            <a href="{{ url_for('job_detail', job_id=job.id) }}" class="btn btn-secondary">Details</a>
+      </div>
+</div>
+{% endfor %}
+{% else %}
+<div class="card">
+      <div style="text-align: center; padding: 40px;">
+            <h3>No matches found</h3>
+            <p style="margin: 20px 0; color: #666;">
+                  We couldn't find any jobs matching your criteria. Try adjusting your preferences.
+            </p>
+            <a href="{{ url_for('preferences') }}" class="btn">Update Preferences</a>
+      </div>
+</div>
+{% endif %}
+{% endblock %}
