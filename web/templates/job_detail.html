@@ -10,12 +10,14 @@
       <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
             <div class="match-score" style="font-size: 1.2rem;">{{ match_score }}% Overall Match</div>
             {% if for_me_score %}
-            <div class="match-score" style="font-size: 1.1rem; background: linear-gradient(135deg, #667eea 0%, #43a047 100%);">
+            <div class="match-score"
+                  style="font-size: 1.1rem; background: linear-gradient(135deg, #667eea 0%, #43a047 100%);">
                   🎯 For You: {{ for_me_score }}%
             </div>
             {% endif %}
             {% if for_them_score %}
-            <div class="match-score" style="font-size: 1.1rem; background: linear-gradient(135deg, #764ba2 0%, #f06292 100%);">
+            <div class="match-score"
+                  style="font-size: 1.1rem; background: linear-gradient(135deg, #764ba2 0%, #f06292 100%);">
                   💼 For Them: {{ for_them_score }}%
             </div>
             {% endif %}
@@ -52,7 +54,7 @@
       <div style="background: #f0f7ff; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
             <h3 style="color: #667eea; margin-bottom: 10px;">🎯 Why This Job is Good For You</h3>
             <p style="line-height: 1.8; color: #333;">{{ job.for_me_reasoning }}</p>
-            
+
             {% if job.for_me_dimensions %}
             <div style="margin-top: 15px;">
                   <strong>Detailed Breakdown:</strong>
@@ -70,7 +72,7 @@
       <div style="background: #fff0f7; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
             <h3 style="color: #764ba2; margin-bottom: 10px;">💼 Why You're a Good Fit For Them</h3>
             <p style="line-height: 1.8; color: #333;">{{ job.for_them_reasoning }}</p>
-            
+
             {% if job.for_them_dimensions %}
             <div style="margin-top: 15px;">
                   <strong>Detailed Breakdown:</strong>
