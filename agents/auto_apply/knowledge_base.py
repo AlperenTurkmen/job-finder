@@ -56,28 +56,49 @@ class KnowledgeBase:
         return data
 
     def parse_and_persist_cv(self, cv_path: Path) -> Dict[str, object]:
-        reader = PdfReader(str(cv_path))
         pages: List[Dict[str, object]] = []
         structured_chunks: List[Dict[str, object]] = []
         chunk_id = 1
         self.chunks = [chunk for chunk in self.chunks if chunk.source != "cv"]
-        for idx, page in enumerate(reader.pages, start=1):
-            text = page.extract_text() or ""
+        
+        # Handle text files (.txt, .md) or PDF files
+        if cv_path.suffix.lower() in ['.txt', '.md']:
+            # Read text file directly
+            text = cv_path.read_text(encoding='utf-8')
             normalized = _normalize_text(text)
-            pages.append({"page": idx, "text": normalized})
+            pages.append({"page": 1, "text": normalized})
             for block in self._split_paragraphs(normalized):
                 structured_chunks.append(
                     {
                         "id": f"chunk-{chunk_id}",
-                        "page": idx,
+                        "page": 1,
                         "text": block,
                         "tokens": _tokenize(block),
                     }
                 )
                 chunk_id += 1
-                self.chunks.append(KnowledgeChunk(text=block, source="cv", page=idx))
+                self.chunks.append(KnowledgeChunk(text=block, source="cv", page=1))
+        else:
+            # Parse PDF file
+            reader = PdfReader(str(cv_path))
+            for idx, page in enumerate(reader.pages, start=1):
+                text = page.extract_text() or ""
+                normalized = _normalize_text(text)
+                pages.append({"page": idx, "text": normalized})
+                for block in self._split_paragraphs(normalized):
+                    structured_chunks.append(
+                        {
+                            "id": f"chunk-{chunk_id}",
+                            "page": idx,
+                            "text": block,
+                            "tokens": _tokenize(block),
+                        }
+                    )
+                    chunk_id += 1
+                    self.chunks.append(KnowledgeChunk(text=block, source="cv", page=idx))
+        
         payload = {
-            "source_pdf": str(cv_path),
+            "source_file": str(cv_path),
             "parsed_at": datetime.now(timezone.utc).isoformat(),
             "pages": pages,
             "chunks": structured_chunks,

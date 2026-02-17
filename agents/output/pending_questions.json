@@ -1,0 +1,386 @@
+{
+  "status": "awaiting_user",
+  "job_name": "790312263846",
+  "job_url": "https://explore.jobs.netflix.net/careers/job/790312263846",
+  "questions": [
+    {
+      "field_id": "ot-group-id-C0002",
+      "question": "Performance and Functionality Cookies",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The provided evidence (CV) does not contain any information regarding cookie preferences or consent for 'Performance and Functionality Cookies'. This information is not typically found in a candidate's professional profile."
+    },
+    {
+      "field_id": "ot-group-id-C0004",
+      "question": "Advertising Cookies",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "No supporting evidence found in profile/CV/cover letter."
+    },
+    {
+      "field_id": "vendor-search-handler",
+      "question": "Search\u2026",
+      "input_type": "input:text",
+      "required": false,
+      "reason": "No supporting evidence found in profile/CV/cover letter."
+    },
+    {
+      "field_id": "select-all-hosts-groups-handler",
+      "question": "checkbox label",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "No supporting evidence found in profile/CV/cover letter."
+    },
+    {
+      "field_id": "select-all-vendor-groups-handler",
+      "question": "checkbox label",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "No supporting evidence found in profile/CV/cover letter."
+    },
+    {
+      "field_id": "select-all-vendor-leg-handler",
+      "question": "checkbox label",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "No supporting evidence found in profile/CV/cover letter."
+    },
+    {
+      "field_id": "chkbox-id",
+      "question": "checkbox label",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "No supporting evidence found in profile/CV/cover letter."
+    },
+    {
+      "field_id": "g-recaptcha-response",
+      "question": "g-recaptcha-response",
+      "input_type": "textarea",
+      "required": false,
+      "reason": "No supporting evidence found in profile/CV/cover letter."
+    },
+    {
+      "field_id": "8be3b230-9bd0-4edb-8521-31709ba9d5e7",
+      "question": "8be3b230-9bd0-4edb-8521-31709ba9d5e7",
+      "input_type": "input:file",
+      "required": false,
+      "reason": "No supporting evidence found in profile/CV/cover letter."
+    },
+    {
+      "field_id": "Contact_Information_email",
+      "question": "Email",
+      "input_type": "input",
+      "required": false,
+      "reason": "The provided evidence describes the metadata of an email field (e.g., question, field type, required status) but does not contain an actual email address value to auto-fill the field."
+    },
+    {
+      "field_id": "Contact_Information_lastname",
+      "question": "Last name",
+      "input_type": "input",
+      "required": false,
+      "reason": "The provided evidence only contains the question/label for 'Last Name' but does not provide the actual value for the candidate's last name."
+    },
+    {
+      "field_id": "input-7",
+      "question": "Select country code",
+      "input_type": "input:text",
+      "required": false,
+      "reason": "The field asks for a 'country code', but the provided evidence only contains 'country' names (France, Germany) and does not explicitly state any country codes. Auto-filling would require inferring or guessing the codes from the names, which is not permitted."
+    },
+    {
+      "field_id": "Contact_Information_phone",
+      "question": "Phone Number",
+      "input_type": "input:text",
+      "required": false,
+      "reason": "The evidence describes metadata about the phone number field (question, type, requirements, appearance) but does not provide the actual phone number value to auto-fill."
+    },
+    {
+      "field_id": "input-10",
+      "question": "Country",
+      "input_type": "input:text",
+      "required": false,
+      "reason": "The evidence provides information about the 'Country' field type and options, but it does not explicitly state the candidate's current country. Therefore, the field cannot be auto-filled without user input."
+    },
+    {
+      "field_id": "Contact_Information_city",
+      "question": "City",
+      "input_type": "input",
+      "required": false,
+      "reason": "The provided evidence describes the 'City' field's properties but does not contain an actual city value for the candidate's contact information."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_gender",
+      "question": "Agender, What gender identity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding the candidate's gender identity."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_gender",
+      "question": "Gender non-conforming, What gender identity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding the candidate's gender identity."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_gender",
+      "question": "Genderfluid, What gender identity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding the candidate's gender identity."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_gender",
+      "question": "Genderqueer, What gender identity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding the candidate's gender identity."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_gender",
+      "question": "I choose not to disclose, What gender identity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding the candidate's gender identity."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_gender",
+      "question": "Man, What gender identity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding the candidate's gender identity."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_gender",
+      "question": "Non-binary, What gender identity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding the candidate's gender identity."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_gender",
+      "question": "Not Listed, What gender identity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding the candidate's gender identity."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_gender",
+      "question": "Woman, What gender identity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding the candidate's gender identity."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_raceEthnicity",
+      "question": "Arab, What race/ethnicity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The evidence provided does not contain any information about the candidate's race or ethnicity, which is required to answer the question 'White - Other White background, What race/ethnicity do you most closely identify with?'."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_raceEthnicity",
+      "question": "Asian or Asian British - Bangladeshi, What race/ethnicity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The evidence provided does not contain any information about the candidate's race or ethnicity, which is required to answer the question 'White - Other White background, What race/ethnicity do you most closely identify with?'."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_raceEthnicity",
+      "question": "Asian or Asian British - Chinese, What race/ethnicity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The evidence provided does not contain any information about the candidate's race or ethnicity, which is required to answer the question 'White - Other White background, What race/ethnicity do you most closely identify with?'."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_raceEthnicity",
+      "question": "Asian or Asian British - Indian, What race/ethnicity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The evidence provided does not contain any information about the candidate's race or ethnicity, which is required to answer the question 'White - Other White background, What race/ethnicity do you most closely identify with?'."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_raceEthnicity",
+      "question": "Asian or Asian British - Other Asian background, What race/ethnicity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The evidence provided does not contain any information about the candidate's race or ethnicity, which is required to answer the question 'White - Other White background, What race/ethnicity do you most closely identify with?'."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_raceEthnicity",
+      "question": "Asian or Asian British - Pakistani, What race/ethnicity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The evidence provided does not contain any information about the candidate's race or ethnicity, which is required to answer the question 'White - Other White background, What race/ethnicity do you most closely identify with?'."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_raceEthnicity",
+      "question": "Black, African, Caribbean, or Black British - African, What race/ethnicity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The evidence provided does not contain any information about the candidate's race or ethnicity, which is required to answer the question 'White - Other White background, What race/ethnicity do you most closely identify with?'."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_raceEthnicity",
+      "question": "Black, African, Caribbean, or Black British - Caribbean, What race/ethnicity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The evidence provided does not contain any information about the candidate's race or ethnicity, which is required to answer the question 'White - Other White background, What race/ethnicity do you most closely identify with?'."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_raceEthnicity",
+      "question": "Black, African, Caribbean, or Black British - Other Black, African, or Caribbean background, What race/ethnicity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The evidence provided does not contain any information about the candidate's race or ethnicity, which is required to answer the question 'White - Other White background, What race/ethnicity do you most closely identify with?'."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_raceEthnicity",
+      "question": "I choose not to disclose, What race/ethnicity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The evidence provided does not contain any information about the candidate's race or ethnicity, which is required to answer the question 'White - Other White background, What race/ethnicity do you most closely identify with?'."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_raceEthnicity",
+      "question": "Other Ethnic Group, What race/ethnicity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The evidence provided does not contain any information about the candidate's race or ethnicity, which is required to answer the question 'White - Other White background, What race/ethnicity do you most closely identify with?'."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_raceEthnicity",
+      "question": "White - English, Welsh, Scottish, Northern Irish, or British, What race/ethnicity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The evidence provided does not contain any information about the candidate's race or ethnicity, which is required to answer the question 'White - Other White background, What race/ethnicity do you most closely identify with?'."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_raceEthnicity",
+      "question": "White - Gypsy or Irish Traveler, What race/ethnicity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The evidence provided does not contain any information about the candidate's race or ethnicity, which is required to answer the question 'White - Other White background, What race/ethnicity do you most closely identify with?'."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_raceEthnicity",
+      "question": "White - Irish, What race/ethnicity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The evidence provided does not contain any information about the candidate's race or ethnicity, which is required to answer the question 'White - Other White background, What race/ethnicity do you most closely identify with?'."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_raceEthnicity",
+      "question": "White - Other White background, What race/ethnicity do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The evidence provided does not contain any information about the candidate's race or ethnicity, which is required to answer the question 'White - Other White background, What race/ethnicity do you most closely identify with?'."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_sexualOrientation",
+      "question": "Asexual, What sexual orientation do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding the candidate's sexual orientation."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_sexualOrientation",
+      "question": "Bisexual, What sexual orientation do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding the candidate's sexual orientation."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_sexualOrientation",
+      "question": "Gay, What sexual orientation do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding the candidate's sexual orientation."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_sexualOrientation",
+      "question": "Heterosexual, What sexual orientation do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding the candidate's sexual orientation."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_sexualOrientation",
+      "question": "I choose not to disclose, What sexual orientation do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding the candidate's sexual orientation."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_sexualOrientation",
+      "question": "Lesbian, What sexual orientation do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding the candidate's sexual orientation."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_sexualOrientation",
+      "question": "Not Listed, What sexual orientation do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding the candidate's sexual orientation."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_sexualOrientation",
+      "question": "Pansexual, What sexual orientation do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding the candidate's sexual orientation."
+    },
+    {
+      "field_id": "Self_ID_Questions_UK_sexualOrientation",
+      "question": "Queer, What sexual orientation do you most closely identify with? Please select all that apply.",
+      "input_type": "input:checkbox",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding the candidate's sexual orientation."
+    },
+    {
+      "field_id": "input-13",
+      "question": "Are you a person of transgender experience?",
+      "input_type": "input:text",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding whether the candidate is a person of transgender experience."
+    },
+    {
+      "field_id": "input-16",
+      "question": "Are you the primary caregiver of a dependent(child, parent, grandparent, family member, foster child, non-blood relative, etc.)",
+      "input_type": "input:text",
+      "required": false,
+      "reason": "The provided evidence does not contain any information regarding whether the candidate is a primary caregiver of a dependent. Therefore, this field cannot be auto-filled and requires user input."
+    },
+    {
+      "field_id": "input-19",
+      "question": "Would you consider yourself to be a person with a disability? For more information on this question, please click here.",
+      "input_type": "input:text",
+      "required": false,
+      "reason": "The provided evidence (CV, profile, cover letter) does not contain any information regarding the candidate's disability status. This is a sensitive personal question that cannot be inferred or guessed."
+    },
+    {
+      "field_id": "600e0f1e-bb37-4877-b008-ee94b35da87c",
+      "question": "600e0f1e-bb37-4877-b008-ee94b35da87c",
+      "input_type": "input:file",
+      "required": false,
+      "reason": "No supporting evidence found in profile/CV/cover letter."
+    },
+    {
+      "field_id": "input-22",
+      "question": "Are you currently working for Netflix as a contractor? (e.g. independent, vendor, or temporary worker)",
+      "input_type": "input:text",
+      "required": false,
+      "reason": "The provided evidence does not explicitly state whether the candidate is currently working for Netflix as a contractor. Mentions of 'Netflix' in personal name or email fields are not sufficient to infer current employment status with the company."
+    },
+    {
+      "field_id": "input-28",
+      "question": "Do you require sponsorship to legally work in the job location?",
+      "input_type": "input:text",
+      "required": false,
+      "reason": "The evidence provides options related to visa sponsorship from the candidate's profile ('No - Will require sponsorship', 'Require Sponsorship') and indicates the candidate's work location is London, UK. However, it does not explicitly state the candidate's direct answer to the question 'Do you require sponsorship to legally work in the job location?'. The presence of options does not confirm the candidate's selection or current sponsorship status."
+    }
+  ],
+  "instructions": "Answer the prompts directly in the terminal (type 'skip' to leave blank) or optionally pre-fill input/user_answers.json with field_id \u2192 answer pairs to auto-populate the prompts."
+}

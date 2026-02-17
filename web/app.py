@@ -23,6 +23,8 @@ from functools import wraps
 
 from utils.db_client import DatabaseClient
 from utils.logging import get_logger
+from web.question_discovery import QuestionDiscoveryService
+from agents.auto_apply.orchestrator import AutoApplyOrchestrator
 
 logger = get_logger(__name__)
 
@@ -106,8 +108,15 @@ async def api_scrape():
     try:
         from web.scraper_orchestrator import ScraperOrchestrator
         
+        # Check if user wants to discover questions automatically
+        data = request.get_json() or {}
+        discover_questions = data.get("discover_questions", False)
+        
         orchestrator = ScraperOrchestrator()
-        results = await orchestrator.scrape_companies(preferences["companies"])
+        results = await orchestrator.scrape_companies(
+            preferences["companies"],
+            discover_questions=discover_questions
+        )
         
         # Store in database
         db = DatabaseClient()
@@ -126,7 +135,8 @@ async def api_scrape():
         return jsonify({
             "success": True,
             "job_count": job_count,
-            "results": {k: len(v) for k, v in results.items()}
+            "results": {k: len(v) for k, v in results.items()},
+            "questions_discovered": discover_questions
         })
     
     except Exception as e:
@@ -184,6 +194,12 @@ async def results():
         return render_template("error.html", error=str(e))
 
 
+@app.route("/questions")
+def questions():
+    """Display discovered application questions."""
+    return render_template("questions.html")
+
+
 @app.route("/job/<int:job_id>")
 @async_route
 async def job_detail(job_id: int):
@@ -236,6 +252,167 @@ async def job_detail(job_id: int):
 def health():
     """Health check endpoint."""
     return jsonify({"status": "healthy", "timestamp": datetime.utcnow().isoformat()})
+
+
+@app.route("/api/discover-questions/<int:job_id>", methods=["POST"])
+@async_route
+async def discover_questions(job_id: int):
+    """Discover application questions for a specific job.
+    
+    This endpoint navigates to the job application page and extracts
+    all form fields without submitting. Useful for building user profiles.
+    """
+    try:
+        # Get job details
+        db = DatabaseClient()
+        await db.initialize()
+        job = await db.get_job_by_id(job_id)
+        await db.close()
+        
+        if not job:
+            return jsonify({"error": "Job not found"}), 404
+        
+        # Discover questions
+        discovery_service = QuestionDiscoveryService()
+        result = await discovery_service.discover_questions(
+            job_url=job["job_url"],
+            company_name=job["company"],
+            job_title=job["title"]
+        )
+        
+        return jsonify(result)
+    
+    except Exception as e:
+        logger.error(f"Question discovery failed: {e}", exc_info=True)
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/all-questions")
+def get_all_discovered_questions():
+    """Get all discovered application questions across all jobs."""
+    try:
+        discovery_service = QuestionDiscoveryService()
+        all_questions = discovery_service.get_all_questions()
+        return jsonify({
+            "success": True,
+            "total_files": len(all_questions),
+            "files": all_questions
+        })
+    except Exception as e:
+        logger.error(f"Failed to get questions: {e}", exc_info=True)
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/unique-questions")
+def get_unique_questions():
+    """Get all unique questions for profile template generation."""
+    try:
+        discovery_service = QuestionDiscoveryService()
+        unique_questions = discovery_service.get_unique_questions()
+        return jsonify({
+            "success": True,
+            "unique_count": len(unique_questions),
+            "questions": unique_questions
+        })
+    except Exception as e:
+        logger.error(f"Failed to get unique questions: {e}", exc_info=True)
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/profile-template")
+def generate_profile_template():
+    """Generate a profile template with all discovered questions.
+    
+    Users can download this and fill it out with their answers.
+    """
+    try:
+        discovery_service = QuestionDiscoveryService()
+        template = discovery_service.generate_profile_template()
+        return jsonify({
+            "success": True,
+            "template": template
+        })
+    except Exception as e:
+        logger.error(f"Failed to generate template: {e}", exc_info=True)
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/auto-apply/<int:job_id>", methods=["POST"])
+@async_route
+async def auto_apply_to_job(job_id: int):
+    """Auto-apply to a job using the multi-agent automation system.
+    
+    Requires user to have filled out profile.json and user_answers.json
+    with answers to application questions.
+    """
+    try:
+        # Get job details
+        db = DatabaseClient()
+        await db.initialize()
+        job = await db.get_job_by_id(job_id)
+        await db.close()
+        
+        if not job:
+            return jsonify({"error": "Job not found"}), 404
+        
+        # Get file paths from request or use defaults
+        data = request.get_json() or {}
+        wait_for_user = data.get("wait_for_user", False)  # Default to non-interactive
+        
+        base_path = Path(__file__).parent.parent
+        profile_path = base_path / "data" / "profile.json"
+        cv_path = base_path / "data" / "cv_library" / "resume.pdf"
+        cover_letter_path = base_path / "data" / "cover_letter.md"
+        answers_path = base_path / "data" / "user_answers.json"
+        
+        # Check required files exist
+        missing_files = []
+        if not profile_path.exists():
+            missing_files.append(str(profile_path))
+        if not cv_path.exists():
+            missing_files.append(str(cv_path))
+        
+        if missing_files:
+            return jsonify({
+                "error": "Missing required files",
+                "missing_files": missing_files,
+                "help": "Please ensure profile.json and resume.pdf exist in data/ directory"
+            }), 400
+        
+        # Read cover letter
+        cover_letter_text = ""
+        if cover_letter_path.exists():
+            cover_letter_text = cover_letter_path.read_text()
+        
+        # Run auto-apply orchestrator
+        orchestrator = AutoApplyOrchestrator(base_path)
+        
+        # Run asynchronously
+        result = await asyncio.get_event_loop().run_in_executor(
+            None,
+            orchestrator.run,
+            job["job_url"],
+            str(cover_letter_path) if cover_letter_path.exists() else cover_letter_text,
+            profile_path,
+            cv_path,
+            wait_for_user,
+            answers_path if answers_path.exists() else None
+        )
+        
+        # Store result in database if successful
+        if result.get("applied"):
+            # You can add a status update here if desired
+            logger.info(f"Successfully applied to job {job_id}: {job['title']}")
+        
+        return jsonify(result)
+    
+    except Exception as e:
+        logger.error(f"Auto-apply failed: {e}", exc_info=True)
+        return jsonify({
+            "error": str(e),
+            "applied": False,
+            "reason": "exception"
+        }), 500
 
 
 if __name__ == "__main__":

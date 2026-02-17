@@ -1,0 +1,95 @@
+{
+      "personal_info": {
+            "name": "Your Full Name",
+            "email": "your.email@example.com",
+            "phone": "+1234567890",
+            "location": "Amsterdam, Netherlands",
+            "linkedin": "https://linkedin.com/in/yourprofile",
+            "github": "https://github.com/yourusername"
+      },
+      "professional_summary": {
+            "title": "Software Engineer",
+            "years_experience": 5,
+            "summary": "Experienced software engineer with expertise in full-stack development, cloud architecture, and AI/ML systems."
+      },
+      "skills": {
+            "programming_languages": [
+                  "Python",
+                  "JavaScript",
+                  "TypeScript",
+                  "Go"
+            ],
+            "frameworks": [
+                  "React",
+                  "Node.js",
+                  "Django",
+                  "FastAPI",
+                  "Flask"
+            ],
+            "databases": [
+                  "PostgreSQL",
+                  "MongoDB",
+                  "Redis"
+            ],
+            "cloud_platforms": [
+                  "AWS",
+                  "GCP",
+                  "Azure"
+            ],
+            "tools": [
+                  "Docker",
+                  "Kubernetes",
+                  "Git",
+                  "CI/CD"
+            ],
+            "specializations": [
+                  "Machine Learning",
+                  "Web Development",
+                  "API Design",
+                  "System Architecture"
+            ]
+      },
+      "work_experience": [
+            {
+                  "company": "Tech Company",
+                  "title": "Senior Software Engineer",
+                  "location": "Amsterdam, Netherlands",
+                  "start_date": "2020-01",
+                  "end_date": "present",
+                  "description": "Led development of microservices architecture serving 1M+ users. Built AI-powered recommendation system increasing engagement by 40%."
+            },
+            {
+                  "company": "Startup Inc",
+                  "title": "Software Engineer",
+                  "location": "Remote",
+                  "start_date": "2018-06",
+                  "end_date": "2019-12",
+                  "description": "Developed full-stack web applications using React and Node.js. Implemented CI/CD pipelines reducing deployment time by 60%."
+            }
+      ],
+      "education": [
+            {
+                  "institution": "University Name",
+                  "degree": "Bachelor of Science in Computer Science",
+                  "location": "City, Country",
+                  "graduation_year": 2018
+            }
+      ],
+      "preferences": {
+            "job_titles": [
+                  "Software Engineer",
+                  "Backend Engineer",
+                  "Full Stack Developer",
+                  "ML Engineer"
+            ],
+            "locations": [
+                  "Amsterdam",
+                  "London",
+                  "Berlin",
+                  "Remote"
+            ],
+            "remote_preference": "hybrid",
+            "salary_expectation": "€70,000 - €100,000",
+            "availability": "2 weeks notice"
+      }
+}

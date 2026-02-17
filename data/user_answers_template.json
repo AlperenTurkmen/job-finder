@@ -1,0 +1,96 @@
+{
+      "personal_info": {
+            "first_name": {
+                  "question": "First Name",
+                  "type": "text",
+                  "required": true,
+                  "answer": "YOUR_FIRST_NAME_HERE"
+            },
+            "last_name": {
+                  "question": "Last Name",
+                  "type": "text",
+                  "required": true,
+                  "answer": "YOUR_LAST_NAME_HERE"
+            },
+            "email": {
+                  "question": "Email Address",
+                  "type": "email",
+                  "required": true,
+                  "answer": "your.email@example.com"
+            },
+            "phone": {
+                  "question": "Phone Number",
+                  "type": "tel",
+                  "required": true,
+                  "answer": "+1234567890"
+            },
+            "linkedin": {
+                  "question": "LinkedIn Profile",
+                  "type": "url",
+                  "required": false,
+                  "answer": "https://linkedin.com/in/yourprofile"
+            },
+            "github": {
+                  "question": "GitHub Profile",
+                  "type": "url",
+                  "required": false,
+                  "answer": "https://github.com/yourusername"
+            },
+            "portfolio": {
+                  "question": "Portfolio Website",
+                  "type": "url",
+                  "required": false,
+                  "answer": "https://yourportfolio.com"
+            }
+      },
+      "professional": {
+            "work_authorization": {
+                  "question": "Are you authorized to work in the US?",
+                  "type": "select",
+                  "required": true,
+                  "options": [
+                        "Yes",
+                        "No",
+                        "Require Sponsorship"
+                  ],
+                  "answer": "Yes"
+            },
+            "visa_sponsorship": {
+                  "question": "Do you require visa sponsorship?",
+                  "type": "select",
+                  "required": true,
+                  "options": [
+                        "Yes",
+                        "No"
+                  ],
+                  "answer": "No"
+            },
+            "years_experience": {
+                  "question": "Years of relevant experience",
+                  "type": "number",
+                  "required": true,
+                  "answer": "5"
+            },
+            "salary_expectations": {
+                  "question": "Salary expectations",
+                  "type": "text",
+                  "required": false,
+                  "answer": "150000"
+            },
+            "start_date": {
+                  "question": "When can you start?",
+                  "type": "text",
+                  "required": false,
+                  "answer": "2 weeks notice"
+            }
+      },
+      "custom_questions": {
+            "_instructions": "This section will be populated with company-specific questions after you run 'Discover Questions'. Fill in your answers for each question.",
+            "_example": {
+                  "question": "Why are you interested in this role?",
+                  "type": "textarea",
+                  "required": true,
+                  "answer": "I am passionate about [company's mission] and have [X years] experience in [relevant field]..."
+            }
+      }
+}

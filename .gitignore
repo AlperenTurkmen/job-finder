@@ -38,6 +38,32 @@ data/output/pending_questions.*
 data/output/*.csv
 
 # DOM snapshots and browser captures
+output/dom_snapshots/
+
+# Test outputs
+pytest_cache/
+.pytest_cache/
+htmlcov/
+.coverage
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Development scripts
+dev_scripts/
+
+# Database dumps
+*.sql.gz
+*.dump
+
+# Memory store
+memory/profile_store/*.json
+
+# Batch results
+data/batch_apply_results.json
 data/output/dom_snapshots/
 
 # Misc scratch artifacts

@@ -89,5 +89,143 @@
       <div style="margin-top: 30px;">
             <a href="{{ job.job_url }}" target="_blank" class="btn">Apply on Company Website →</a>
       </div>
+
+      <!-- Auto-Apply Section -->
+      <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 8px; border: 2px solid #e0e0e0;">
+            <h3 style="color: #333; margin-bottom: 15px;">🤖 Automated Application</h3>
+            <p style="color: #666; margin-bottom: 15px;">
+                  Use our AI-powered automation to discover application questions or auto-fill and submit applications.
+            </p>
+
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;">
+                  <button id="discoverQuestionsBtn" class="btn btn-secondary" onclick="discoverQuestions({{ job.id }})">
+                        🔍 Discover Questions
+                  </button>
+                  <button id="autoApplyBtn" class="btn" onclick="autoApply({{ job.id }})"
+                        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        ⚡ Auto-Apply
+                  </button>
+            </div>
+
+            <!-- Status messages -->
+            <div id="autoApplyStatus" style="display: none; padding: 15px; border-radius: 5px; margin-top: 15px;"></div>
+
+            <details style="margin-top: 15px;">
+                  <summary style="cursor: pointer; color: #667eea; font-weight: 500;">ℹ️ How does this work?</summary>
+                  <div style="margin-top: 10px; padding: 15px; background: white; border-radius: 5px; font-size: 14px;">
+                        <p><strong>Discover Questions:</strong> We'll navigate to the job application page and extract
+                              all the questions asked (without applying). These questions are saved so you can prepare
+                              your answers.</p>
+                        <p style="margin-top: 10px;"><strong>Auto-Apply:</strong> Once you've filled out your profile
+                              with answers, this will automatically fill and submit the application for you.</p>
+                        <p style="margin-top: 10px; color: #e53935;"><strong>Requirements:</strong> Make sure you have
+                              <code>data/profile.json</code>, <code>data/user_answers.json</code>, and
+                              <code>data/cv_library/resume.pdf</code> files set up.</p>
+                  </div>
+            </details>
+      </div>
 </div>
+
+<script>
+      async function discoverQuestions(jobId) {
+            const btn = document.getElementById('discoverQuestionsBtn');
+            const statusDiv = document.getElementById('autoApplyStatus');
+
+            // Show loading state
+            btn.disabled = true;
+            btn.textContent = '🔄 Discovering...';
+            statusDiv.style.display = 'block';
+            statusDiv.style.background = '#e3f2fd';
+            statusDiv.style.color = '#1976d2';
+            statusDiv.innerHTML = '⏳ Navigating to application page and extracting questions...';
+
+            try {
+                  const response = await fetch(`/api/discover-questions/${jobId}`, {
+                        method: 'POST'
+                  });
+
+                  const result = await response.json();
+
+                  if (result.success) {
+                        statusDiv.style.background = '#e8f5e9';
+                        statusDiv.style.color = '#2e7d32';
+                        statusDiv.innerHTML = `
+                        ✅ Successfully discovered <strong>${result.questions_count}</strong> questions!<br>
+                        <small>Saved to: ${result.questions_file}</small><br>
+                        <a href="/questions" style="color: #1976d2; margin-top: 10px; display: inline-block;">View All Questions →</a>
+                  `;
+                  } else {
+                        statusDiv.style.background = '#ffebee';
+                        statusDiv.style.color = '#c62828';
+                        statusDiv.innerHTML = `❌ Error: ${result.error}`;
+                  }
+            } catch (error) {
+                  statusDiv.style.background = '#ffebee';
+                  statusDiv.style.color = '#c62828';
+                  statusDiv.innerHTML = `❌ Failed to discover questions: ${error.message}`;
+            } finally {
+                  btn.disabled = false;
+                  btn.textContent = '🔍 Discover Questions';
+            }
+      }
+
+      async function autoApply(jobId) {
+            const btn = document.getElementById('autoApplyBtn');
+            const statusDiv = document.getElementById('autoApplyStatus');
+
+            // Confirm before applying
+            if (!confirm('Are you sure you want to auto-apply to this job? Make sure your profile and CV are up to date.')) {
+                  return;
+            }
+
+            // Show loading state
+            btn.disabled = true;
+            btn.textContent = '⏳ Applying...';
+            statusDiv.style.display = 'block';
+            statusDiv.style.background = '#e3f2fd';
+            statusDiv.style.color = '#1976d2';
+            statusDiv.innerHTML = '⏳ Starting automated application process...<br><small>This may take 1-2 minutes.</small>';
+
+            try {
+                  const response = await fetch(`/api/auto-apply/${jobId}`, {
+                        method: 'POST',
+                        headers: {
+                              'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                              wait_for_user: false
+                        })
+                  });
+
+                  const result = await response.json();
+
+                  if (result.applied) {
+                        statusDiv.style.background = '#e8f5e9';
+                        statusDiv.style.color = '#2e7d32';
+                        statusDiv.innerHTML = `
+                        ✅ <strong>Application Submitted Successfully!</strong><br>
+                        <small>Details saved to: ${result.artifact}</small><br>
+                        <small>Steps completed: ${result.steps || 'N/A'}</small>
+                  `;
+                  } else {
+                        statusDiv.style.background = '#fff3e0';
+                        statusDiv.style.color = '#e65100';
+                        statusDiv.innerHTML = `
+                        ⚠️ <strong>Application Not Completed</strong><br>
+                        Reason: ${result.reason}<br>
+                        ${result.artifact ? `<small>Details: ${result.artifact}</small>` : ''}
+                        ${result.error ? `<br><small>Error: ${result.error}</small>` : ''}
+                  `;
+                  }
+            } catch (error) {
+                  statusDiv.style.background = '#ffebee';
+                  statusDiv.style.color = '#c62828';
+                  statusDiv.innerHTML = `❌ Failed to auto-apply: ${error.message}`;
+            } finally {
+                  btn.disabled = false;
+                  btn.textContent = '⚡ Auto-Apply';
+            }
+      }
+</script>
+
 {% endblock %}

@@ -1,53 +1,85 @@
-# Quick Start Guide - Job Finder Web Application
+# Quick Start Guide
 
-This guide will help you get the Job Finder web application running in minutes.
+Get Job Finder running in under 5 minutes.
 
-## Prerequisites Checklist
+## Prerequisites
 
-- [ ] Python 3.9 or higher installed
-- [ ] PostgreSQL installed and running
-- [ ] Git (to clone the repository)
+- ✅ Python 3.9 or higher
+- ✅ PostgreSQL installed and running
+- ✅ Internet connection
 
-## Step-by-Step Setup
+## Installation
 
-### 1. Install Python Dependencies
+### 1. Clone & Navigate
 
 ```bash
-cd /Users/alperenturkmen/Documents/GitHub/job-finder
-pip install -r requirements.txt
+git clone https://github.com/yourusername/job-finder.git
+cd job-finder
 ```
 
-### 2. Install Playwright Browser
+### 2. Install Dependencies
 
 ```bash
+pip install -r requirements.txt
 playwright install chromium
 ```
 
-### 3. Set Up PostgreSQL Database
+### 3. Set Up Database
 
 ```bash
 # Create database
 createdb jobfinder
 
-# Run schema
+# Load schema
 psql -d jobfinder -f database/schema.sql
 
-# Verify it worked
+# Verify (should show 0 rows)
 psql -d jobfinder -c "SELECT count(*) FROM companies;"
 ```
 
-### 4. Configure Environment Variables
+### 4. Configure Environment
 
 ```bash
-# Copy example environment file
+# Copy template
 cp .env.example .env
 
-# Edit .env file and add your credentials
-# You need to set:
-# - DATABASE_URL (e.g., postgresql://youruser:yourpass@localhost/jobfinder)
-# - GEMINI_API_KEY (get from https://makersuite.google.com/app/apikey)
-# - FLASK_SECRET_KEY (generate with: python -c "import secrets; print(secrets.token_hex(32))")
+# Edit .env with your favorite editor
+nano .env  # or vim, code, etc.
 ```
+
+**Required variables:**
+```bash
+DATABASE_URL=postgresql://yourusername@localhost/jobfinder
+GEMINI_API_KEY=your_api_key_from_google_ai_studio
+FLASK_SECRET_KEY=run_this_to_generate_$(python -c "import secrets; print(secrets.token_hex(32))")
+```
+
+**Get Gemini API Key:** Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+
+### 5. Start the Application
+
+```bash
+./start_web.sh
+```
+
+Or manually:
+```bash
+python web/app.py
+```
+
+### 6. Open in Browser
+
+Visit: **http://localhost:5000**
+
+## First Use
+
+1. **Select Companies** - Choose 2-3 companies to start
+2. **Enter Skills** - Add your key skills (Python, JavaScript, etc.)
+3. **Set Preferences** - Location, remote work, job titles
+4. **Click "Find Jobs"** - Wait 30-60 seconds for scraping
+5. **View Results** - See matched jobs ranked by fit
+
+## Troubleshooting
 
 ### 5. Start the Application
 

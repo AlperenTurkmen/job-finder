@@ -1,0 +1,117 @@
+{
+      "company": "Meta",
+      "job_title": "Software Engineer",
+      "job_url": "https://www.metacareers.com/jobs/123456",
+      "discovered_at": "2026-02-17T13:15:00",
+      "questions_count": 12,
+      "questions": [
+            {
+                  "field_name": "full_name",
+                  "label": "Full Name",
+                  "display_text": "Full Name",
+                  "type": "text",
+                  "required": true,
+                  "options": []
+            },
+            {
+                  "field_name": "email",
+                  "label": "E-mail",
+                  "display_text": "E-mail Address",
+                  "type": "email",
+                  "required": true,
+                  "options": []
+            },
+            {
+                  "field_name": "phone",
+                  "label": "Phone",
+                  "display_text": "Mobile Phone",
+                  "type": "tel",
+                  "required": true,
+                  "options": []
+            },
+            {
+                  "field_name": "linkedin_url",
+                  "label": "LinkedIn",
+                  "display_text": "LinkedIn URL",
+                  "type": "url",
+                  "required": false,
+                  "options": []
+            },
+            {
+                  "field_name": "github_url",
+                  "label": "GitHub",
+                  "display_text": "GitHub Profile",
+                  "type": "url",
+                  "required": false,
+                  "options": []
+            },
+            {
+                  "field_name": "city",
+                  "label": "City",
+                  "display_text": "Current City",
+                  "type": "text",
+                  "required": true,
+                  "options": []
+            },
+            {
+                  "field_name": "country",
+                  "label": "Country",
+                  "display_text": "Current Country",
+                  "type": "select",
+                  "required": true,
+                  "options": [
+                        "United Kingdom",
+                        "United States",
+                        "Germany",
+                        "France",
+                        "Other"
+                  ]
+            },
+            {
+                  "field_name": "years_of_experience",
+                  "label": "Experience",
+                  "display_text": "Years of Experience",
+                  "type": "number",
+                  "required": true,
+                  "options": []
+            },
+            {
+                  "field_name": "authorized_to_work",
+                  "label": "Work Authorization",
+                  "display_text": "Authorized to work in the UK?",
+                  "type": "radio",
+                  "required": true,
+                  "options": [
+                        "Yes",
+                        "No"
+                  ]
+            },
+            {
+                  "field_name": "require_visa",
+                  "label": "Visa Sponsorship",
+                  "display_text": "Do you require visa sponsorship?",
+                  "type": "radio",
+                  "required": true,
+                  "options": [
+                        "Yes",
+                        "No"
+                  ]
+            },
+            {
+                  "field_name": "resume",
+                  "label": "Resume",
+                  "display_text": "Upload Resume",
+                  "type": "file",
+                  "required": true,
+                  "options": []
+            },
+            {
+                  "field_name": "diversity_statement",
+                  "label": "Diversity",
+                  "display_text": "Optional: Share your perspective on diversity",
+                  "type": "textarea",
+                  "required": false,
+                  "options": []
+            }
+      ]
+}

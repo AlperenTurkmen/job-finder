@@ -185,37 +185,86 @@ class NetflixScraper(BaseScraper):
         # Extract job data from the page's embedded JSON (includes IDs for URLs)
         html_content = await page.content()
         
-        # Find complete job objects using a more comprehensive regex
-        # Captures all fields between { and }
-        job_pattern = r'\{"id":\s*(\d+),\s*"name":\s*"([^"]+)",\s*"location":\s*"([^"]*)",\s*"locations":\s*\[([^\]]*)\][^}]*"department":\s*"([^"]*)"[^}]*"business_unit":\s*"([^"]*)"[^}]*"ats_job_id":\s*"([^"]*)"[^}]*"work_location_option":\s*"([^"]*)"'
-        matches = re.findall(job_pattern, html_content)
+        # Improved: Find all job objects in embedded JSON
+        # Look for job objects with flexible field ordering
+        # Match pattern: {"id": <number>, ...other fields... }
+        job_objects_pattern = r'\{"id":\s*(\d+)[^}]{50,800}?"name":\s*"([^"]+)"[^}]{0,800}?\}'
+        id_name_matches = re.findall(job_objects_pattern, html_content, re.DOTALL)
         
-        if matches:
-            for match in matches:
-                job_id_num, name, location, locations_str, department, business_unit, ats_job_id, work_option = match
+        if id_name_matches:
+            # Found job data in JSON format
+            for job_id_num, name in id_name_matches:
+                # Try to extract more details from the full JSON object for this job
+                # Find the complete JSON object containing this id
+                job_obj_pattern = rf'\{{"id":\s*{job_id_num}[^}}]+\}}'
+                full_match = re.search(job_obj_pattern, html_content, re.DOTALL)
                 
-                # Parse locations array
-                locations = re.findall(r'"([^"]+)"', locations_str)
+                location = ""
+                department = ""
+                business_unit = ""
+                ats_job_id = ""
+                work_option = ""
+                locations = []
                 
-                # Decode HTML entities (e.g., &amp; -> &)
+                if full_match:
+                    job_json_str = full_match.group()
+                    
+                    # Extract individual fields with more flexible regex
+                    loc_match = re.search(r'"location":\s*"([^"]*)"', job_json_str)
+                    if loc_match:
+                        location = loc_match.group(1)
+                    
+                    dept_match = re.search(r'"department":\s*"([^"]*)"', job_json_str)
+                    if dept_match:
+                        department = dept_match.group(1)
+                    
+                    bu_match = re.search(r'"business_unit":\s*"([^"]*)"', job_json_str)
+                    if bu_match:
+                        business_unit = bu_match.group(1)
+                    
+                    ats_match = re.search(r'"ats_job_id":\s*"([^"]*)"', job_json_str)
+                    if ats_match:
+                        ats_job_id = ats_match.group(1)
+                    
+                    work_match = re.search(r'"work_location_option":\s*"([^"]*)"', job_json_str)
+                    if work_match:
+                        work_option = work_match.group(1)
+                    
+                    # Extract locations array
+                    locs_match = re.search(r'"locations":\s*\[([^\]]*)\]', job_json_str)
+                    if locs_match:
+                        locations = re.findall(r'"([^"]+)"', locs_match.group(1))
+                
+                # Decode HTML entities
                 import html
                 department = html.unescape(department)
                 name = html.unescape(name)
+                location = html.unescape(location)
                 
                 job_url = f"https://explore.jobs.netflix.net/careers/job/{job_id_num}"
                 jobs.append(NetflixJobListing(
                     title=name,
                     location=location.replace(",", ", "),
-                    locations=[loc.replace(",", ", ") for loc in locations],
+                    locations=[loc.replace(",", ", ") for loc in locations] if locations else [location],
                     department=department,
                     business_unit=business_unit,
                     work_location_option=work_option,
-                    job_id=ats_job_id,
+                    job_id=ats_job_id or str(job_id_num),
                     job_url=job_url,
                 ))
         else:
-            # Fallback: extract from DOM (limited data available)
+            # Fallback: extract from DOM (try to get job ID from data attributes or page interactions)
             job_cards = await page.query_selector_all(".position-card")
+            
+            # Try to extract job IDs from embedded JSON and match with DOM titles
+            job_ids_by_title = {}
+            id_title_pattern = r'\{"id":\s*(\d+)[^}]*?"name":\s*"([^"]+)"'
+            id_title_matches = re.findall(id_title_pattern, html_content)
+            for job_id, title in id_title_matches:
+                # Normalize title for matching
+                import html
+                normalized_title = html.unescape(title).strip()
+                job_ids_by_title[normalized_title] = job_id
             
             for card in job_cards:
                 try:
@@ -224,10 +273,19 @@ class NetflixScraper(BaseScraper):
                     
                     location_el = await card.query_selector(".position-location")
                     location = (await location_el.inner_text()).strip() if location_el else ""
+                    # Remove location icon if present
+                    location = location.replace("", "").strip()
                     
                     # Try to get department from card
                     dept_el = await card.query_selector("[id^='position-department']")
                     department = (await dept_el.inner_text()).strip() if dept_el else ""
+                    
+                    # Try to match title with extracted job IDs
+                    job_url = ""
+                    job_id = ""
+                    if title in job_ids_by_title:
+                        job_id = job_ids_by_title[title]
+                        job_url = f"https://explore.jobs.netflix.net/careers/job/{job_id}"
                     
                     if title:
                         jobs.append(NetflixJobListing(
@@ -237,8 +295,8 @@ class NetflixScraper(BaseScraper):
                             department=department,
                             business_unit="",
                             work_location_option="",
-                            job_id="",
-                            job_url="",
+                            job_id=job_id,
+                            job_url=job_url,
                         ))
                 except Exception:
                     continue

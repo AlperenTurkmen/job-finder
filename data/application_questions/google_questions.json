@@ -1,0 +1,134 @@
+{
+      "company": "Google",
+      "job_title": "Product Manager",
+      "job_url": "https://careers.google.com/jobs/results/123456",
+      "discovered_at": "2026-02-17T13:15:00",
+      "questions_count": 13,
+      "questions": [
+            {
+                  "field_name": "first_name",
+                  "label": "First name",
+                  "display_text": "First name",
+                  "type": "text",
+                  "required": true,
+                  "options": []
+            },
+            {
+                  "field_name": "last_name",
+                  "label": "Last name",
+                  "display_text": "Last name",
+                  "type": "text",
+                  "required": true,
+                  "options": []
+            },
+            {
+                  "field_name": "email_address",
+                  "label": "Email",
+                  "display_text": "Email address",
+                  "type": "email",
+                  "required": true,
+                  "options": []
+            },
+            {
+                  "field_name": "telephone",
+                  "label": "Phone",
+                  "display_text": "Telephone number",
+                  "type": "tel",
+                  "required": true,
+                  "options": []
+            },
+            {
+                  "field_name": "linkedin_profile",
+                  "label": "LinkedIn",
+                  "display_text": "LinkedIn profile URL",
+                  "type": "url",
+                  "required": false,
+                  "options": []
+            },
+            {
+                  "field_name": "location_city",
+                  "label": "City",
+                  "display_text": "City",
+                  "type": "text",
+                  "required": false,
+                  "options": []
+            },
+            {
+                  "field_name": "total_years_experience",
+                  "label": "Experience",
+                  "display_text": "Total years of professional experience",
+                  "type": "select",
+                  "required": true,
+                  "options": [
+                        "0-2",
+                        "3-5",
+                        "6-10",
+                        "11-15",
+                        "15+"
+                  ]
+            },
+            {
+                  "field_name": "education_level",
+                  "label": "Education",
+                  "display_text": "Highest level of education",
+                  "type": "select",
+                  "required": true,
+                  "options": [
+                        "Bachelor's",
+                        "Master's",
+                        "PhD",
+                        "Other"
+                  ]
+            },
+            {
+                  "field_name": "work_authorization_uk",
+                  "label": "UK Work Auth",
+                  "display_text": "Are you authorized to work in the UK?",
+                  "type": "select",
+                  "required": true,
+                  "options": [
+                        "Yes - UK Citizen",
+                        "Yes - Work Visa",
+                        "No - Will require sponsorship"
+                  ]
+            },
+            {
+                  "field_name": "start_date_availability",
+                  "label": "Start Date",
+                  "display_text": "When can you start?",
+                  "type": "date",
+                  "required": false,
+                  "options": []
+            },
+            {
+                  "field_name": "cv_file",
+                  "label": "CV",
+                  "display_text": "Upload CV/Resume",
+                  "type": "file",
+                  "required": true,
+                  "options": []
+            },
+            {
+                  "field_name": "how_did_you_hear",
+                  "label": "Referral Source",
+                  "display_text": "How did you hear about this role?",
+                  "type": "select",
+                  "required": false,
+                  "options": [
+                        "Google Jobs Board",
+                        "LinkedIn",
+                        "Referral",
+                        "Recruiter",
+                        "Other"
+                  ]
+            },
+            {
+                  "field_name": "additional_information",
+                  "label": "Additional Info",
+                  "display_text": "Additional information (optional)",
+                  "type": "textarea",
+                  "required": false,
+                  "options": []
+            }
+      ]
+}

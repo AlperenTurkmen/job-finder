@@ -1,102 +1,189 @@
-# job-finder
+# Job Finder
 
-A **multi-agent job application automation system** with a web interface for finding and applying to relevant jobs.
+A **multi-agent job application automation system** with a web interface for finding and applying to relevant jobs automatically.
+
+> 🚀 **New to Job Finder?** Check out [GET_STARTED.md](GET_STARTED.md) for a quick 3-step setup!
 
 ## Features
 
-### 🌐 Web Interface (NEW!)
-- **User-friendly web app** for finding jobs matched to your profile
-- Select companies, enter skills and preferences
-- Real-time scraping and intelligent job matching
-- See why each job matches your profile
-
-### 🤖 Automation Pipeline
-- **Multi-agent system** for automated job applications
-- LLM-powered scraping, scoring, and cover letter generation
-- Playwright-based form filling
+- 🌐 **Web Interface** - User-friendly app for job discovery and matching
+- 🤖 **AI-Powered** - LLM-based scraping, scoring, and cover letter generation
+- 🎯 **Smart Matching** - Intelligent job matching based on your profile
+- 🏢 **Multi-Company** - Support for Netflix, Meta, Google, IBM, and more
+- 📝 **Auto-Apply** - Automated form filling and job application submission
+- 💾 **Database** - PostgreSQL storage for persistent job data
 
 ## Quick Start
 
-### Web Interface (Recommended)
+### 5-Minute Setup
 
 ```bash
-# Install dependencies
+# 1. Install dependencies
 pip install -r requirements.txt
 playwright install chromium
 
-# Set up environment (see .env.example)
-cp .env.example .env
-# Edit .env with your DATABASE_URL, GEMINI_API_KEY, etc.
-
-# Set up database (see DATABASE_SETUP.md)
+# 2. Set up PostgreSQL database
+createdb jobfinder
 psql -d jobfinder -f database/schema.sql
 
-# Start the web application
+# 3. Configure environment
+cp .env.example .env
+# Edit .env and add:
+#   DATABASE_URL=postgresql://user:password@localhost/jobfinder
+#   GEMINI_API_KEY=your_api_key_here
+#   FLASK_SECRET_KEY=$(python -c "import secrets; print(secrets.token_hex(32))")
+
+# 4. Start the web application
 ./start_web.sh
-# Or: python web/app.py
 ```
 
-Visit http://localhost:5000 to use the web interface.
+Visit **http://localhost:5000** and start finding jobs!
 
-See [web/README.md](web/README.md) for detailed documentation.
-
-### Command-Line Pipeline
+### Alternative: Command-Line Usage
 
 ```bash
-# Set API key
-echo "GEMINI_API_KEY=your_key_here" > .env
-
-# Run the pipeline
+# Run the full pipeline
 python pipeline/run_apply_pipeline.py \
   --companies-csv data/companies/example_companies.csv \
   --max-companies 1 \
-  --max-urls 3 \
-  --apply-threshold 50
+  --max-urls 3
+```
+
+## Supported Companies
+
+- Netflix
+- Meta (Facebook)
+- Google
+- IBM
+- Samsung
+- Vodafone
+- Rockstar Games
+- Rebellion
+- Miniclip
+
+## How It Works
+
+1. **Select Companies** - Choose companies you want to apply to
+2. **Enter Preferences** - Your skills, location, job titles
+3. **AI Scraping** - Real-time job extraction from career pages
+4. **Smart Matching** - AI scores each job based on fit
+5. **Auto-Apply** - Automated application submission (optional)
+
+## Documentation
+
+- [QUICKSTART.md](QUICKSTART.md) - Detailed setup guide
+- [docs/DATABASE_SETUP.md](docs/DATABASE_SETUP.md) - Database configuration
+- [docs/AUTO_APPLY_GUIDE.md](docs/AUTO_APPLY_GUIDE.md) - Auto-apply feature guide
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - System architecture
+- [web/README.md](web/README.md) - Web app documentation
+
+## Configuration
+
+Create a `.env` file with these variables:
+
+```bash
+DATABASE_URL=postgresql://user:password@localhost/jobfinder
+GEMINI_API_KEY=your_gemini_api_key
+FLASK_SECRET_KEY=generate_random_32_byte_hex
+PORT=5000  # optional
+LOG_LEVEL=INFO  # optional
 ```
 
 ## Project Structure
 
 ```
 job-finder/
-├── web/                       # Web application (NEW!)
-│   ├── app.py                 # Flask web server
+├── web/                       # Flask web application
+│   ├── app.py                 # Main web server
 │   ├── scraper_orchestrator.py
-│   ├── job_matcher.py         # Job matching logic
+│   ├── job_matcher.py
 │   └── templates/             # HTML templates
-├── agents/                    # All agents in unified structure
-│   ├── discovery/             # Find careers pages and extract jobs
-│   ├── scoring/               # Evaluate roles for fit
-│   ├── cover_letter/          # Generate and refine cover letters
-│   ├── common/                # Shared utilities (Gemini client, profile)
-│   └── auto_apply/            # Playwright-based form filling
-├── pipeline/                  # Command-line entry points
-│   ├── run_apply_pipeline.py  # Full pipeline orchestrator
-│   └── scrape_and_normalize.py
-├── utils/                     # Shared utilities (logging, db_client)
-├── tools/                     # Search utilities and scrapers
+├── agents/                    # Multi-agent system
+│   ├── discovery/             # Job scraping and extraction
+│   ├── scoring/               # Job evaluation
+│   ├── cover_letter/          # Cover letter generation
+│   ├── auto_apply/            # Form filling automation
+│   └── common/                # Shared utilities
+├── pipeline/                  # Command-line pipelines
+├── tools/                     # Search and scraper utilities
 │   └── scrapers/              # Company-specific scrapers
-├── database/                  # Database schema
-├── config/                    # Prompts and workflows
+├── database/                  # PostgreSQL schema
 ├── data/                      # Input/output data
-└── tests/                     # Pytest tests
+├── config/                    # Prompts and workflows
+└── docs/                      # Documentation
 ```
 
-## Configuration
+## Requirements
 
-| Environment Variable | Purpose |
-|---------------------|---------|
-| `GEMINI_API_KEY` | Required for LLM calls |
-| `MOCK_LLM_RESPONSES` | Path to mock JSON for offline testing |
-| `LOG_LEVEL` | Logging verbosity (default: INFO) |
+- Python 3.9+
+- PostgreSQL 12+
+- Chromium (installed via Playwright)
+- Gemini API key (get from [Google AI Studio](https://makersuite.google.com/app/apikey))
 
-## Input Files
+## Development
 
-- `data/companies/*.csv` - Company name + careers URL
-- `data/profile.json` - Your profile for scoring
-- `data/user_uploaded_cv.pdf` - Your CV
+```bash
+# Run tests
+pytest tests/
 
-## Output Files
+# Check database connection
+python scripts/check_database.py
 
-- `data/roles/*.json` - Normalized job postings
+# Scrape specific company
+python scripts/quick_scrape.py --company netflix
+
+# Score existing jobs
+python scripts/score_jobs.py
+
+# Generate cover letter
+python scripts/generate_cover_letter.py
+```
+
+## Troubleshooting
+
+### Database Connection Issues
+```bash
+# Verify PostgreSQL is running
+pg_isready
+
+# Check database exists
+psql -l | grep jobfinder
+
+# Verify schema
+psql -d jobfinder -c "\dt"
+```
+
+### Playwright Issues
+```bash
+# Reinstall browsers
+playwright install --force chromium
+```
+
+### API Key Issues
+```bash
+# Test Gemini API key
+python -c "import os; from dotenv import load_dotenv; load_dotenv(); print('✅ API key loaded' if os.getenv('GEMINI_API_KEY') else '❌ API key missing')"
+```
+
+## Contributing
+
+This project uses:
+- **Flask** for web framework
+- **Playwright** for web scraping
+- **Gemini LLM** for AI features
+- **PostgreSQL** for data storage
+- **asyncio** for async operations
+
+## License
+
+MIT License - See LICENSE file for details
+
+## Support
+
+For detailed guides, see the [docs/](docs/) directory:
+- Setup & Installation: [QUICKSTART.md](QUICKSTART.md)
+- Auto-Apply: [docs/AUTO_APPLY_GUIDE.md](docs/AUTO_APPLY_GUIDE.md)
+- Architecture: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+- Database: [docs/DATABASE_SETUP.md](docs/DATABASE_SETUP.md)
 - `data/output/final_cover_letter.md` - Generated cover letter
 - `data/output/results.json` - Pipeline summary

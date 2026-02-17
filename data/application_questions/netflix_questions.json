@@ -1,0 +1,133 @@
+{
+      "company": "Netflix",
+      "job_title": "Senior Manager, UK Tax",
+      "job_url": "https://explore.jobs.netflix.net/careers/job/790312263846",
+      "discovered_at": "2026-02-17T13:15:00",
+      "questions_count": 15,
+      "questions": [
+            {
+                  "field_name": "first_name",
+                  "label": "First Name",
+                  "display_text": "First Name",
+                  "type": "text",
+                  "required": true,
+                  "options": []
+            },
+            {
+                  "field_name": "last_name",
+                  "label": "Last Name",
+                  "display_text": "Last Name",
+                  "type": "text",
+                  "required": true,
+                  "options": []
+            },
+            {
+                  "field_name": "email",
+                  "label": "Email Address",
+                  "display_text": "Email Address",
+                  "type": "email",
+                  "required": true,
+                  "options": []
+            },
+            {
+                  "field_name": "phone",
+                  "label": "Phone Number",
+                  "display_text": "Phone Number",
+                  "type": "tel",
+                  "required": true,
+                  "options": []
+            },
+            {
+                  "field_name": "linkedin",
+                  "label": "LinkedIn Profile",
+                  "display_text": "LinkedIn Profile (optional)",
+                  "type": "url",
+                  "required": false,
+                  "options": []
+            },
+            {
+                  "field_name": "current_company",
+                  "label": "Current Company",
+                  "display_text": "Current Company",
+                  "type": "text",
+                  "required": false,
+                  "options": []
+            },
+            {
+                  "field_name": "current_title",
+                  "label": "Current Job Title",
+                  "display_text": "Current Job Title",
+                  "type": "text",
+                  "required": false,
+                  "options": []
+            },
+            {
+                  "field_name": "years_experience",
+                  "label": "Years of Experience",
+                  "display_text": "Total Years of Professional Experience",
+                  "type": "number",
+                  "required": true,
+                  "options": []
+            },
+            {
+                  "field_name": "work_authorization",
+                  "label": "Work Authorization",
+                  "display_text": "Are you authorized to work in the UK?",
+                  "type": "select",
+                  "required": true,
+                  "options": [
+                        "Yes",
+                        "No",
+                        "Require Sponsorship"
+                  ]
+            },
+            {
+                  "field_name": "notice_period",
+                  "label": "Notice Period",
+                  "display_text": "Notice Period / Availability",
+                  "type": "text",
+                  "required": false,
+                  "options": []
+            },
+            {
+                  "field_name": "salary_expectations",
+                  "label": "Salary Expectations",
+                  "display_text": "Salary Expectations (optional)",
+                  "type": "text",
+                  "required": false,
+                  "options": []
+            },
+            {
+                  "field_name": "cv_upload",
+                  "label": "Resume/CV",
+                  "display_text": "Upload your Resume/CV",
+                  "type": "file",
+                  "required": true,
+                  "options": []
+            },
+            {
+                  "field_name": "cover_letter",
+                  "label": "Cover Letter",
+                  "display_text": "Cover Letter (optional)",
+                  "type": "textarea",
+                  "required": false,
+                  "options": []
+            },
+            {
+                  "field_name": "why_interested",
+                  "label": "Why Netflix?",
+                  "display_text": "Why are you interested in this role at Netflix?",
+                  "type": "textarea",
+                  "required": true,
+                  "options": []
+            },
+            {
+                  "field_name": "referral",
+                  "label": "Referral",
+                  "display_text": "Were you referred by a Netflix employee?",
+                  "type": "text",
+                  "required": false,
+                  "options": []
+            }
+      ]
+}

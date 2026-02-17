@@ -1,0 +1,329 @@
+{
+  "personal": {
+    "first_name": {
+      "question": "First name",
+      "field_type": "text",
+      "required_by": "2 companies",
+      "appears_in": [
+        "Google",
+        "Netflix"
+      ],
+      "options": null,
+      "answer": "John",
+      "can_extract_from_cv": true,
+      "source": "cv"
+    },
+    "last_name": {
+      "question": "Last Name",
+      "field_type": "text",
+      "required_by": "2 companies",
+      "appears_in": [
+        "Google",
+        "Netflix"
+      ],
+      "options": null,
+      "answer": "Smith",
+      "can_extract_from_cv": true,
+      "source": "cv"
+    },
+    "email": {
+      "question": "Email Address",
+      "field_type": "email",
+      "required_by": "3 companies",
+      "appears_in": [
+        "Google",
+        "Meta",
+        "Netflix"
+      ],
+      "options": null,
+      "answer": "john.smith@email.com",
+      "can_extract_from_cv": true,
+      "source": "cv"
+    },
+    "phone": {
+      "question": "Phone Number",
+      "field_type": "tel",
+      "required_by": "3 companies",
+      "appears_in": [
+        "Google",
+        "Meta",
+        "Netflix"
+      ],
+      "options": null,
+      "answer": "+44 20 1234 5678",
+      "can_extract_from_cv": true,
+      "source": "cv"
+    },
+    "full_name": {
+      "question": "Full Name",
+      "field_type": "text",
+      "required_by": "1 companies",
+      "appears_in": [
+        "Meta"
+      ],
+      "options": null,
+      "answer": "John Smith",
+      "can_extract_from_cv": true,
+      "source": "cv"
+    }
+  },
+  "contact": {
+    "linkedin": {
+      "question": "LinkedIn Profile (optional)",
+      "field_type": "url",
+      "required_by": "0 companies",
+      "appears_in": [
+        "Google",
+        "Meta",
+        "Netflix"
+      ],
+      "options": null,
+      "answer": "https://linkedin.com/in/johnsmith",
+      "can_extract_from_cv": true,
+      "source": "cv"
+    },
+    "city": {
+      "question": "City",
+      "field_type": "text",
+      "required_by": "1 companies",
+      "appears_in": [
+        "Google",
+        "Meta"
+      ],
+      "options": null,
+      "answer": "London",
+      "can_extract_from_cv": true,
+      "source": "cv"
+    },
+    "github": {
+      "question": "GitHub Profile",
+      "field_type": "url",
+      "required_by": "0 companies",
+      "appears_in": [
+        "Meta"
+      ],
+      "options": null,
+      "answer": "https://github.com/johnsmith",
+      "can_extract_from_cv": true,
+      "source": "cv"
+    },
+    "country": {
+      "question": "Current Country",
+      "field_type": "select",
+      "required_by": "1 companies",
+      "appears_in": [
+        "Meta"
+      ],
+      "options": [
+        "France",
+        "Germany",
+        "Other",
+        "United Kingdom",
+        "United States"
+      ],
+      "answer": "United Kingdom",
+      "can_extract_from_cv": true,
+      "source": "cv"
+    }
+  },
+  "professional": {
+    "current_company": {
+      "question": "Current Company",
+      "field_type": "text",
+      "required_by": "0 companies",
+      "appears_in": [
+        "Netflix"
+      ],
+      "options": null,
+      "answer": "Tech Corp Ltd",
+      "can_extract_from_cv": true,
+      "source": "cv"
+    },
+    "current_title": {
+      "question": "Current Job Title",
+      "field_type": "text",
+      "required_by": "0 companies",
+      "appears_in": [
+        "Netflix"
+      ],
+      "options": null,
+      "answer": "Senior Software Engineer",
+      "can_extract_from_cv": true,
+      "source": "cv"
+    },
+    "education": {
+      "question": "Highest level of education",
+      "field_type": "select",
+      "required_by": "1 companies",
+      "appears_in": [
+        "Google"
+      ],
+      "options": [
+        "Bachelor's",
+        "Master's",
+        "Other",
+        "PhD"
+      ],
+      "answer": "BSc Computer Science, University of London, 2016",
+      "can_extract_from_cv": true,
+      "source": "cv"
+    },
+    "years_experience": {
+      "question": "Years of Experience",
+      "field_type": "number",
+      "required_by": "1 companies",
+      "appears_in": [
+        "Meta"
+      ],
+      "options": null,
+      "answer": 8,
+      "can_extract_from_cv": true,
+      "source": "cv"
+    }
+  },
+  "work_eligibility": {
+    "work_authorization": {
+      "question": "Are you authorized to work in the UK?",
+      "field_type": "radio",
+      "required_by": "3 companies",
+      "appears_in": [
+        "Google",
+        "Meta",
+        "Netflix"
+      ],
+      "options": [
+        "No",
+        "No - Will require sponsorship",
+        "Require Sponsorship",
+        "Yes",
+        "Yes - UK Citizen",
+        "Yes - Work Visa"
+      ],
+      "answer": "Yes - UK Citizen",
+      "can_extract_from_cv": false,
+      "source": "cv"
+    },
+    "start_date": {
+      "question": "When can you start?",
+      "field_type": "date",
+      "required_by": "0 companies",
+      "appears_in": [
+        "Google",
+        "Netflix"
+      ],
+      "options": null,
+      "answer": "Immediately",
+      "can_extract_from_cv": false
+    },
+    "visa_sponsorship": {
+      "question": "Do you require visa sponsorship?",
+      "field_type": "radio",
+      "required_by": "1 companies",
+      "appears_in": [
+        "Meta"
+      ],
+      "options": [
+        "No",
+        "Yes"
+      ],
+      "answer": "No",
+      "can_extract_from_cv": false
+    }
+  },
+  "preferences": {
+    "salary_expectations": {
+      "question": "Salary Expectations (optional)",
+      "field_type": "text",
+      "required_by": "0 companies",
+      "appears_in": [
+        "Netflix"
+      ],
+      "options": null,
+      "answer": null,
+      "can_extract_from_cv": false,
+      "source": "cv"
+    }
+  },
+  "custom_answers": {
+    "cover_letter": {
+      "question": "Cover Letter (optional)",
+      "field_type": "textarea",
+      "required_by": "0 companies",
+      "appears_in": [
+        "Netflix"
+      ],
+      "options": null,
+      "answer": "",
+      "can_extract_from_cv": false
+    },
+    "referral": {
+      "question": "Were you referred by a Netflix employee?",
+      "field_type": "select",
+      "required_by": "0 companies",
+      "appears_in": [
+        "Google",
+        "Netflix"
+      ],
+      "options": [
+        "Google Jobs Board",
+        "LinkedIn",
+        "Other",
+        "Recruiter",
+        "Referral"
+      ],
+      "answer": "No",
+      "can_extract_from_cv": false
+    },
+    "total_years_of_professional_experience": {
+      "question": "Total years of professional experience",
+      "field_type": "select",
+      "required_by": "2 companies",
+      "appears_in": [
+        "Google",
+        "Netflix"
+      ],
+      "options": [
+        "0-2",
+        "11-15",
+        "15+",
+        "3-5",
+        "6-10"
+      ],
+      "answer": "6-10",
+      "can_extract_from_cv": false
+    },
+    "why_are_you_interested_in_this_role_at_netflix": {
+      "question": "Why are you interested in this role at Netflix?",
+      "field_type": "textarea",
+      "required_by": "1 companies",
+      "appears_in": [
+        "Netflix"
+      ],
+      "options": null,
+      "answer": "",
+      "can_extract_from_cv": false
+    },
+    "additional_information_(optional)": {
+      "question": "Additional information (optional)",
+      "field_type": "textarea",
+      "required_by": "0 companies",
+      "appears_in": [
+        "Google"
+      ],
+      "options": null,
+      "answer": "",
+      "can_extract_from_cv": false
+    },
+    "optional_share_your_perspective_on_diversity": {
+      "question": "Optional: Share your perspective on diversity",
+      "field_type": "textarea",
+      "required_by": "0 companies",
+      "appears_in": [
+        "Meta"
+      ],
+      "options": null,
+      "answer": "Prefer not to answer",
+      "can_extract_from_cv": false
+    }
+  }
+}

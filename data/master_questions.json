@@ -1,0 +1,1443 @@
+{
+  "generated_at": "2026-02-17",
+  "total_unique_fields": 24,
+  "total_companies": 3,
+  "merged_questions": {
+    "first_name": {
+      "normalized_name": "first_name",
+      "common_labels": [
+        "First name",
+        "First Name"
+      ],
+      "field_type": "text",
+      "appears_in_companies": [
+        "Google",
+        "Netflix"
+      ],
+      "companies_count": 2,
+      "required_in": 2,
+      "optional_in": 0,
+      "options": [],
+      "examples": [
+        {
+          "company": "Netflix",
+          "label": "First Name",
+          "required": true,
+          "type": "text"
+        },
+        {
+          "company": "Google",
+          "label": "First name",
+          "required": true,
+          "type": "text"
+        }
+      ]
+    },
+    "last_name": {
+      "normalized_name": "last_name",
+      "common_labels": [
+        "Last Name",
+        "Last name"
+      ],
+      "field_type": "text",
+      "appears_in_companies": [
+        "Google",
+        "Netflix"
+      ],
+      "companies_count": 2,
+      "required_in": 2,
+      "optional_in": 0,
+      "options": [],
+      "examples": [
+        {
+          "company": "Netflix",
+          "label": "Last Name",
+          "required": true,
+          "type": "text"
+        },
+        {
+          "company": "Google",
+          "label": "Last name",
+          "required": true,
+          "type": "text"
+        }
+      ]
+    },
+    "email": {
+      "normalized_name": "email",
+      "common_labels": [
+        "Email Address",
+        "E-mail Address",
+        "Email address"
+      ],
+      "field_type": "email",
+      "appears_in_companies": [
+        "Google",
+        "Meta",
+        "Netflix"
+      ],
+      "companies_count": 3,
+      "required_in": 3,
+      "optional_in": 0,
+      "options": [],
+      "examples": [
+        {
+          "company": "Netflix",
+          "label": "Email Address",
+          "required": true,
+          "type": "email"
+        },
+        {
+          "company": "Google",
+          "label": "Email address",
+          "required": true,
+          "type": "email"
+        },
+        {
+          "company": "Meta",
+          "label": "E-mail Address",
+          "required": true,
+          "type": "email"
+        }
+      ]
+    },
+    "phone": {
+      "normalized_name": "phone",
+      "common_labels": [
+        "Phone Number",
+        "Mobile Phone",
+        "Telephone number"
+      ],
+      "field_type": "tel",
+      "appears_in_companies": [
+        "Google",
+        "Meta",
+        "Netflix"
+      ],
+      "companies_count": 3,
+      "required_in": 3,
+      "optional_in": 0,
+      "options": [],
+      "examples": [
+        {
+          "company": "Netflix",
+          "label": "Phone Number",
+          "required": true,
+          "type": "tel"
+        },
+        {
+          "company": "Google",
+          "label": "Telephone number",
+          "required": true,
+          "type": "tel"
+        },
+        {
+          "company": "Meta",
+          "label": "Mobile Phone",
+          "required": true,
+          "type": "tel"
+        }
+      ]
+    },
+    "linkedin": {
+      "normalized_name": "linkedin",
+      "common_labels": [
+        "LinkedIn Profile (optional)",
+        "LinkedIn profile URL",
+        "LinkedIn URL"
+      ],
+      "field_type": "url",
+      "appears_in_companies": [
+        "Google",
+        "Meta",
+        "Netflix"
+      ],
+      "companies_count": 3,
+      "required_in": 0,
+      "optional_in": 3,
+      "options": [],
+      "examples": [
+        {
+          "company": "Netflix",
+          "label": "LinkedIn Profile (optional)",
+          "required": false,
+          "type": "url"
+        },
+        {
+          "company": "Google",
+          "label": "LinkedIn profile URL",
+          "required": false,
+          "type": "url"
+        },
+        {
+          "company": "Meta",
+          "label": "LinkedIn URL",
+          "required": false,
+          "type": "url"
+        }
+      ]
+    },
+    "current_company": {
+      "normalized_name": "current_company",
+      "common_labels": [
+        "Current Company"
+      ],
+      "field_type": "text",
+      "appears_in_companies": [
+        "Netflix"
+      ],
+      "companies_count": 1,
+      "required_in": 0,
+      "optional_in": 1,
+      "options": [],
+      "examples": [
+        {
+          "company": "Netflix",
+          "label": "Current Company",
+          "required": false,
+          "type": "text"
+        }
+      ]
+    },
+    "current_title": {
+      "normalized_name": "current_title",
+      "common_labels": [
+        "Current Job Title"
+      ],
+      "field_type": "text",
+      "appears_in_companies": [
+        "Netflix"
+      ],
+      "companies_count": 1,
+      "required_in": 0,
+      "optional_in": 1,
+      "options": [],
+      "examples": [
+        {
+          "company": "Netflix",
+          "label": "Current Job Title",
+          "required": false,
+          "type": "text"
+        }
+      ]
+    },
+    "total_years_of_professional_experience": {
+      "normalized_name": "total_years_of_professional_experience",
+      "common_labels": [
+        "Total years of professional experience",
+        "Total Years of Professional Experience"
+      ],
+      "field_type": "select",
+      "appears_in_companies": [
+        "Google",
+        "Netflix"
+      ],
+      "companies_count": 2,
+      "required_in": 2,
+      "optional_in": 0,
+      "options": [
+        "0-2",
+        "11-15",
+        "15+",
+        "3-5",
+        "6-10"
+      ],
+      "examples": [
+        {
+          "company": "Netflix",
+          "label": "Total Years of Professional Experience",
+          "required": true,
+          "type": "number"
+        },
+        {
+          "company": "Google",
+          "label": "Total years of professional experience",
+          "required": true,
+          "type": "select"
+        }
+      ]
+    },
+    "work_authorization": {
+      "normalized_name": "work_authorization",
+      "common_labels": [
+        "Are you authorized to work in the UK?",
+        "Authorized to work in the UK?"
+      ],
+      "field_type": "radio",
+      "appears_in_companies": [
+        "Google",
+        "Meta",
+        "Netflix"
+      ],
+      "companies_count": 3,
+      "required_in": 3,
+      "optional_in": 0,
+      "options": [
+        "No",
+        "No - Will require sponsorship",
+        "Require Sponsorship",
+        "Yes",
+        "Yes - UK Citizen",
+        "Yes - Work Visa"
+      ],
+      "examples": [
+        {
+          "company": "Netflix",
+          "label": "Are you authorized to work in the UK?",
+          "required": true,
+          "type": "select"
+        },
+        {
+          "company": "Google",
+          "label": "Are you authorized to work in the UK?",
+          "required": true,
+          "type": "select"
+        },
+        {
+          "company": "Meta",
+          "label": "Authorized to work in the UK?",
+          "required": true,
+          "type": "radio"
+        }
+      ]
+    },
+    "start_date": {
+      "normalized_name": "start_date",
+      "common_labels": [
+        "When can you start?",
+        "Notice Period / Availability"
+      ],
+      "field_type": "date",
+      "appears_in_companies": [
+        "Google",
+        "Netflix"
+      ],
+      "companies_count": 2,
+      "required_in": 0,
+      "optional_in": 2,
+      "options": [],
+      "examples": [
+        {
+          "company": "Netflix",
+          "label": "Notice Period / Availability",
+          "required": false,
+          "type": "text"
+        },
+        {
+          "company": "Google",
+          "label": "When can you start?",
+          "required": false,
+          "type": "date"
+        }
+      ]
+    },
+    "salary_expectations": {
+      "normalized_name": "salary_expectations",
+      "common_labels": [
+        "Salary Expectations (optional)"
+      ],
+      "field_type": "text",
+      "appears_in_companies": [
+        "Netflix"
+      ],
+      "companies_count": 1,
+      "required_in": 0,
+      "optional_in": 1,
+      "options": [],
+      "examples": [
+        {
+          "company": "Netflix",
+          "label": "Salary Expectations (optional)",
+          "required": false,
+          "type": "text"
+        }
+      ]
+    },
+    "cv_upload": {
+      "normalized_name": "cv_upload",
+      "common_labels": [
+        "Upload CV/Resume",
+        "Upload your Resume/CV",
+        "Upload Resume"
+      ],
+      "field_type": "file",
+      "appears_in_companies": [
+        "Google",
+        "Meta",
+        "Netflix"
+      ],
+      "companies_count": 3,
+      "required_in": 3,
+      "optional_in": 0,
+      "options": [],
+      "examples": [
+        {
+          "company": "Netflix",
+          "label": "Upload your Resume/CV",
+          "required": true,
+          "type": "file"
+        },
+        {
+          "company": "Google",
+          "label": "Upload CV/Resume",
+          "required": true,
+          "type": "file"
+        },
+        {
+          "company": "Meta",
+          "label": "Upload Resume",
+          "required": true,
+          "type": "file"
+        }
+      ]
+    },
+    "cover_letter": {
+      "normalized_name": "cover_letter",
+      "common_labels": [
+        "Cover Letter (optional)"
+      ],
+      "field_type": "textarea",
+      "appears_in_companies": [
+        "Netflix"
+      ],
+      "companies_count": 1,
+      "required_in": 0,
+      "optional_in": 1,
+      "options": [],
+      "examples": [
+        {
+          "company": "Netflix",
+          "label": "Cover Letter (optional)",
+          "required": false,
+          "type": "textarea"
+        }
+      ]
+    },
+    "why_are_you_interested_in_this_role_at_netflix": {
+      "normalized_name": "why_are_you_interested_in_this_role_at_netflix",
+      "common_labels": [
+        "Why are you interested in this role at Netflix?"
+      ],
+      "field_type": "textarea",
+      "appears_in_companies": [
+        "Netflix"
+      ],
+      "companies_count": 1,
+      "required_in": 1,
+      "optional_in": 0,
+      "options": [],
+      "examples": [
+        {
+          "company": "Netflix",
+          "label": "Why are you interested in this role at Netflix?",
+          "required": true,
+          "type": "textarea"
+        }
+      ]
+    },
+    "referral": {
+      "normalized_name": "referral",
+      "common_labels": [
+        "Were you referred by a Netflix employee?",
+        "How did you hear about this role?"
+      ],
+      "field_type": "select",
+      "appears_in_companies": [
+        "Google",
+        "Netflix"
+      ],
+      "companies_count": 2,
+      "required_in": 0,
+      "optional_in": 2,
+      "options": [
+        "Google Jobs Board",
+        "LinkedIn",
+        "Other",
+        "Recruiter",
+        "Referral"
+      ],
+      "examples": [
+        {
+          "company": "Netflix",
+          "label": "Were you referred by a Netflix employee?",
+          "required": false,
+          "type": "text"
+        },
+        {
+          "company": "Google",
+          "label": "How did you hear about this role?",
+          "required": false,
+          "type": "select"
+        }
+      ]
+    },
+    "city": {
+      "normalized_name": "city",
+      "common_labels": [
+        "City",
+        "Current City"
+      ],
+      "field_type": "text",
+      "appears_in_companies": [
+        "Google",
+        "Meta"
+      ],
+      "companies_count": 2,
+      "required_in": 1,
+      "optional_in": 1,
+      "options": [],
+      "examples": [
+        {
+          "company": "Google",
+          "label": "City",
+          "required": false,
+          "type": "text"
+        },
+        {
+          "company": "Meta",
+          "label": "Current City",
+          "required": true,
+          "type": "text"
+        }
+      ]
+    },
+    "education": {
+      "normalized_name": "education",
+      "common_labels": [
+        "Highest level of education"
+      ],
+      "field_type": "select",
+      "appears_in_companies": [
+        "Google"
+      ],
+      "companies_count": 1,
+      "required_in": 1,
+      "optional_in": 0,
+      "options": [
+        "Bachelor's",
+        "Master's",
+        "Other",
+        "PhD"
+      ],
+      "examples": [
+        {
+          "company": "Google",
+          "label": "Highest level of education",
+          "required": true,
+          "type": "select"
+        }
+      ]
+    },
+    "additional_information_(optional)": {
+      "normalized_name": "additional_information_(optional)",
+      "common_labels": [
+        "Additional information (optional)"
+      ],
+      "field_type": "textarea",
+      "appears_in_companies": [
+        "Google"
+      ],
+      "companies_count": 1,
+      "required_in": 0,
+      "optional_in": 1,
+      "options": [],
+      "examples": [
+        {
+          "company": "Google",
+          "label": "Additional information (optional)",
+          "required": false,
+          "type": "textarea"
+        }
+      ]
+    },
+    "full_name": {
+      "normalized_name": "full_name",
+      "common_labels": [
+        "Full Name"
+      ],
+      "field_type": "text",
+      "appears_in_companies": [
+        "Meta"
+      ],
+      "companies_count": 1,
+      "required_in": 1,
+      "optional_in": 0,
+      "options": [],
+      "examples": [
+        {
+          "company": "Meta",
+          "label": "Full Name",
+          "required": true,
+          "type": "text"
+        }
+      ]
+    },
+    "github": {
+      "normalized_name": "github",
+      "common_labels": [
+        "GitHub Profile"
+      ],
+      "field_type": "url",
+      "appears_in_companies": [
+        "Meta"
+      ],
+      "companies_count": 1,
+      "required_in": 0,
+      "optional_in": 1,
+      "options": [],
+      "examples": [
+        {
+          "company": "Meta",
+          "label": "GitHub Profile",
+          "required": false,
+          "type": "url"
+        }
+      ]
+    },
+    "country": {
+      "normalized_name": "country",
+      "common_labels": [
+        "Current Country"
+      ],
+      "field_type": "select",
+      "appears_in_companies": [
+        "Meta"
+      ],
+      "companies_count": 1,
+      "required_in": 1,
+      "optional_in": 0,
+      "options": [
+        "France",
+        "Germany",
+        "Other",
+        "United Kingdom",
+        "United States"
+      ],
+      "examples": [
+        {
+          "company": "Meta",
+          "label": "Current Country",
+          "required": true,
+          "type": "select"
+        }
+      ]
+    },
+    "years_experience": {
+      "normalized_name": "years_experience",
+      "common_labels": [
+        "Years of Experience"
+      ],
+      "field_type": "number",
+      "appears_in_companies": [
+        "Meta"
+      ],
+      "companies_count": 1,
+      "required_in": 1,
+      "optional_in": 0,
+      "options": [],
+      "examples": [
+        {
+          "company": "Meta",
+          "label": "Years of Experience",
+          "required": true,
+          "type": "number"
+        }
+      ]
+    },
+    "visa_sponsorship": {
+      "normalized_name": "visa_sponsorship",
+      "common_labels": [
+        "Do you require visa sponsorship?"
+      ],
+      "field_type": "radio",
+      "appears_in_companies": [
+        "Meta"
+      ],
+      "companies_count": 1,
+      "required_in": 1,
+      "optional_in": 0,
+      "options": [
+        "No",
+        "Yes"
+      ],
+      "examples": [
+        {
+          "company": "Meta",
+          "label": "Do you require visa sponsorship?",
+          "required": true,
+          "type": "radio"
+        }
+      ]
+    },
+    "optional_share_your_perspective_on_diversity": {
+      "normalized_name": "optional_share_your_perspective_on_diversity",
+      "common_labels": [
+        "Optional: Share your perspective on diversity"
+      ],
+      "field_type": "textarea",
+      "appears_in_companies": [
+        "Meta"
+      ],
+      "companies_count": 1,
+      "required_in": 0,
+      "optional_in": 1,
+      "options": [],
+      "examples": [
+        {
+          "company": "Meta",
+          "label": "Optional: Share your perspective on diversity",
+          "required": false,
+          "type": "textarea"
+        }
+      ]
+    }
+  },
+  "categorized": {
+    "essential": [
+      "first_name",
+      "last_name",
+      "email",
+      "phone",
+      "full_name"
+    ],
+    "contact_info": [
+      "linkedin",
+      "city",
+      "github",
+      "country"
+    ],
+    "work_eligibility": [
+      "work_authorization",
+      "start_date",
+      "visa_sponsorship"
+    ],
+    "professional": [
+      "current_company",
+      "current_title",
+      "education",
+      "years_experience"
+    ],
+    "application_specific": [
+      "cover_letter",
+      "referral"
+    ],
+    "preferences": [
+      "salary_expectations"
+    ],
+    "uploads": [
+      "cv_upload"
+    ],
+    "other": [
+      "total_years_of_professional_experience",
+      "why_are_you_interested_in_this_role_at_netflix",
+      "additional_information_(optional)",
+      "optional_share_your_perspective_on_diversity"
+    ]
+  },
+  "full_categorized": {
+    "essential": {
+      "first_name": {
+        "normalized_name": "first_name",
+        "common_labels": [
+          "First name",
+          "First Name"
+        ],
+        "field_type": "text",
+        "appears_in_companies": [
+          "Google",
+          "Netflix"
+        ],
+        "companies_count": 2,
+        "required_in": 2,
+        "optional_in": 0,
+        "options": [],
+        "examples": [
+          {
+            "company": "Netflix",
+            "label": "First Name",
+            "required": true,
+            "type": "text"
+          },
+          {
+            "company": "Google",
+            "label": "First name",
+            "required": true,
+            "type": "text"
+          }
+        ]
+      },
+      "last_name": {
+        "normalized_name": "last_name",
+        "common_labels": [
+          "Last Name",
+          "Last name"
+        ],
+        "field_type": "text",
+        "appears_in_companies": [
+          "Google",
+          "Netflix"
+        ],
+        "companies_count": 2,
+        "required_in": 2,
+        "optional_in": 0,
+        "options": [],
+        "examples": [
+          {
+            "company": "Netflix",
+            "label": "Last Name",
+            "required": true,
+            "type": "text"
+          },
+          {
+            "company": "Google",
+            "label": "Last name",
+            "required": true,
+            "type": "text"
+          }
+        ]
+      },
+      "email": {
+        "normalized_name": "email",
+        "common_labels": [
+          "Email Address",
+          "E-mail Address",
+          "Email address"
+        ],
+        "field_type": "email",
+        "appears_in_companies": [
+          "Google",
+          "Meta",
+          "Netflix"
+        ],
+        "companies_count": 3,
+        "required_in": 3,
+        "optional_in": 0,
+        "options": [],
+        "examples": [
+          {
+            "company": "Netflix",
+            "label": "Email Address",
+            "required": true,
+            "type": "email"
+          },
+          {
+            "company": "Google",
+            "label": "Email address",
+            "required": true,
+            "type": "email"
+          },
+          {
+            "company": "Meta",
+            "label": "E-mail Address",
+            "required": true,
+            "type": "email"
+          }
+        ]
+      },
+      "phone": {
+        "normalized_name": "phone",
+        "common_labels": [
+          "Phone Number",
+          "Mobile Phone",
+          "Telephone number"
+        ],
+        "field_type": "tel",
+        "appears_in_companies": [
+          "Google",
+          "Meta",
+          "Netflix"
+        ],
+        "companies_count": 3,
+        "required_in": 3,
+        "optional_in": 0,
+        "options": [],
+        "examples": [
+          {
+            "company": "Netflix",
+            "label": "Phone Number",
+            "required": true,
+            "type": "tel"
+          },
+          {
+            "company": "Google",
+            "label": "Telephone number",
+            "required": true,
+            "type": "tel"
+          },
+          {
+            "company": "Meta",
+            "label": "Mobile Phone",
+            "required": true,
+            "type": "tel"
+          }
+        ]
+      },
+      "full_name": {
+        "normalized_name": "full_name",
+        "common_labels": [
+          "Full Name"
+        ],
+        "field_type": "text",
+        "appears_in_companies": [
+          "Meta"
+        ],
+        "companies_count": 1,
+        "required_in": 1,
+        "optional_in": 0,
+        "options": [],
+        "examples": [
+          {
+            "company": "Meta",
+            "label": "Full Name",
+            "required": true,
+            "type": "text"
+          }
+        ]
+      }
+    },
+    "contact_info": {
+      "linkedin": {
+        "normalized_name": "linkedin",
+        "common_labels": [
+          "LinkedIn Profile (optional)",
+          "LinkedIn profile URL",
+          "LinkedIn URL"
+        ],
+        "field_type": "url",
+        "appears_in_companies": [
+          "Google",
+          "Meta",
+          "Netflix"
+        ],
+        "companies_count": 3,
+        "required_in": 0,
+        "optional_in": 3,
+        "options": [],
+        "examples": [
+          {
+            "company": "Netflix",
+            "label": "LinkedIn Profile (optional)",
+            "required": false,
+            "type": "url"
+          },
+          {
+            "company": "Google",
+            "label": "LinkedIn profile URL",
+            "required": false,
+            "type": "url"
+          },
+          {
+            "company": "Meta",
+            "label": "LinkedIn URL",
+            "required": false,
+            "type": "url"
+          }
+        ]
+      },
+      "city": {
+        "normalized_name": "city",
+        "common_labels": [
+          "City",
+          "Current City"
+        ],
+        "field_type": "text",
+        "appears_in_companies": [
+          "Google",
+          "Meta"
+        ],
+        "companies_count": 2,
+        "required_in": 1,
+        "optional_in": 1,
+        "options": [],
+        "examples": [
+          {
+            "company": "Google",
+            "label": "City",
+            "required": false,
+            "type": "text"
+          },
+          {
+            "company": "Meta",
+            "label": "Current City",
+            "required": true,
+            "type": "text"
+          }
+        ]
+      },
+      "github": {
+        "normalized_name": "github",
+        "common_labels": [
+          "GitHub Profile"
+        ],
+        "field_type": "url",
+        "appears_in_companies": [
+          "Meta"
+        ],
+        "companies_count": 1,
+        "required_in": 0,
+        "optional_in": 1,
+        "options": [],
+        "examples": [
+          {
+            "company": "Meta",
+            "label": "GitHub Profile",
+            "required": false,
+            "type": "url"
+          }
+        ]
+      },
+      "country": {
+        "normalized_name": "country",
+        "common_labels": [
+          "Current Country"
+        ],
+        "field_type": "select",
+        "appears_in_companies": [
+          "Meta"
+        ],
+        "companies_count": 1,
+        "required_in": 1,
+        "optional_in": 0,
+        "options": [
+          "France",
+          "Germany",
+          "Other",
+          "United Kingdom",
+          "United States"
+        ],
+        "examples": [
+          {
+            "company": "Meta",
+            "label": "Current Country",
+            "required": true,
+            "type": "select"
+          }
+        ]
+      }
+    },
+    "work_eligibility": {
+      "work_authorization": {
+        "normalized_name": "work_authorization",
+        "common_labels": [
+          "Are you authorized to work in the UK?",
+          "Authorized to work in the UK?"
+        ],
+        "field_type": "radio",
+        "appears_in_companies": [
+          "Google",
+          "Meta",
+          "Netflix"
+        ],
+        "companies_count": 3,
+        "required_in": 3,
+        "optional_in": 0,
+        "options": [
+          "No",
+          "No - Will require sponsorship",
+          "Require Sponsorship",
+          "Yes",
+          "Yes - UK Citizen",
+          "Yes - Work Visa"
+        ],
+        "examples": [
+          {
+            "company": "Netflix",
+            "label": "Are you authorized to work in the UK?",
+            "required": true,
+            "type": "select"
+          },
+          {
+            "company": "Google",
+            "label": "Are you authorized to work in the UK?",
+            "required": true,
+            "type": "select"
+          },
+          {
+            "company": "Meta",
+            "label": "Authorized to work in the UK?",
+            "required": true,
+            "type": "radio"
+          }
+        ]
+      },
+      "start_date": {
+        "normalized_name": "start_date",
+        "common_labels": [
+          "When can you start?",
+          "Notice Period / Availability"
+        ],
+        "field_type": "date",
+        "appears_in_companies": [
+          "Google",
+          "Netflix"
+        ],
+        "companies_count": 2,
+        "required_in": 0,
+        "optional_in": 2,
+        "options": [],
+        "examples": [
+          {
+            "company": "Netflix",
+            "label": "Notice Period / Availability",
+            "required": false,
+            "type": "text"
+          },
+          {
+            "company": "Google",
+            "label": "When can you start?",
+            "required": false,
+            "type": "date"
+          }
+        ]
+      },
+      "visa_sponsorship": {
+        "normalized_name": "visa_sponsorship",
+        "common_labels": [
+          "Do you require visa sponsorship?"
+        ],
+        "field_type": "radio",
+        "appears_in_companies": [
+          "Meta"
+        ],
+        "companies_count": 1,
+        "required_in": 1,
+        "optional_in": 0,
+        "options": [
+          "No",
+          "Yes"
+        ],
+        "examples": [
+          {
+            "company": "Meta",
+            "label": "Do you require visa sponsorship?",
+            "required": true,
+            "type": "radio"
+          }
+        ]
+      }
+    },
+    "professional": {
+      "current_company": {
+        "normalized_name": "current_company",
+        "common_labels": [
+          "Current Company"
+        ],
+        "field_type": "text",
+        "appears_in_companies": [
+          "Netflix"
+        ],
+        "companies_count": 1,
+        "required_in": 0,
+        "optional_in": 1,
+        "options": [],
+        "examples": [
+          {
+            "company": "Netflix",
+            "label": "Current Company",
+            "required": false,
+            "type": "text"
+          }
+        ]
+      },
+      "current_title": {
+        "normalized_name": "current_title",
+        "common_labels": [
+          "Current Job Title"
+        ],
+        "field_type": "text",
+        "appears_in_companies": [
+          "Netflix"
+        ],
+        "companies_count": 1,
+        "required_in": 0,
+        "optional_in": 1,
+        "options": [],
+        "examples": [
+          {
+            "company": "Netflix",
+            "label": "Current Job Title",
+            "required": false,
+            "type": "text"
+          }
+        ]
+      },
+      "education": {
+        "normalized_name": "education",
+        "common_labels": [
+          "Highest level of education"
+        ],
+        "field_type": "select",
+        "appears_in_companies": [
+          "Google"
+        ],
+        "companies_count": 1,
+        "required_in": 1,
+        "optional_in": 0,
+        "options": [
+          "Bachelor's",
+          "Master's",
+          "Other",
+          "PhD"
+        ],
+        "examples": [
+          {
+            "company": "Google",
+            "label": "Highest level of education",
+            "required": true,
+            "type": "select"
+          }
+        ]
+      },
+      "years_experience": {
+        "normalized_name": "years_experience",
+        "common_labels": [
+          "Years of Experience"
+        ],
+        "field_type": "number",
+        "appears_in_companies": [
+          "Meta"
+        ],
+        "companies_count": 1,
+        "required_in": 1,
+        "optional_in": 0,
+        "options": [],
+        "examples": [
+          {
+            "company": "Meta",
+            "label": "Years of Experience",
+            "required": true,
+            "type": "number"
+          }
+        ]
+      }
+    },
+    "application_specific": {
+      "cover_letter": {
+        "normalized_name": "cover_letter",
+        "common_labels": [
+          "Cover Letter (optional)"
+        ],
+        "field_type": "textarea",
+        "appears_in_companies": [
+          "Netflix"
+        ],
+        "companies_count": 1,
+        "required_in": 0,
+        "optional_in": 1,
+        "options": [],
+        "examples": [
+          {
+            "company": "Netflix",
+            "label": "Cover Letter (optional)",
+            "required": false,
+            "type": "textarea"
+          }
+        ]
+      },
+      "referral": {
+        "normalized_name": "referral",
+        "common_labels": [
+          "Were you referred by a Netflix employee?",
+          "How did you hear about this role?"
+        ],
+        "field_type": "select",
+        "appears_in_companies": [
+          "Google",
+          "Netflix"
+        ],
+        "companies_count": 2,
+        "required_in": 0,
+        "optional_in": 2,
+        "options": [
+          "Google Jobs Board",
+          "LinkedIn",
+          "Other",
+          "Recruiter",
+          "Referral"
+        ],
+        "examples": [
+          {
+            "company": "Netflix",
+            "label": "Were you referred by a Netflix employee?",
+            "required": false,
+            "type": "text"
+          },
+          {
+            "company": "Google",
+            "label": "How did you hear about this role?",
+            "required": false,
+            "type": "select"
+          }
+        ]
+      }
+    },
+    "preferences": {
+      "salary_expectations": {
+        "normalized_name": "salary_expectations",
+        "common_labels": [
+          "Salary Expectations (optional)"
+        ],
+        "field_type": "text",
+        "appears_in_companies": [
+          "Netflix"
+        ],
+        "companies_count": 1,
+        "required_in": 0,
+        "optional_in": 1,
+        "options": [],
+        "examples": [
+          {
+            "company": "Netflix",
+            "label": "Salary Expectations (optional)",
+            "required": false,
+            "type": "text"
+          }
+        ]
+      }
+    },
+    "uploads": {
+      "cv_upload": {
+        "normalized_name": "cv_upload",
+        "common_labels": [
+          "Upload CV/Resume",
+          "Upload your Resume/CV",
+          "Upload Resume"
+        ],
+        "field_type": "file",
+        "appears_in_companies": [
+          "Google",
+          "Meta",
+          "Netflix"
+        ],
+        "companies_count": 3,
+        "required_in": 3,
+        "optional_in": 0,
+        "options": [],
+        "examples": [
+          {
+            "company": "Netflix",
+            "label": "Upload your Resume/CV",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "company": "Google",
+            "label": "Upload CV/Resume",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "company": "Meta",
+            "label": "Upload Resume",
+            "required": true,
+            "type": "file"
+          }
+        ]
+      }
+    },
+    "other": {
+      "total_years_of_professional_experience": {
+        "normalized_name": "total_years_of_professional_experience",
+        "common_labels": [
+          "Total years of professional experience",
+          "Total Years of Professional Experience"
+        ],
+        "field_type": "select",
+        "appears_in_companies": [
+          "Google",
+          "Netflix"
+        ],
+        "companies_count": 2,
+        "required_in": 2,
+        "optional_in": 0,
+        "options": [
+          "0-2",
+          "11-15",
+          "15+",
+          "3-5",
+          "6-10"
+        ],
+        "examples": [
+          {
+            "company": "Netflix",
+            "label": "Total Years of Professional Experience",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "company": "Google",
+            "label": "Total years of professional experience",
+            "required": true,
+            "type": "select"
+          }
+        ]
+      },
+      "why_are_you_interested_in_this_role_at_netflix": {
+        "normalized_name": "why_are_you_interested_in_this_role_at_netflix",
+        "common_labels": [
+          "Why are you interested in this role at Netflix?"
+        ],
+        "field_type": "textarea",
+        "appears_in_companies": [
+          "Netflix"
+        ],
+        "companies_count": 1,
+        "required_in": 1,
+        "optional_in": 0,
+        "options": [],
+        "examples": [
+          {
+            "company": "Netflix",
+            "label": "Why are you interested in this role at Netflix?",
+            "required": true,
+            "type": "textarea"
+          }
+        ]
+      },
+      "additional_information_(optional)": {
+        "normalized_name": "additional_information_(optional)",
+        "common_labels": [
+          "Additional information (optional)"
+        ],
+        "field_type": "textarea",
+        "appears_in_companies": [
+          "Google"
+        ],
+        "companies_count": 1,
+        "required_in": 0,
+        "optional_in": 1,
+        "options": [],
+        "examples": [
+          {
+            "company": "Google",
+            "label": "Additional information (optional)",
+            "required": false,
+            "type": "textarea"
+          }
+        ]
+      },
+      "optional_share_your_perspective_on_diversity": {
+        "normalized_name": "optional_share_your_perspective_on_diversity",
+        "common_labels": [
+          "Optional: Share your perspective on diversity"
+        ],
+        "field_type": "textarea",
+        "appears_in_companies": [
+          "Meta"
+        ],
+        "companies_count": 1,
+        "required_in": 0,
+        "optional_in": 1,
+        "options": [],
+        "examples": [
+          {
+            "company": "Meta",
+            "label": "Optional: Share your perspective on diversity",
+            "required": false,
+            "type": "textarea"
+          }
+        ]
+      }
+    }
+  }
+}

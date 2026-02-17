@@ -1,0 +1,35 @@
+{
+  "scraped_at": "2026-02-17T13:12:07.995251",
+  "companies": [
+    "Netflix"
+  ],
+  "total_jobs": 3,
+  "jobs_by_company": {
+    "netflix": [
+      {
+        "company": "Netflix",
+        "title": "Senior Manager, UK Tax",
+        "location": "London, United Kingdom",
+        "department": "Core Finance & Controllership",
+        "job_id": "790312263846",
+        "job_url": "https://explore.jobs.netflix.net/careers/job/790312263846"
+      },
+      {
+        "company": "Netflix",
+        "title": "Streaming Operations Engineer",
+        "location": "London, United Kingdom",
+        "department": "Engineering",
+        "job_id": "790304856703",
+        "job_url": "https://explore.jobs.netflix.net/careers/job/790304856703"
+      },
+      {
+        "company": "Netflix",
+        "title": "EMEA Hardlines PD Designer",
+        "location": "London, United Kingdom",
+        "department": "Consumer Products & Experiences",
+        "job_id": "790313599873",
+        "job_url": "https://explore.jobs.netflix.net/careers/job/790313599873"
+      }
+    ]
+  }
+}

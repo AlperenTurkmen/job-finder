@@ -240,8 +240,18 @@
 <body>
       <div class="container">
             <header>
-                  <h1>🎯 Job Finder</h1>
-                  <p>Find your perfect job match</p>
+                  <div
+                        style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                        <div>
+                              <h1>🎯 Job Finder</h1>
+                              <p>Find your perfect job match</p>
+                        </div>
+                        <nav style="display: flex; gap: 15px; flex-wrap: wrap;">
+                              <a href="/" style="color: #667eea; text-decoration: none; font-weight: 500;">🏠 Home</a>
+                              <a href="/questions" style="color: #667eea; text-decoration: none; font-weight: 500;">📋
+                                    Questions</a>
+                        </nav>
+                  </div>
             </header>
 
             {% block content %}{% endblock %}

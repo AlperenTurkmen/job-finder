@@ -152,4 +152,8 @@ class GeminiClient:
         try:
             return json.loads(cleaned)
         except json.JSONDecodeError as exc:
-            raise ValueError(f"Gemini response was not valid JSON: {cleaned}") from exc
+            # Log the full payload for debugging
+            from utils.logging import get_logger
+            logger = get_logger(__name__)
+            logger.error(f"Failed to parse JSON. Full payload ({len(cleaned)} chars): {cleaned[:1000]}")
+            raise ValueError(f"Gemini response was not valid JSON: {cleaned[:200]}") from exc

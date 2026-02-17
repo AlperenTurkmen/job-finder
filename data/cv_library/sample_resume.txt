@@ -1,0 +1,52 @@
+# John Smith
+Senior Software Engineer
+
+## Contact Information
+- Email: john.smith@email.com
+- Phone: +44 20 1234 5678
+- LinkedIn: https://linkedin.com/in/johnsmith
+- GitHub: https://github.com/johnsmith
+- Location: London, United Kingdom
+
+## Professional Experience
+
+### Senior Software Engineer | Tech Corp Ltd
+**London, UK** | January 2021 - Present
+- Led development of microservices architecture serving 2M+ users
+- Implemented CI/CD pipelines reducing deployment time by 60%
+- Mentored team of 5 junior engineers
+- Technologies: Python, Go, AWS, Kubernetes, PostgreSQL
+
+### Software Engineer | Digital Solutions Inc
+**London, UK** | March 2018 - December 2020
+- Developed RESTful APIs for mobile applications
+- Optimized database queries improving performance by 40%
+- Collaborated with cross-functional teams on product features
+- Technologies: Python, Django, React, MySQL
+
+### Junior Developer | StartUp Co
+**London, UK** | June 2016 - February 2018
+- Built web applications using modern JavaScript frameworks
+- Participated in agile development process
+- Technologies: JavaScript, Node.js, MongoDB
+
+## Education
+
+### BSc Computer Science
+**University of London** | 2013 - 2016
+- First Class Honours
+- Final Project: Machine Learning for Image Recognition
+
+## Skills
+- Languages: Python, JavaScript, Go, Java, SQL
+- Frameworks: Django, FastAPI, React, Node.js
+- Cloud: AWS, Google Cloud Platform, Azure
+- Tools: Docker, Kubernetes, Git, Jenkins
+- Databases: PostgreSQL, MySQL, MongoDB, Redis
+
+## Certifications
+- AWS Certified Solutions Architect (2022)
+- Certified Kubernetes Administrator (2021)
+
+## Summary
+Experienced software engineer with 7+ years of professional experience building scalable web applications and distributed systems. Strong expertise in backend development, cloud infrastructure, and team leadership. Passionate about clean code, test-driven development, and mentoring junior developers.

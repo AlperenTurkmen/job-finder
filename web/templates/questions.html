@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block title %}Application Questions - Job Finder{% endblock %}
+
+{% block content %}
+<div class="card">
+      <h2>📋 Application Questions</h2>
+      <p style="color: #666; margin-bottom: 30px;">
+            Below are all the questions discovered from job applications. Use these to fill out your profile and answer
+            templates.
+      </p>
+
+      <!-- Actions -->
+      <div style="display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap;">
+            <button onclick="loadAllQuestions()" class="btn btn-secondary">
+                  🔄 Refresh Questions
+            </button>
+            <button onclick="downloadProfileTemplate()" class="btn"
+                  style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                  📥 Download Profile Template
+            </button>
+            <a href="{{ url_for('results') }}" class="btn btn-secondary">
+                  ← Back to Results
+            </a>
+      </div>
+
+      <!-- Status message -->
+      <div id="statusMessage" style="display: none; padding: 15px; border-radius: 5px; margin-bottom: 20px;"></div>
+
+      <!-- Discovered Questions List -->
+      <div id="questionsContainer">
+            <div style="text-align: center; padding: 40px; color: #999;">
+                  <p>Loading questions...</p>
+            </div>
+      </div>
+
+      <!-- Unique Questions Section -->
+      <div id="uniqueQuestionsSection" style="margin-top: 40px; display: none;">
+            <h3 style="color: #667eea; margin-bottom: 20px;">🎯 Unique Questions Across All Jobs</h3>
+            <p style="color: #666; margin-bottom: 20px;">
+                  These are all the unique questions grouped together. Prepare answers for these to speed up your
+                  applications.
+            </p>
+            <div id="uniqueQuestionsContainer"></div>
+      </div>
+</div>
+
+<script>
+      // Load all discovered questions on page load
+      window.addEventListener('DOMContentLoaded', () => {
+            loadAllQuestions();
+      });
+
+      async function loadAllQuestions() {
+            const container = document.getElementById('questionsContainer');
+            const statusDiv = document.getElementById('statusMessage');
+
+            try {
+                  container.innerHTML = '<div style="text-align: center; padding: 40px; color: #999;"><p>Loading questions...</p></div>';
+
+                  const response = await fetch('/api/all-questions');
+                  const result = await response.json();
+
+                  if (result.success && result.files.length > 0) {
+                        container.innerHTML = '';
+
+                        result.files.forEach(file => {
+                              const card = document.createElement('div');
+                              card.style.cssText = 'background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #667eea;';
+
+                              card.innerHTML = `
+                              <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
+                                    <div>
+                                          <h4 style="margin: 0 0 5px 0; color: #333;">${file.job_title}</h4>
+                                          <p style="margin: 0; color: #666; font-size: 14px;">
+                                                🏢 ${file.company} | 📝 ${file.questions_count} questions
+                                          </p>
+                                    </div>
+                                    <a href="${file.job_url}" target="_blank" class="btn btn-secondary" style="padding: 5px 15px; font-size: 14px;">
+                                          View Job →
+                                    </a>
+                              </div>
+                              <p style="margin: 10px 0 0 0; font-size: 14px; color: #888;">
+                                    File: <code style="background: white; padding: 2px 6px; border-radius: 3px;">${file.filename}</code>
+                              </p>
+                        `;
+
+                              container.appendChild(card);
+                        });
+
+                        statusDiv.style.display = 'block';
+                        statusDiv.style.background = '#e8f5e9';
+                        statusDiv.style.color = '#2e7d32';
+                        statusDiv.textContent = `✅ Loaded ${result.total_files} question files`;
+
+                        // Load unique questions
+                        loadUniqueQuestions();
+                  } else {
+                        container.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: #999;">
+                              <p style="font-size: 18px; margin-bottom: 15px;">📭 No questions discovered yet</p>
+                              <p>Use the "Discover Questions" button on any job detail page to start extracting questions.</p>
+                              <a href="{{ url_for('results') }}" class="btn" style="margin-top: 20px;">Browse Jobs →</a>
+                        </div>
+                  `;
+                  }
+            } catch (error) {
+                  container.innerHTML = `
+                  <div style="text-align: center; padding: 40px; color: #c62828;">
+                        <p>❌ Error loading questions: ${error.message}</p>
+                  </div>
+            `;
+            }
+      }
+
+      async function loadUniqueQuestions() {
+            const section = document.getElementById('uniqueQuestionsSection');
+            const container = document.getElementById('uniqueQuestionsContainer');
+
+            try {
+                  const response = await fetch('/api/unique-questions');
+                  const result = await response.json();
+
+                  if (result.success && Object.keys(result.questions).length > 0) {
+                        section.style.display = 'block';
+                        container.innerHTML = '';
+
+                        // Group questions by category
+                        const categories = {
+                              'Personal Info': ['first_name', 'last_name', 'email', 'phone', 'linkedin', 'github', 'portfolio'],
+                              'Professional': ['work_authorization', 'visa_sponsorship', 'salary_expectations', 'start_date', 'years_experience'],
+                              'Other': []
+                        };
+
+                        const categorizedQuestions = {
+                              'Personal Info': {},
+                              'Professional': {},
+                              'Other': {}
+                        };
+
+                        // Categorize questions
+                        for (const [key, instances] of Object.entries(result.questions)) {
+                              let categorized = false;
+                              for (const [category, keys] of Object.entries(categories)) {
+                                    if (keys.includes(key)) {
+                                          categorizedQuestions[category][key] = instances;
+                                          categorized = true;
+                                          break;
+                                    }
+                              }
+                              if (!categorized) {
+                                    categorizedQuestions['Other'][key] = instances;
+                              }
+                        }
+
+                        // Render each category
+                        for (const [category, questions] of Object.entries(categorizedQuestions)) {
+                              if (Object.keys(questions).length === 0) continue;
+
+                              const categoryCard = document.createElement('div');
+                              categoryCard.style.cssText = 'background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e0e0e0;';
+
+                              let html = `<h4 style="color: #667eea; margin-bottom: 15px;">${category}</h4>`;
+
+                              for (const [key, instances] of Object.entries(questions)) {
+                                    const firstInstance = instances[0];
+                                    const count = instances.length;
+
+                                    html += `
+                                    <div style="margin-bottom: 15px; padding: 15px; background: #f8f9fa; border-radius: 5px;">
+                                          <div style="display: flex; justify-content: between; align-items: start; gap: 10px;">
+                                                <div style="flex: 1;">
+                                                      <strong style="color: #333;">${firstInstance.question}</strong>
+                                                      <div style="margin-top: 5px; font-size: 13px; color: #666;">
+                                                            Type: <code style="background: white; padding: 2px 6px; border-radius: 3px;">${firstInstance.type}</code>
+                                                            ${firstInstance.required ? '<span style="color: #e53935; margin-left: 8px;">* Required</span>' : ''}
+                                                      </div>
+                                                      ${firstInstance.options && firstInstance.options.length > 0 ? `
+                                                            <div style="margin-top: 8px; font-size: 13px;">
+                                                                  <strong>Options:</strong> ${firstInstance.options.join(', ')}
+                                                            </div>
+                                                      ` : ''}
+                                                </div>
+                                                <div style="background: #667eea; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; white-space: nowrap;">
+                                                      ${count} job${count > 1 ? 's' : ''}
+                                                </div>
+                                          </div>
+                                          <details style="margin-top: 10px;">
+                                                <summary style="cursor: pointer; font-size: 12px; color: #667eea;">Appears in these jobs...</summary>
+                                                <ul style="margin: 8px 0 0 20px; font-size: 12px; color: #666;">
+                                                      ${instances.map(inst => `<li>${inst.company} - ${inst.job_title}</li>`).join('')}
+                                                </ul>
+                                          </details>
+                                    </div>
+                              `;
+                              }
+
+                              categoryCard.innerHTML = html;
+                              container.appendChild(categoryCard);
+                        }
+                  }
+            } catch (error) {
+                  console.error('Failed to load unique questions:', error);
+            }
+      }
+
+      async function downloadProfileTemplate() {
+            const statusDiv = document.getElementById('statusMessage');
+
+            try {
+                  statusDiv.style.display = 'block';
+                  statusDiv.style.background = '#e3f2fd';
+                  statusDiv.style.color = '#1976d2';
+                  statusDiv.textContent = '⏳ Generating profile template...';
+
+                  const response = await fetch('/api/profile-template');
+                  const result = await response.json();
+
+                  if (result.success) {
+                        // Download as JSON file
+                        const blob = new Blob([JSON.stringify(result.template, null, 2)], { type: 'application/json' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'user_answers_template.json';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+
+                        statusDiv.style.background = '#e8f5e9';
+                        statusDiv.style.color = '#2e7d32';
+                        statusDiv.innerHTML = '✅ Profile template downloaded! Fill it out and save as <code>data/user_answers.json</code>';
+                  } else {
+                        throw new Error(result.error || 'Failed to generate template');
+                  }
+            } catch (error) {
+                  statusDiv.style.background = '#ffebee';
+                  statusDiv.style.color = '#c62828';
+                  statusDiv.textContent = `❌ Error: ${error.message}`;
+            }
+      }
+</script>
+
+{% endblock %}
